@@ -1,0 +1,97 @@
+<div id="Workflow">
+<div id="tabs" class="centered">
+  <ul>
+    <li class="ui-tabs-nav"><a href="#tabs-1">1. IMPORT</a></li>
+    <li class="ui-tabs-nav"><a href="#tabs-2">2. VALIDATE</a></li>
+    <li class="ui-tabs-nav"><a href="#tabs-3">3. ORGANIZE</a></li>
+    <li class="ui-tabs-nav"><a href="#tabs-4">4. EXPORT</a></li>
+  </ul>
+  <div id="tabs-1">
+    <div class="overflow">
+      <h2>Choose your input from the list</h2>
+
+      <div class="left half inline">
+
+        <label for="database">Select a database format :</label>
+        <br/>
+        <select name="database" id="dbSelect">
+          <option disabled selected> -- select an option -- </option>
+          <option>SAP database format</option>
+          <option>MySQL database format</option>
+          <option>PostgreSQL database format</option>
+          <option>Oracle database format</option>
+          <option>MongoDB database format</option>
+          <option>Amazon SimpleDB database format</option>
+          <option>Microsoft SQL Server database format</option>
+          <option>IBM DB2 database format</option>
+          <option>Excel format (XLS)</option>
+          <option>CSV format</option>
+          <option>OpenOffice format</option>
+          <option>Teradata database format</option>
+          <option>Informix database format</option>
+          <option>MariaDB database format</option>
+          <option>Other format</option>
+        </select>
+
+
+      </div>
+      <div id="tabs-1-right" class="right half inline">
+        <div id="form1">
+
+          <label>Address :</label>
+          <br/>
+          <input type="text" name="daddress" id="address">
+          <br/>
+          <br/>
+          <label>Port :</label>
+          <br/>
+          <input type="text" name="port" id="port">
+          <br/>
+          <br/>
+
+          <label>Username :</label>
+          <br/>
+          <input type="text" name="demail" id="email">
+          <br/>
+          <br/>
+          <label>Password :</label>
+          <br/>
+          <input type="password" name="password" id="password">
+          <br/>
+          <br/>
+
+          <input type="submit" name="login" id="dbLogin" value="Login">
+          <br/>
+          <br/>
+        </div>
+
+        <div id="form2">
+          <label>Database :</label>
+          <br/>
+          <input type="text" name="database" id="databaseb">
+          <br/>
+          <br/>
+          <label>Table :</label>
+          <br/>
+          <input type="text" name="table" id="table">
+          <br/>
+          <br/>
+
+          <input type="submit" name="select" id="dbTable" value="Select">
+          <br/>
+          <br/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="tabs-2">
+    <table id="example" class="display" cellspacing="0" width="100%" />
+  </div>
+  <div id="tabs-3">
+  </div>
+  <div id="tabs-4">
+  </div>
+</div>
+<div id="mainfooter" class="textcenter">
+</div>
+</div>

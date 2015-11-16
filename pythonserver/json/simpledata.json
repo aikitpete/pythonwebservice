@@ -1,0 +1,28 @@
+{
+    "columns": [
+        {
+            "data": "Doc.",
+            "title": "Doc."
+        },
+        {
+            "data": "Order no.",
+            "title": "Order no."
+        },
+        {
+            "data": "Nothing",
+            "title": "Nothing"
+        }
+    ],
+    "data": [
+        {
+            "Doc.": "564251422",
+            "Nothing": 0.0,
+            "Order no.": "56421"
+        },
+        {
+            "Doc.": "546546545",
+            "Nothing": 0.0,
+            "Order no.": "98745"
+        }
+    ]
+}

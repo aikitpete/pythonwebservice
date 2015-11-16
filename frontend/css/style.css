@@ -1,0 +1,111 @@
+html { visibility:hidden; }
+
+h1, h2, h3 {
+	margin:0px;
+}
+
+a {
+	color: CadetBlue;
+	font-weight: bold;
+}
+
+#contaier {
+	height: 950px;
+}
+
+#menu {
+	overflow: hidden;
+	width: 100%;
+	background-color: DarkSlateBlue;
+	position:relative;
+}
+
+#main {
+	position:relative;
+}
+
+#menuitems {
+	
+}
+
+#mainfooter {
+	position: absolute;
+	bottom:30px;
+	
+}
+
+.column-left{ float: left; width: 33%; }
+.column-right{ float: right; width: 33%; }
+.column-center{ display: inline-block; width: 33%; }
+
+.textcenter {
+	text-align: center;
+	margin:0 auto;
+}
+
+.border {
+	/*border: 1pt solid black;*/
+	background-color: CadetBlue;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.inline {
+	display:inline-block;
+}
+
+.small {
+	width:150px;
+	
+}
+
+.large {
+	margin:0 auto;
+	height:auto;
+	width:200px;
+	position:relative;
+	padding:0px;
+}
+
+a.disabled {
+    pointer-events: none;
+    color:grey;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float:right;
+}
+
+.half {
+	width:50%;
+}
+
+.overflow {
+	overflow: hidden;
+}
+
+.slide-out-div {
+          padding: 20px;
+          width: 350px;
+          background: #ccc;
+          border: 1px solid #29216d;
+          z-index:9999;
+      }      
+
+.handle {
+	z-index:9999;
+}
+
+.autoheight {
+	height: auto !important;
+}
