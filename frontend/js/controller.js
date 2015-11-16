@@ -1,4 +1,4 @@
-define(['jquery','viewObject','utils','bootstrap','datatables'], function($,viewObject) {
+define(['jquery','viewObject','utils','bootstrap'], function($,viewObject) {//,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
     //$(function() {
         console.log("Start initializing controller");
 
@@ -54,7 +54,7 @@ define(['jquery','viewObject','utils','bootstrap','datatables'], function($,view
                     event["data"]["tab"] = 1;
                     event["data"]["initial"] = false;
                     viewObject.initializeUI(event);
-                }
+                    }
                 else if (controllerObject.currentTab == 1) {
                     var event = {};
                     event["data"] = {};

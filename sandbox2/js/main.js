@@ -9,7 +9,7 @@ requirejs.config({
         'datatables.net': 'DataTables/datatables',
         //'datatables': 'datatables.net',
         //'datatables': 'datatables',
-        'script': '../js/script'
+        'script': 'script'
     },
     shim: {
         'jquery': {
