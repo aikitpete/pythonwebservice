@@ -124,3 +124,15 @@ a.disabled {
     transition: transform .2s ease-in-out;
 }
 */
+
+.nav-tabs > li, .nav-pills > li {
+    float:none !important;
+    display:inline-block !important;
+    *display:inline !important; /* ie7 fix */
+     zoom:1 !important; /* hasLayout ie7 trigger */
+}
+
+.nav-tabs, .nav-pills {
+    text-align:center !important;
+}
+

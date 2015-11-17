@@ -42,7 +42,7 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                 var $tabs = $('#tabs');
                 $tabs.tabs();
                 console.log("viewObject: initializeUI: #single-item test", $('#single-item').length);
-                if (screen = "Welcome") {
+                if (screen = "welcome") {
                     //$('#single-item').slick({
                     //    autoplaySpeed: 1000,
                     //});
@@ -50,11 +50,11 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                         interval: 4000
                     });
                 }
-                else if (screen == "Workflow" && tab == 0) {
+                else if (screen == "workflow" && tab == 0) {
                     $('.loadanimation').clone().appendTo('#tabs-1-right');
                     $('#tabs-1-right .loadanimation').visible();
                 }
-                else if (screen == "Workflow" && tab == 1) {
+                else if (screen == "workflow" && tab == 1) {
                     $('.loadanimation').clone().appendTo('#tabs-2');
                     $('#tabs-2 .loadanimation').visible();
                 }
@@ -77,13 +77,14 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             viewObject.initializeUI(params);
         },
         switchScreen: function(event) {
+            console.log("viewObject :switchScreen(event)",event);
             if (event.data.screen == this.currentScreen) {
                 return;
             }
             console.log("view: switchScreen", event);
             $('html').invisible();
             $('#maincontainer').load(event.data.screen + '.html');
-            $('#mainheader h2').html(event.data.screen);
+            $('#mainheader h2').html(event.data.title);
             callWhenReady('#' + event.data.screen, viewObject.switchScreenCallback, viewObject, event);
             this.currentScreen = event.data.screen;
         },
@@ -93,7 +94,8 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             //$("#next").button();
             var event = {};
             event["data"] = {};
-            event["data"]["screen"] = "Welcome";
+            event["data"]["screen"] = "welcome";
+            event["data"]["title"] = "welcome";
             event["data"]["visibleTabs"] = [0];
             event["data"]["step"] = null;
             event["data"]["tab"] = 0;

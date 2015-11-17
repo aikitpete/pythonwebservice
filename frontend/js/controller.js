@@ -52,7 +52,8 @@ function($,viewObject,utils,Bootstrap,datatables) {
                 if (controllerObject.currentTab == 0) {
                     var event = {};
                     event["data"] = {};
-                    event["data"]["screen"] = "Workflow";
+                    event["data"]["screen"] = "workflow";
+                    event["data"]["title"] = "My data";
                     event["data"]["disabledTabs"] = [2,3];
                     event["data"]["step"] = null;
                     event["data"]["tab"] = 1;
@@ -62,7 +63,8 @@ function($,viewObject,utils,Bootstrap,datatables) {
                 else if (controllerObject.currentTab == 1) {
                     var event = {};
                     event["data"] = {};
-                    event["data"]["screen"] = "Workflow";
+                    event["data"]["screen"] = "workflow";
+                    event["data"]["title"] = "My data";
                     event["data"]["disabledTabs"] = [2,3];
                     event["data"]["step"] = null;
                     event["data"]["tab"] = 2;
@@ -143,7 +145,8 @@ function($,viewObject,utils,Bootstrap,datatables) {
                 else if (controllerObject.currentTab == 2) {
                     var event = {};
                     event["data"] = {};
-                    event["data"]["screen"] = "Workflow";
+                    event["data"]["screen"] = "workflow";
+                    event["data"]["title"] = "My data";
                     event["data"]["visibleTabs"] = [0];
                     event["data"]["step"] = 2;
                     viewObject.initializeUI(event);
@@ -262,23 +265,26 @@ function($,viewObject,utils,Bootstrap,datatables) {
             navigateTo: function(params) {
                 console.log("controllerObject: navigateTo",params);
                 var event = {};
-                if (params["data"]["screen"]=="Workflow") {
+                if (params["data"]["screen"]=="workflow") {
                     event["data"] = {};
-                    event["data"]["screen"] = "Workflow";
+                    event["data"]["screen"] = "workflow";
+                    event["data"]["title"] = "My data";
                     event["data"]["disabledTabs"] = [1,2,3];
                     event["data"]["tab"] = 0;
                     event["data"]["step"] = 0;
                     event["data"]["initial"] = true;
-                } else if (params["data"]["screen"]=="Welcome") {
+                } else if (params["data"]["screen"]=="welcome") {
                     event["data"] = {};
-                    event["data"]["screen"] = "Welcome";
+                    event["data"]["screen"] = "welcome";
+                    event["data"]["title"] = "Welcome";
                     event["data"]["disabledTabs"] = [];
                     event["data"]["tab"] = 0;
                     event["data"]["step"] = null;
                     event["data"]["initial"] = true;
-                } else if (params["data"]["screen"]=="Marketplace") {
+                } else if (params["data"]["screen"]=="marketplace") {
                     event["data"] = {};
-                    event["data"]["screen"] = "Marketplace";
+                    event["data"]["screen"] = "marketplace";
+                    event["data"]["title"] = "Data market";
                     event["data"]["disabledTabs"] = [];
                     event["data"]["tab"] = 0;
                     event["data"]["step"] = null;
@@ -290,7 +296,8 @@ function($,viewObject,utils,Bootstrap,datatables) {
                 console.log("dbSelect changed");
                 var event = {};
                 event["data"] = {};
-                event["data"]["screen"] = "Workflow";
+                event["data"]["screen"] = "workflow";
+                event["data"]["title"] = "My data";
                 event["data"]["disabledTabs"] = [1,2,3];
                 event["data"]["step"] = 1;
                 event["data"]["tab"] = 0;
@@ -300,7 +307,8 @@ function($,viewObject,utils,Bootstrap,datatables) {
             dbLoginClicked: function() {
                 var event = {};
                 event["data"] = {};
-                event["data"]["screen"] = "Workflow";
+                event["data"]["screen"] = "workflow";
+                event["data"]["title"] = "My data";
                 event["data"]["disabledTabs"] = [1,2,3];
                 event["data"]["step"] = 2;
                 event["data"]["tab"] = 0;
@@ -310,7 +318,8 @@ function($,viewObject,utils,Bootstrap,datatables) {
             dbTableClicked: function() {
                 var event = {};
                 event["data"] = {};
-                event["data"]["screen"] = "Workflow";
+                event["data"]["screen"] = "workflow";
+                event["data"]["title"] = "My data";
                 event["data"]["disabledTabs"] = [2,3];
                 event["data"]["tab"] = 1;
                 viewObject.initializeUI(event);

@@ -3,12 +3,9 @@ define(['jquery','controllerObject'], function($,controllerObject) {
 	console.log("Start mapping handlers");
 	$('#next').on("click",controllerObject.nextStep);
 	$('#previous').on("click",controllerObject.previousStep);
-	$('#home').on("click",{screen:"Welcome"},controllerObject.navigateTo);
-	$('#startimport').on("click",{
-		screen:"Workflow"
-		
-	},controllerObject.navigateTo);
-	$('#marketplace').on("click",{screen:"Marketplace"},controllerObject.navigateTo);
+	$('#home').on("click",{screen:"welcome"},controllerObject.navigateTo);
+	$('#startimport').on("click",{screen:"workflow"},controllerObject.navigateTo);
+	$('#marketplace').on("click",{screen:"marketplace"},controllerObject.navigateTo);
 	$('#dbSelect-button').on("selectmenuchange",{},controllerObject.dbSelectChanged);
 	$('#dbLogin').on("click",{},controllerObject.dbLoginClicked);
 	$('#dbTable').on("click",{},controllerObject.dbTableClicked);
