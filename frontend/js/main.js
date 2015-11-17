@@ -12,22 +12,28 @@ requirejs.config({
         'jquery-ui': '//code.jquery.com/ui/1.11.4/jquery-ui',
         'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap',
         
-        'datatables': 'https://cdn.datatables.net/s/bs/dt-1.10.10,cr-1.3.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables',
-        /*'datatables' : 'DataTables/datatables',
-        'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
-        'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
+        //'datatables': 'https://cdn.datatables.net/s/bs/dt-1.10.10,cr-1.3.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables',
         
+        //'datatables' : 'DataTables/datatables',
+        //'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
+        //'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
+        
+        //STACKOVERFLOW
+        'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
+        'datatables' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
+        
+        /*
         'datatables.net-autofill' : 'DataTables/AutoFill-2.1.0/js/dataTables.autoFill',
         'datatables.net-editor' : "DataTables/Editor-1.5.2/js/dataTables.editor",
         'datatables-editor-bootstrap' : "DataTables/Editor-1.5.2/js/editor.bootstrap",
         //'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/dataTables.buttons',
         'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
-        
+        */
         //'datatables.net-buttons-bs' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
         'datatables.net-colreorder' : "DataTables/ColReorder-1.3.0/js/dataTables.colReorder",
         'datatables.net-rowreorder' : "DataTables/RowReorder-1.1.0/js/dataTables.rowReorder",
         'datatables.net-scroller' : "DataTables/Scroller-1.4.0/js/dataTables.scroller",
-        'datatables.net-select' : "DataTables/Select-1.1.0/js/dataTables.select",*/
+        'datatables.net-select' : "DataTables/Select-1.1.0/js/dataTables.select",
         
         
         
@@ -53,7 +59,7 @@ requirejs.config({
             deps: ['jquery']
         },
         'datatables' : {
-           deps: ['jquery','bootstrap']  
+           deps: ['jquery','bootstrap','datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select']  
         },
         /*'datatables.net' : {
             deps: [ 'jquery', 'datatables' ],
