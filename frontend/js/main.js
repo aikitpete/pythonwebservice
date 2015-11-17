@@ -13,10 +13,12 @@ requirejs.config({
         'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap',
         
         'datatables': 'https://cdn.datatables.net/s/bs-3.3.5/jq-2.1.4,dt-1.10.10,cr-1.3.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables',
-        /*'datatables' : 'DataTables/datatables',
-        'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
-        'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
         
+        //'datatables' : 'DataTables/datatables',
+        ////'datatables' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap'
+        'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
+        //'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
+        /*
         'datatables.net-autofill' : 'DataTables/AutoFill-2.1.0/js/dataTables.autoFill',
         'datatables.net-editor' : "DataTables/Editor-1.5.2/js/dataTables.editor",
         'datatables-editor-bootstrap' : "DataTables/Editor-1.5.2/js/editor.bootstrap",
@@ -76,7 +78,7 @@ requirejs.config({
             deps: []
         },
         'controllerObject': {
-            deps: ['viewObject','utils','datatables'],
+            deps: ['jquery','viewObject','utils','datatables','datatables.net-colreorder', 'datatables.net-rowreorder', 'datatables.net-scroller', 'datatables.net-select'],
             exports: 'controllerObject'
         },
         'viewObject': {

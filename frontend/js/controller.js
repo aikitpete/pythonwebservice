@@ -1,4 +1,4 @@
-define(['jquery','viewObject','utils','bootstrap','datatables'], 
+define(['jquery','viewObject','utils','datatables','datatables.net-colreorder', 'datatables.net-rowreorder', 'datatables.net-scroller', 'datatables.net-select'], 
 function($,viewObject,utils,Bootstrap,datatables) {
     //,colreorder,rowreorder,scroller,select
     //,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
