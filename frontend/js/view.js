@@ -1,4 +1,4 @@
-define(['jquery','vTab'], function($,vTab) {
+define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
     "use strict";
 
     //$(function() {
@@ -43,13 +43,18 @@ define(['jquery','vTab'], function($,vTab) {
                 $tabs.tabs();
                 console.log("viewObject: initializeUI: #single-item test", $('#single-item').length);
                 if (screen = "Welcome") {
-                    $('#single-item').slick({
-                        autoplaySpeed: 1000,
+                    //$('#single-item').slick({
+                    //    autoplaySpeed: 1000,
+                    //});
+                    $('.carousel').carousel({
+                        interval: 4000
                     });
-                } else if (screen=="Workflow" && tab==0) {
+                }
+                else if (screen == "Workflow" && tab == 0) {
                     $('.loadanimation').clone().appendTo('#tabs-1-right');
                     $('#tabs-1-right .loadanimation').visible();
-                } else if (screen=="Workflow" && tab==1) {
+                }
+                else if (screen == "Workflow" && tab == 1) {
                     $('.loadanimation').clone().appendTo('#tabs-2');
                     $('#tabs-2 .loadanimation').visible();
                 }
@@ -84,8 +89,8 @@ define(['jquery','vTab'], function($,vTab) {
         },
         initialize: function() {
 
-            $("#previous").button();
-            $("#next").button();
+            //$("#previous").button();
+            //$("#next").button();
             var event = {};
             event["data"] = {};
             event["data"]["screen"] = "Welcome";

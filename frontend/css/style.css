@@ -16,7 +16,7 @@ a {
 #menu {
 	overflow: hidden;
 	width: 100%;
-	background-color: DarkSlateBlue;
+
 	position:relative;
 }
 
@@ -45,7 +45,7 @@ a {
 
 .border {
 	/*border: 1pt solid black;*/
-	background-color: CadetBlue;
+	/*background-color: CadetBlue;*/
 }
 
 .left {
@@ -109,3 +109,18 @@ a.disabled {
 .autoheight {
 	height: auto !important;
 }
+
+.carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%;
+      margin: auto;
+  }
+
+/*
+@media not all, (-webkit-transform-3d)
+.carousel-inner>.item {
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+    -o-transition: -o-transform .2s ease-in-out;
+    transition: transform .2s ease-in-out;
+}
+*/

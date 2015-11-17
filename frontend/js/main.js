@@ -84,15 +84,15 @@ requirejs.config({
             exports: 'controllerObject'
         },
         'viewObject': {
-            deps: ['jquery-ui','tabslideout','slick','utils','vTab'],
+            deps: ['jquery-ui','tabslideout','bootstrap','utils','vTab'],
             exports: 'viewObject'
         },
         'vTab': {
-            deps: ['jquery-ui','tabslideout','slick','utils','vStep'],
+            deps: ['jquery-ui','tabslideout','bootstrap','utils','vStep'],
             exports: 'vTab'
         },
         'vStep': {
-            deps: ['jquery-ui','tabslideout','slick','utils'],
+            deps: ['jquery-ui','tabslideout','bootstrap','utils'],
             exports: 'vStep'
         }
     }
