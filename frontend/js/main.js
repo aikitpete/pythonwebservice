@@ -26,10 +26,10 @@ requirejs.config({
         'datatables.net-autofill' : 'DataTables/AutoFill-2.1.0/js/dataTables.autoFill',
         'datatables.net-editor' : "DataTables/Editor-1.5.2/js/dataTables.editor",
         'datatables-editor-bootstrap' : "DataTables/Editor-1.5.2/js/editor.bootstrap",
-        //'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/dataTables.buttons',
-        'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
+        'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/dataTables.buttons',
+        //'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
         
-        //'datatables.net-buttons-bs' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
+        'datatables.net-buttons-bs' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
         'datatables.net-colreorder' : "DataTables/ColReorder-1.3.0/js/dataTables.colReorder",
         'datatables.net-rowreorder' : "DataTables/RowReorder-1.1.0/js/dataTables.rowReorder",
         'datatables.net-scroller' : "DataTables/Scroller-1.4.0/js/dataTables.scroller",
@@ -61,21 +61,12 @@ requirejs.config({
         'datatables' : {
            deps: ['jquery','bootstrap','datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select']  
         },
-        'datatables.net-editor' : {
-            deps: ['jquery','bootstrap','datatables',],//,'datatables-editor-bootstrap','datatables.net-buttons','datatables.net-editor'
-        },
-        /*'datatables.net' : {
-            deps: [ 'jquery', 'datatables' ],
-        },
-        'datatables.net-bs' : {
-            deps: [ 'datatables.net' ],
+        'datatables.net-buttons-bs' : {
+            deps: ['jquery','bootstrap','datatables','datatables.net-buttons'],//,'datatables-editor-bootstrap',,'
         },
         'datatables.net-editor' : {
-            deps: [ 'datatables.net-bs', 'datatables.net-buttons', 'datatables-buttons-bootstrap', 'datatables-colreorder', 'datatables-rowreorder', 'datatables-scroller', 'datatables-select'],
+            deps: ['jquery','bootstrap','datatables','datatables.net-buttons-bs'],//,'datatables-editor-bootstrap',,'
         },
-        'datatables-editor-bootstrap' : {
-            deps: [ 'datatables.net-editor' ],
-        },*/
         'tabslideout': {
             deps: []
         },
