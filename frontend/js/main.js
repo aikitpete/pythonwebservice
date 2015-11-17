@@ -92,6 +92,9 @@ requirejs.config({
         'vStep': {
             deps: ['jquery-ui','tabslideout','slick','utils'],
             exports: 'vStep'
+        },
+        'script': {
+            deps: ['jquery','controllerObject']  
         }
     }
 });
