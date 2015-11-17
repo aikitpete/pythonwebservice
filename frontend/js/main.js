@@ -53,7 +53,7 @@ requirejs.config({
     shim: {
         'jquery' : {
             deps: [],
-            exports: $
+            exports: '$'
         },
         'bootstrap' : {
             deps: ['jquery']
