@@ -1,47 +1,79 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="cache-control" content="max-age=0" />
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
-    
+
     <meta name="robots" content="noindex, nofollow">
     <title>Home</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.css"/>
-    
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.css" />
+
     <!--
     <link rel="stylesheet" type="text/css" href="lib/DataTables/DataTables-1.10.10/css/dataTables.bootstrap.min.css"/>
     -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/dt/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,b-flash-1.1.0,b-html5-1.1.0,cr-1.3.0,fc-3.2.0,fh-3.1.0,kt-2.1.0,r-2.0.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/dt/jszip-2.5.0,pdfmake-0.1.18,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,b-flash-1.1.0,b-html5-1.1.0,cr-1.3.0,fc-3.2.0,fh-3.1.0,kt-2.1.0,r-2.0.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables.min.css"
+    />
     <!--<link rel="stylesheet" type="text/css" href="lib/DataTables/Editor-1.5.2/css/editor.bootstrap.min.css"/>-->
-    
+
     <link rel="stylesheet" type="text/css" href="css/style.css?a=b">
     <link rel="stylesheet" type="text/css" href="css/box.css?a=b">
     <link rel="stylesheet" type="text/css" href="css/loading.css?a=b">
     <link rel="stylesheet" type="text/css" href="css/workflow.css?a=b">
-    
+
     <!--
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     -->
-    
+
     <!--
     <script type="text/javascript" src="lib/DataTables/datatables.min.js"></script>
     -->
-    
+
     <!--
     <script type="text/javascript" src="https://cdn.datatables.net/s/bs-3.3.5/jq-2.1.4,dt-1.10.10,cr-1.3.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables.js"></script>
     -->
+
+    <script type="text/javascript" src="lib/DataTables/jQuery-2.1.4/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Bootstrap-3.3.5/js/bootstrap.js"></script>
+    <script type="text/javascript" src="lib/DataTables/JSZip-2.5.0/jszip.js"></script>
+    <script type="text/javascript" src="lib/DataTables/pdfmake-0.1.18/build/pdfmake.js"></script>
+    <script type="text/javascript" src="lib/DataTables/pdfmake-0.1.18/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="lib/DataTables/DataTables-1.10.10/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="lib/DataTables/DataTables-1.10.10/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="lib/DataTables/AutoFill-2.1.0/js/dataTables.autoFill.js"></script>
+    <script type="text/javascript" src="lib/DataTables/AutoFill-2.1.0/js/autoFill.bootstrap.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Buttons-1.1.0/js/dataTables.buttons.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Buttons-1.1.0/js/buttons.bootstrap.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Buttons-1.1.0/js/buttons.colVis.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Buttons-1.1.0/js/buttons.flash.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Buttons-1.1.0/js/buttons.html5.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Buttons-1.1.0/js/buttons.print.js"></script>
+    <script type="text/javascript" src="lib/DataTables/ColReorder-1.3.0/js/dataTables.colReorder.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Editor-1.5.2/js/dataTables.editor.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Editor-1.5.2/js/editor.bootstrap.js"></script>
+    <script type="text/javascript" src="lib/DataTables/FixedColumns-3.2.0/js/dataTables.fixedColumns.js"></script>
+    <script type="text/javascript" src="lib/DataTables/FixedHeader-3.1.0/js/dataTables.fixedHeader.js"></script>
+    <script type="text/javascript" src="lib/DataTables/KeyTable-2.1.0/js/dataTables.keyTable.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Responsive-2.0.0/js/dataTables.responsive.js"></script>
+    <script type="text/javascript" src="lib/DataTables/RowReorder-1.1.0/js/dataTables.rowReorder.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Scroller-1.4.0/js/dataTables.scroller.js"></script>
+    <script type="text/javascript" src="lib/DataTables/Select-1.1.0/js/dataTables.select.js"></script>
     
+    <script type="text/javascript" src="lib/jquery-ui.js"></script>
+    <script type="text/javascript" src="lib/tabslideout.1.3.js"></script>
+    <script type="text/javascript" src="lib/slick.min.js"></script>
+
     <script type="text/javascript" src="js/require.js"></script>
     <!--
     <script type="text/javascript" src="//knockoutjs.com/downloads/knockout-3.3.0.js"></script>
@@ -54,7 +86,7 @@
     <script type="text/javascript" src="lib/jquery.tabslideout.1.3.js?a=b"></script>
     <script type="text/javascript" src="//sugarjs.com/release/current/sugar.min.js"></script>
     -->
-    
+
     <script type="text/javascript" src="js/main.js?a=b"></script>
     <!--
     <script type="text/javascript" src="js/view.js?a=b"></script>
@@ -64,6 +96,7 @@
     <script type="text/javascript" src="js/utils.js?a=b"></script>
     -->
 </head>
+
 <body>
     <div class="slide-out-div autoheight">
         <a class="handle">Feedback</a>
@@ -92,13 +125,13 @@
     <div id="container" class="border">
         <div id="menu" class="border">
             <div id="home" class="column-left">
-                <a href="javascript:void(0);"><img class="left" src="" alt="HOME"/></a>
+                <a href="javascript:void(0);"><img class="left" src="" alt="HOME" /></a>
             </div>
             <div id="startimport" class="textcenter column-center">
-                <a href="javascript:void(0);"><img src="" alt="START IMPORT"/></a>
+                <a href="javascript:void(0);"><img src="" alt="START IMPORT" /></a>
             </div>
             <div id="marketplace" class="column-right">
-                <a href="javascript:void(0);"><img class="right" src="" alt="MARKETPLACE"/></a>
+                <a href="javascript:void(0);"><img class="right" src="" alt="MARKETPLACE" /></a>
             </div>
         </div>
         <div id="main" class="border">
@@ -116,15 +149,15 @@
     </div>
     <p>&copy; 2015 CommerceBoard.com</p>
     <div id="loadanimation" class="sk-cube-grid hidden">
-          <div class="sk-cube sk-cube1"></div>
-          <div class="sk-cube sk-cube2"></div>
-          <div class="sk-cube sk-cube3"></div>
-          <div class="sk-cube sk-cube4"></div>
-          <div class="sk-cube sk-cube5"></div>
-          <div class="sk-cube sk-cube6"></div>
-          <div class="sk-cube sk-cube7"></div>
-          <div class="sk-cube sk-cube8"></div>
-          <div class="sk-cube sk-cube9"></div>
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
     </div>
 </body>
 
