@@ -1,4 +1,4 @@
-define(['jquery','jquery-ui','vStep'], function($,jqueryui,vStep) {
+define(['vStep'], function(vStep) {
     var vTab = {
         switchTab: function(tab,step) {
             console.log("vTab: switchTab:",tab,step);

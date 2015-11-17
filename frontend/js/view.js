@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
+=======
+define(['vTab'], function(vTab) {
+>>>>>>> origin/master
     "use strict";
 
     //$(function() {
