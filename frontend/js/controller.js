@@ -1,4 +1,8 @@
-define(['jquery','viewObject','utils','bootstrap'], function($,viewObject) {//,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
+define(['jquery','viewObject','utils','datatables'], 
+function($,viewObject,utils,datatables) {
+    //,colreorder,rowreorder,scroller,select
+    //,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
+    
     //$(function() {
         console.log("Start initializing controller");
 
