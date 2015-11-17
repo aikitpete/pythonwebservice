@@ -7,25 +7,26 @@ requirejs.config({
         //'plugins': 'durandal/js/plugins',
         //'transitions': 'durandal/js/transitions',
         //'knockout': '//knockoutjs.com/downloads/knockout-3.3.0',
-        'jquery': '//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min',
+        'jquery': '//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery',
         'jquery-ui': '//code.jquery.com/ui/1.11.4/jquery-ui',
-        'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
+        'bootstrap': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap',
         
-        'datatables' : 'DataTables/datatables.min',
-        'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables.min',
-        'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap.min',
+        'datatables' : 'DataTables/datatables',
+        'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
+        'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
         
-        'datatables.net-autofill' : 'DataTables/AutoFill-2.1.0/js/dataTables.autoFill.min',
-        'datatables.net-editor' : "DataTables/Editor-1.5.2/js/dataTables.editor.min",
-        'datatables-editor-bootstrap' : "DataTables/Editor-1.5.2/js/editor.bootstrap.min",
-        'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/dataTables.buttons.min',
-        //'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap.min',
+        'datatables.net-autofill' : 'DataTables/AutoFill-2.1.0/js/dataTables.autoFill',
+        'datatables.net-editor' : "DataTables/Editor-1.5.2/js/dataTables.editor",
+        'datatables-editor-bootstrap' : "DataTables/Editor-1.5.2/js/editor.bootstrap",
+        //'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/dataTables.buttons',
+        'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
         
-        //'datatables.net-buttons-bs' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap.min',//blank screen
-        'datatables.net-colreorder' : "DataTables/ColReorder-1.3.0/js/dataTables.colReorder.min",
-        'datatables.net-rowreorder' : "DataTables/RowReorder-1.1.0/js/dataTables.rowReorder.min",
-        'datatables.net-scroller' : "DataTables/Scroller-1.4.0/js/dataTables.scroller.min",
-        'datatables.net-select' : "DataTables/Select-1.1.0/js/dataTables.select.min",
+        
+        //'datatables.net-buttons-bs' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',//blank screen
+        'datatables.net-colreorder' : "DataTables/ColReorder-1.3.0/js/dataTables.colReorder",
+        'datatables.net-rowreorder' : "DataTables/RowReorder-1.1.0/js/dataTables.rowReorder",
+        'datatables.net-scroller' : "DataTables/Scroller-1.4.0/js/dataTables.scroller",
+        'datatables.net-select' : "DataTables/Select-1.1.0/js/dataTables.select",
         
         
         
@@ -53,17 +54,22 @@ requirejs.config({
         'datatables' : {
             deps: ['jquery','bootstrap']  
         },
+        'datatables.net-buttons' : {
+            deps: ['jquery','bootstrap']  
+        },
         /*'datatables.net' : {
-            deps: [ 'jquery', 'datatables' ],
+            deps: [ 'jquery' ],
         },
         'datatables.net-bs' : {
-            deps: [ 'datatables.net' ],
-        },
+            deps: [ 'bootstrap','datatables.net' ],
+        },*/
+        /*
         'datatables.net-editor' : {
             deps: [ 'datatables.net-bs', 'datatables.net-buttons', 'datatables-buttons-bootstrap', 'datatables-colreorder', 'datatables-rowreorder', 'datatables-scroller', 'datatables-select'],
         },
-        'datatables-editor-bootstrap' : {
-            deps: [ 'datatables.net-editor' ],
+        */
+        /*'datatables-editor-bootstrap' : {
+            deps: [ 'bootstrap', 'datatables.net-editor' ],
         },*/
         'tabslideout': {
             deps: []
@@ -72,7 +78,7 @@ requirejs.config({
             deps: ['jquery']
         },
         'controllerObject': {
-            deps: ['jquery','viewObject','utils','bootstrap','datatables.net'],
+            deps: ['jquery','viewObject','utils','bootstrap','datatables'],
             exports: 'controllerObject'
         },
         'viewObject': {

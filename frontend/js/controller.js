@@ -1,5 +1,5 @@
-define(['jquery','viewObject','utils','datatables'], 
-function($,viewObject,utils,datatables) {
+define(['jquery','viewObject','utils','bootstrap','datatables'], 
+function($,viewObject,utils,Bootstrap,datatables) {
     //,colreorder,rowreorder,scroller,select
     //,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
     
@@ -98,7 +98,7 @@ function($,viewObject,utils,datatables) {
                                 data: json.data,
                                 columns: json.columns,
                                 dom: 'Bfrpit',
-                                buttons: [{
+                                /*buttons: [{
                                         extend: "create",
                                         editor: editor
                                     }, {
@@ -107,14 +107,14 @@ function($,viewObject,utils,datatables) {
                                     }, {
                                         extend: "remove",
                                         editor: editor
-                                    }, {
-                                        extend: 'print',
-                                        exportOptions: {
-                                            columns: ':visible'
-                                        }
+                                    //}, {
+                                    //    extend: 'print',
+                                    //    exportOptions: {
+                                    //        columns: ':visible'
+                                    //    }
                                     },
                                     'colvis'
-                                ],
+                                ],*/
                                 columnDefs: [{
                                     targets: -1,
                                     visible: true
@@ -177,7 +177,7 @@ function($,viewObject,utils,datatables) {
                                 data: json.data,
                                 columns: json.columns,
                                 dom: 'Bfrtip',
-                                buttons: [{
+                                /*buttons: [{
                                         extend: "create",
                                         editor: editor
                                     }, {
@@ -186,14 +186,14 @@ function($,viewObject,utils,datatables) {
                                     }, {
                                         extend: "remove",
                                         editor: editor
-                                    }, {
-                                        extend: 'print',
-                                        exportOptions: {
-                                            columns: ':visible'
-                                        }
+                                    //}, {
+                                    //    extend: 'print',
+                                    //    exportOptions: {
+                                    //        columns: ':visible'
+                                    //    }
                                     },
                                     'colvis'
-                                ],
+                                ],*/
                                 columnDefs: [{
                                     targets: -1,
                                     visible: true
