@@ -1,5 +1,5 @@
-define(['jquery','viewObject','utils','bootstrap','datatables'], 
-function($,viewObject,utils,Bootstrap,datatables) {
+define(['viewObject','utils'], 
+function(viewObject,utils) {
     //,colreorder,rowreorder,scroller,select
     //,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
     
@@ -69,7 +69,7 @@ function($,viewObject,utils,Bootstrap,datatables) {
                     event["data"]["initial"] = false;
                     viewObject.initializeUI(event);
                     console.log("nextStep(): Loading table", controllerObject.currentTab);
-                    var editor = new $.fn.dataTable.Editor({
+                    /*var editor = new $.fn.dataTable.Editor({
                         table: "#example",
                         fields: [{
                             label: "Doc.",
@@ -81,7 +81,7 @@ function($,viewObject,utils,Bootstrap,datatables) {
                             label: "Nothing",
                             name: "Nothing"
                         }]
-                    });
+                    });*/
                     console.log("nextStep(): Editor loaded", controllerObject.currentTab);
                     $.ajax({
                         //url: 'http://www.petegerhat.com:8000/simpledata.json',
@@ -151,7 +151,7 @@ function($,viewObject,utils,Bootstrap,datatables) {
                     console.log("nextStep(): Loading table", controllerObject.currentTab);
                     $('#example').DataTable().destroy();
                     $('#example').empty();
-                    var editor = new $.fn.dataTable.Editor({
+                    /*var editor = new $.fn.dataTable.Editor({
                         //ajax: "../php/join.php",
                         table: "#example",
                         fields: [{
@@ -161,7 +161,7 @@ function($,viewObject,utils,Bootstrap,datatables) {
                             label: "Color:",
                             name: "color"
                         }]
-                    });
+                    });*/
                     console.log("nextStep(): Editor loaded", controllerObject.currentTab);
                     $.ajax({
                         url: 'http://www.petegerhat.com:8000/smalldata.json',
