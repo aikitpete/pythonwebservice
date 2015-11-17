@@ -1,4 +1,4 @@
-define(['vTab'], function(vTab) {
+define(['jquery','vTab'], function($,vTab) {
     "use strict";
 
     //$(function() {

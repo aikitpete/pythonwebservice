@@ -1,4 +1,4 @@
-define([ 'tabslideout', 'slick', 'utils'], function() {
+define(['jquery','jquery-ui', 'tabslideout', 'slick', 'utils'], function($) {
     var vStep = {
         switchTabStep: function(step) {
             console.log("viewTabStep: switchTabStep:",step);

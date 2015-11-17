@@ -1,4 +1,4 @@
-define(['controllerObject'], function(controllerObject) {
+define(['jquery','controllerObject'], function($,controllerObject) {
 	
 	console.log("Start mapping handlers");
 	$('#next').on("click",controllerObject.nextStep);
