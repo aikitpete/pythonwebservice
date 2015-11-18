@@ -5,7 +5,7 @@
     <title>CommerceBoard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
     <meta http-equiv="cache-control" content="max-age=0" />
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="expires" content="0" />
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="css/box.css?a=b">
     <link rel="stylesheet" type="text/css" href="css/loading.css?a=b">
     <link rel="stylesheet" type="text/css" href="css/workflow.css?a=b">
-  
+
 
     <!--
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -43,8 +43,8 @@
     <!--
     <script type="text/javascript" src="lib/DataTables/datatables.min.js"></script>
     -->
-    
-    
+
+
     <script type="text/javascript" src="https://cdn.datatables.net/s/bs-3.3.5/jq-2.1.4,dt-1.10.10,cr-1.3.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables.js"></script>
     <script type="text/javascript" src="js/require.js"></script>
     <!--
@@ -67,7 +67,7 @@
     <script type="text/javascript" src="js/script.js?a=b"></script>
     <script type="text/javascript" src="js/utils.js?a=b"></script>
     -->
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -104,20 +104,20 @@
                 </button>
                 <a class="navbar-brand" href="#">CommerceBoard</a>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
+            <div class="collapse navbar-collapse" id="mainmenu">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#" id="home">Home</a></li>
-                    <li><a href="#" id="marketplace">Data market</a></li>
-                    <li><a href="#" id="startimport">My data</a></li>
+                    <li class="active"><a href="#home" id="home">Home</a></li>
+                    <li><a href="#datamarket" id="marketplace">Data market</a></li>
+                    <li><a href="#mydata" id="startimport">My data</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+                    <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    
+
     <div id="container" class="border">
         <!--<div id="menu" class="border">
             <div id="home" class="column-left">
@@ -133,8 +133,6 @@
         <div id="main" class="border">
             <div id="mainheader" class="overflow">
                 <h2 class="inline left"></h2>
-                <!--<input id="next" class="inline right" type="submit" value="Next >>">
-                <input id="previous" class="inline right" type="submit" value="<< Previous" class="inline right">-->
                 <button type="button" id="next" class="btn btn-default inline right">Next >></button>
                 <button type="button" id="previous" class="btn btn-default inline right">
                     << Previous</button>

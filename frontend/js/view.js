@@ -24,8 +24,9 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             var disabledTabs = params.data['disabledTabs'];
             var tabController = params.data['tabController'];
             console.log("viewObject: initializeUI(): start", tab, step, initial, screen, disabledTabs, tabController);
-
+            console.log("viewObject: initializeUI(): content validations",$('#maincontainer .nav-tabs'), $('#maincontainer .nav-tabs > li'), $('.nav-tabs #furniture'));
             if (initial) {
+
 
                 $('input:text, input:password, input[type=submit], button')
                     .button()
@@ -38,19 +39,30 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                     });
                 //var $tabs = $('#tabs');
                 //$tabs.tabs();
-                $('#screen'+' .nav-tabs').tab();
+                $('#maincontainer .nav-tabs').tab('show');
+                $('#maincontainer .nav-tabs > li').on('click', function(e) {
+                    console.log("viewObject: initializeUI(): onclick",e,this);
+                    $('#maincontainer .nav-tabs > li').removeClass('active');
+                    $(e.currentTarget).addClass('active');
+                });
+
                 console.log("viewObject: initializeUI: #single-item test", $('#single-item').length);
-                if (screen = "welcome") {
+                if (screen == "marketplace") {
+                    console.log("viewObject: initializeUI(): initialize marketplace tab");
+                    $('.nav-tabs #furniture').addClass('active');
+                } else if (screen == "welcome") {
                     //$('#single-item').slick({
                     //    autoplaySpeed: 1000,
                     //});
                     $('.carousel').carousel({
                         interval: 4000
                     });
+                    $('#maincontainer .nav-tabs #welcome').addClass('active');
                 }
                 else if (screen == "workflow" && tab == 0) {
                     $('.loadanimation').clone().appendTo('#tabs-1-right');
                     $('#tabs-1-right .loadanimation').visible();
+                    $('#maincontainer .nav-tabs #import').addClass('active');
                 }
                 else if (screen == "workflow" && tab == 1) {
                     $('.loadanimation').clone().appendTo('#tabs-2');
@@ -69,7 +81,9 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             vTab.switchTab(tab, step);
             //switchTab.call(tab,step);
             //tabController.switchTab(tab,step);
-            
+
+
+
             console.log("viewObject: initializeUI(): end");
         },
         switchScreenCallback: function(params) {
@@ -77,7 +91,7 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             viewObject.initializeUI(params);
         },
         switchScreen: function(event) {
-            console.log("viewObject :switchScreen(event): start",event);
+            console.log("viewObject :switchScreen(event): start", event);
             if (event.data.screen == this.currentScreen) {
                 return;
             }
@@ -88,7 +102,7 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             $('#mainheader h2').html(event.data.title);
             callWhenReady('#' + event.data.screen, viewObject.switchScreenCallback, viewObject, event);
             this.currentScreen = event.data.screen;
-            console.log("viewObject :switchScreen(event): end",event);
+            console.log("viewObject :switchScreen(event): end", event);
         },
         initialize: function() {
             console.log("viewObject: initialize(): start");
@@ -103,6 +117,12 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             event["data"]["tab"] = 0;
             event["data"]["initial"] = true;
             event["data"]["tabController"] = vTab;
+
+            $('#mainmenu .navbar-nav > li').on('click', function(e) {
+                $('#mainmenu .navbar-nav > li').removeClass('active');
+                $(this).addClass('active');
+            });
+
             viewObject.switchScreen(event);
             $('.slide-out-div').tabSlideOut({
                 tabHandle: '.handle', //class of the element that will become your tab
