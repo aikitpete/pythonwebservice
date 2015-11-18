@@ -100,7 +100,8 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             console.log("viewObject: switchScteen(): Invisible end");
             $('#maincontainer').load(event.data.screen + '.html');
             $('#mainheader h2').html(event.data.title);
-            callWhenReady('#' + event.data.screen, viewObject.switchScreenCallback, viewObject, event);
+            //callWhenReady('#' + event.data.screen, viewObject.switchScreenCallback, viewObject, event);
+            $(document).ready(function() {viewObject.initializeUI(event);});
             this.currentScreen = event.data.screen;
             console.log("viewObject :switchScreen(event): end", event);
         },
