@@ -6,11 +6,11 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
     console.log("0");
     console.log("viewTab test", vTab === undefined);
 
-    jQuery.fn.visible = function() {
+    $.fn.visible = function() {
         return this.css('visibility', 'visible');
     };
 
-    jQuery.fn.invisible = function() {
+    $.fn.invisible = function() {
         return this.css('visibility', 'hidden');
     };
 
@@ -23,13 +23,10 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             var screen = params.data['screen'];
             var disabledTabs = params.data['disabledTabs'];
             var tabController = params.data['tabController'];
-            console.log("ViewObject: Initializing step:", tab, step, initial, screen, disabledTabs, tabController);
+            console.log("viewObject: initializeUI(): start", tab, step, initial, screen, disabledTabs, tabController);
 
             if (initial) {
 
-                $('#tabs').tabs({
-                    disabled: disabledTabs
-                });
                 $('input:text, input:password, input[type=submit], button')
                     .button()
                     .css({
@@ -39,8 +36,9 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                         'outline': 'none',
                         'cursor': 'text'
                     });
-                var $tabs = $('#tabs');
-                $tabs.tabs();
+                //var $tabs = $('#tabs');
+                //$tabs.tabs();
+                $('#screen'+' .nav-tabs').tab();
                 console.log("viewObject: initializeUI: #single-item test", $('#single-item').length);
                 if (screen = "welcome") {
                     //$('#single-item').slick({
@@ -58,12 +56,12 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                     $('.loadanimation').clone().appendTo('#tabs-2');
                     $('#tabs-2 .loadanimation').visible();
                 }
+                console.log("viewObject: initializeUI(): visible start");
                 $('html').visible();
+                console.log("viewObject: initializeUI(): visible end");
             }
 
-            console.log("1");
             console.log("viewTab test", vTab === undefined);
-            console.log("2");
             console.log("tabController test", tabController === undefined);
 
             //viewTab.switchTab(0,0);  
@@ -71,31 +69,35 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             vTab.switchTab(tab, step);
             //switchTab.call(tab,step);
             //tabController.switchTab(tab,step);
+            
+            console.log("viewObject: initializeUI(): end");
         },
         switchScreenCallback: function(params) {
-            console.log("ViewObject: SwitchScreenCallback", params);
+            console.log("viewObject: switchScreenCallback(): start", params);
             viewObject.initializeUI(params);
         },
         switchScreen: function(event) {
-            console.log("viewObject :switchScreen(event)",event);
+            console.log("viewObject :switchScreen(event): start",event);
             if (event.data.screen == this.currentScreen) {
                 return;
             }
-            console.log("view: switchScreen", event);
+            console.log("viewObject: switchScreen(): Invisible start");
             $('html').invisible();
+            console.log("viewObject: switchScteen(): Invisible end");
             $('#maincontainer').load(event.data.screen + '.html');
             $('#mainheader h2').html(event.data.title);
             callWhenReady('#' + event.data.screen, viewObject.switchScreenCallback, viewObject, event);
             this.currentScreen = event.data.screen;
+            console.log("viewObject :switchScreen(event): end",event);
         },
         initialize: function() {
-
+            console.log("viewObject: initialize(): start");
             //$("#previous").button();
             //$("#next").button();
             var event = {};
             event["data"] = {};
             event["data"]["screen"] = "welcome";
-            event["data"]["title"] = "welcome";
+            event["data"]["title"] = "Welcome";
             event["data"]["visibleTabs"] = [0];
             event["data"]["step"] = null;
             event["data"]["tab"] = 0;
@@ -114,6 +116,7 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                 rightPos: '20px', //position from left/ use if tabLocation is bottom or top
                 fixedPosition: true //options: true makes it stick(fixed position) on scroll
             });
+            console.log("viewObject: initialize(): end");
         }
     }
 
