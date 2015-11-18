@@ -136,3 +136,10 @@ a.disabled {
     text-align:center !important;
 }
 
+.carousel-inner .item img{
+    width: 100%;
+}
+
+.lazy-load {
+    background: url("http://www.mozart.it/images/preloader.gif") center center no-repeat;
+}

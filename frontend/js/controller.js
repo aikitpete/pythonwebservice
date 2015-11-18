@@ -1,32 +1,25 @@
-define(['viewObject','utils'], 
-function(viewObject,utils) {
+define(['jquery','viewObject','utils'], 
+function($,viewObject,utils) {
     //,colreorder,rowreorder,scroller,select
     //,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
     
     //$(function() {
         console.log("Start initializing controller");
 
+        $.fn.exists = function () {
+            return this.length !== 0;
+        }
+
         var controllerObject = {
+            currentScreen: null,
             workflowStep: 0,
             minTabs: 0,
             maxTabs: 3,
             currentTab: 0,
             activeTab: 0,
             allowedTabs: 0,
-            initTabs: function() {
-                console.log("init tabs called");
+            initialized: false,
 
-                controllerObject.nextWorkflowStep();
-
-                $("#database").on("selectmenuchange", function() {
-                    if (controllerObject.workflowStep == 1) {
-                        controllerObject.nextWorkflowStep();
-                    }
-                });
-                
-                console.error("Controller: initTabs: No event initialization");
-                viewObject.initializeUI(0);
-            },
             previousStep: function() {
                 console.log("previous step");
                 if (controllerObject.currentTab == controllerObject.minTabs) {
@@ -234,22 +227,33 @@ function(viewObject,utils) {
                 console.log("nextWorkflowStep(): IMPORT STEP", controllerObject.workflowStep);
 
                 if (controllerObject.workflowStep == 0) {//REMOVE?
-                    callWhenReady('#dbSelect', function() {
+                    //callWhenReady('#dbSelect', function() {
                         console.log("Controller: navigateTo: Create dbselect selectmenuchange event");
-                        $('#dbSelect').on("selectmenuchange",{},controllerObject.dbSelectChanged);
-                    }, controllerObject, null);
+                        if ($('#dbSelect').exists()) {
+                            $('#dbSelect').on("change",{},controllerObject.dbSelectChanged);
+                        } else {
+                            console.error('#dbSelect does not exist')
+                        }
+                        
+                    //}, controllerObject, null);
                 }
                 else if (controllerObject.workflowStep == 1) {
-                    callWhenReady('#dbLogin', function() {
+                    //callWhenReady('#dbLogin', function() {
                         console.log("Controller: navigateTo: Create dblogin click event");
+                        if (!$('#dbLogin').exists()) {
+                            console.error('#dbLogin does not exist')
+                        }
                         $('#dbLogin').on("click",{},controllerObject.dbLoginClicked);
-                    }, controllerObject, null);
+                    //}, controllerObject, null);
                 }
                 else if (controllerObject.workflowStep == 2) {
-                    callWhenReady('#dbTable', function() {
+                    //callWhenReady('#dbTable', function() {
                         console.log("Controller: navigateTo: Create dbtable click event");
+                        if (!$('#dbTable').exists()) {
+                            console.error('#dbTable does not exist')
+                        }
                         $('#dbTable').on("click",{},controllerObject.dbTableClicked);
-                    }, controllerObject, null);
+                    //}, controllerObject, null);
                 }
                 else if (controllerObject.workflowStep == 3) {
                     controllerObject.allowedTabs++;
@@ -258,9 +262,6 @@ function(viewObject,utils) {
 
                 controllerObject.workflowStep++;
 
-            },
-            initialize: function() {
-                controllerObject.nextWorkflowStep();
             },
             navigateTo: function(params) {
                 console.log("controllerObject: navigateTo",params);
@@ -290,7 +291,31 @@ function(viewObject,utils) {
                     event["data"]["step"] = null;
                     event["data"]["initial"] = true;
                 }
-                viewObject.switchScreen(event);
+                if (this.currentScreen!=event.data.screen) {
+                    viewObject.switchScreen(event, controllerObject);
+                } else {
+                    updateLogic(event);
+                }
+                
+            },
+            updateLogic: function(event) {
+                console.log("controlObject: updateLogic(event): start",event);
+                this.currentScreen=event.data.screen;
+                if (this.currentScreen=="workflow") {
+                    console.log("controlObject: updateLogic(event): nextWorkflowStep call start");
+                    controllerObject.nextWorkflowStep();
+                    console.log("controlObject: updateLogic(event): nextWorkflowStep call end");
+                } else if (this.currentScreen=="welcome") {
+                    if (!this.initialized) {
+                        viewObject.initialize();
+                        this.initialized=true;
+                    }
+                } else if (this.currentScreen=="marketplace") {
+
+                }
+                console.log("controlObject: updateLogic(event): initializeUI call");
+                viewObject.initializeUI(event);
+                console.log("controlObject: updateLogic(event): end");
             },
             dbSelectChanged: function() {
                 console.log("dbSelect changed");
@@ -301,6 +326,7 @@ function(viewObject,utils) {
                 event["data"]["disabledTabs"] = [1,2,3];
                 event["data"]["step"] = 1;
                 event["data"]["tab"] = 0;
+                event["data"]["initial"] = false;
                 viewObject.initializeUI(event);
                 controllerObject.nextWorkflowStep();
             },
@@ -312,6 +338,7 @@ function(viewObject,utils) {
                 event["data"]["disabledTabs"] = [1,2,3];
                 event["data"]["step"] = 2;
                 event["data"]["tab"] = 0;
+                event["data"]["initial"] = false;
                 viewObject.initializeUI(event);
                 controllerObject.nextWorkflowStep();
             },
@@ -322,11 +349,15 @@ function(viewObject,utils) {
                 event["data"]["title"] = "My data";
                 event["data"]["disabledTabs"] = [2,3];
                 event["data"]["tab"] = 1;
+                event["data"]["initial"] = false;
                 viewObject.initializeUI(event);
                 controllerObject.nextWorkflowStep();
-            }
+            },
         }
-        controllerObject.initialize();
+        var event = {};
+        event["data"] = {};
+        event["data"]["screen"] = "welcome";
+        controllerObject.navigateTo(event);
         console.log("Controller: controllerObject initialized");
         return controllerObject;
     //});

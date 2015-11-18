@@ -6,9 +6,9 @@ define(['controllerObject'], function(controllerObject) {
 	$('#home').on("click",{screen:"welcome"},controllerObject.navigateTo);
 	$('#startimport').on("click",{screen:"workflow"},controllerObject.navigateTo);
 	$('#marketplace').on("click",{screen:"marketplace"},controllerObject.navigateTo);
-	$('#dbSelect-button').on("selectmenuchange",{},controllerObject.dbSelectChanged);
-	$('#dbLogin').on("click",{},controllerObject.dbLoginClicked);
-	$('#dbTable').on("click",{},controllerObject.dbTableClicked);
+	//$('#dbSelect').on("selectmenuchange",{},controllerObject.dbSelectChanged);
+	//$('#dbLogin').on("click",{},controllerObject.dbLoginClicked);
+	//$('#dbTable').on("click",{},controllerObject.dbTableClicked);
 	console.log("End mapping handlers");
 	
 	/*

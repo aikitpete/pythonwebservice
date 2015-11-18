@@ -1,11 +1,11 @@
-define(['utils'], function() {
+define(['jquery','utils'], function($) {
     var vStep = {
         switchTabStep: function(step) {
             console.log("viewTabStep: switchTabStep:",step);
             if (step == 0) {
                 //Import step 1
                 console.log("View: initializeUI: Create selectmenu object");
-                $("#dbSelect").selectmenu();
+                //$("#dbSelect").selectmenu();
                 $('#form1').invisible();
                 $('#form2').invisible();
                 $('#loadanimation').show();
@@ -14,7 +14,7 @@ define(['utils'], function() {
                 $('#form2').hide("slow");
             }
             else if (step == 1) {
-                $('#dbLogin').button();
+                //$('#dbLogin').button();
                 $('#form1').invisible();
                 $('#form2').invisible();
                 $('#form2').hide("slow");
@@ -31,7 +31,7 @@ define(['utils'], function() {
                     }, 2000);
             }
             else if (step == 2) {
-                $('#dbTable').button();
+                //$('#dbTable').button();
                 $('#form1').invisible();
                 $('#form2').invisible();
                 $('#form1').hide("slow");

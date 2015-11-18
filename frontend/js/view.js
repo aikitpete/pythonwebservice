@@ -15,7 +15,6 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
     };
 
     var viewObject = {
-        currentScreen: null,
         initializeUI: function(params) {
             var tab = params.data['tab'];
             var step = params.data['step'];
@@ -54,8 +53,14 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                     //$('#single-item').slick({
                     //    autoplaySpeed: 1000,
                     //});
-                    $('.carousel').carousel({
-                        interval: 4000
+                    //$('#mainCarousel').carousel({
+                    //    interval: 4000
+                    //});
+                    $(function () {
+                        $('.carousel').carousel({
+                        interval: 3000
+                    });
+                    $('.carousel').carousel('cycle');
                     });
                     $('#maincontainer .nav-tabs #welcome').addClass('active');
                 }
@@ -73,8 +78,8 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                 console.log("viewObject: initializeUI(): visible end");
             }
 
-            console.log("viewTab test", vTab === undefined);
-            console.log("tabController test", tabController === undefined);
+            console.log("viewObject: initializeUI(): viewTab test", vTab === undefined);
+            console.log("viewObject: initializeUI(): tabController test", tabController === undefined);
 
             //viewTab.switchTab(0,0);  
             //this.viewTabObject.switchTab(tab,step);  
@@ -86,42 +91,31 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
 
             console.log("viewObject: initializeUI(): end");
         },
-        switchScreen: function(event) {
+        switchScreen: function(event, callback) {
             console.log("viewObject :switchScreen(event): start", event);
-            if (event.data.screen == this.currentScreen) {
-                return;
-            }
             console.log("viewObject: switchScreen(): Invisible start");
             $('html').invisible();
             console.log("viewObject: switchScteen(): Invisible end");
             $('#maincontainer').load(event.data.screen + '.html', function() {
-                viewObject.initializeUI(event);
-                
+                if (typeof callback != 'undefined') {
+                    callback.updateLogic(event);
+                    $('#mainheader h2').html(event.data.title);
+                    console.log("viewObject :switchScreen(event): end", event);
+                } else {
+                    console.error("viewObject: switchScreen: Undefined callback",event.data.screen);
+                }
             });
-            $('#mainheader h2').html(event.data.title);
-            this.currentScreen = event.data.screen;
-            console.log("viewObject :switchScreen(event): end", event);
         },
         initialize: function() {
             console.log("viewObject: initialize(): start");
             //$("#previous").button();
             //$("#next").button();
-            var event = {};
-            event["data"] = {};
-            event["data"]["screen"] = "welcome";
-            event["data"]["title"] = "Welcome";
-            event["data"]["visibleTabs"] = [0];
-            event["data"]["step"] = null;
-            event["data"]["tab"] = 0;
-            event["data"]["initial"] = true;
-            event["data"]["tabController"] = vTab;
 
             $('#mainmenu .navbar-nav > li').on('click', function(e) {
                 $('#mainmenu .navbar-nav > li').removeClass('active');
                 $(this).addClass('active');
             });
 
-            viewObject.switchScreen(event);
             $('.slide-out-div').tabSlideOut({
                 tabHandle: '.handle', //class of the element that will become your tab
                 pathToTabImage: 'imgs/contact_tab.gif', //path to the image for the tab //Optionally can be set using css

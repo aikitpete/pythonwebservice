@@ -14,7 +14,7 @@
 
         <label for="database">Select a database format :</label>
         <br/>
-        <select name="database" id="dbSelect">
+        <select id="dbSelect" class="form-control">
           <option disabled selected> -- select an option -- </option>
           <option>SAP database format</option>
           <option>MySQL database format</option>
@@ -40,27 +40,31 @@
 
           <label>Address :</label>
           <br/>
-          <input type="text" name="daddress" id="address">
+          <input type="text" class="form-control" id="address" placeholder="8080">
           <br/>
           <br/>
           <label>Port :</label>
           <br/>
-          <input type="text" name="port" id="port">
+          <input type="text" class="form-control" id="port" placeholder="127.0.0.1">
           <br/>
           <br/>
 
           <label>Username :</label>
           <br/>
-          <input type="text" name="demail" id="email">
+          <input type="text" class="form-control" id="email" placeholder="janedoe">
           <br/>
           <br/>
           <label>Password :</label>
           <br/>
-          <input type="password" name="password" id="password">
+          <input type="password" class="form-control" id="password" placeholder="jane.doe@example.com">
           <br/>
           <br/>
-
-          <input type="submit" name="login" id="dbLogin" value="Login">
+          
+          
+          <button type="button" id="dbLogin" class="btn btn-default">Login</button>
+          <!--<input type="submit" name="login" id="dbLogin" value="Login">
+          <button type="button" id="next" class="btn btn-default inline right">Next >></button>-->
+          
           <br/>
           <br/>
         </div>
@@ -68,16 +72,17 @@
         <div id="form2">
           <label>Database :</label>
           <br/>
-          <input type="text" name="database" id="databaseb">
+          <input type="text" class="form-control" id="databaseb" placeholder="Product Data">
           <br/>
           <br/>
           <label>Table :</label>
           <br/>
-          <input type="text" name="table" id="table">
+          <input type="text" class="form-control" id="table" placeholder="Furniture">
           <br/>
           <br/>
-
-          <input type="submit" name="select" id="dbTable" value="Select">
+          
+          <button type="button" id="dbTable" class="btn btn-default">Select</button>
+          <!--<input type="submit" name="select" id="dbTable" value="Select">-->
           <br/>
           <br/>
         </div>
