@@ -86,10 +86,6 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
 
             console.log("viewObject: initializeUI(): end");
         },
-        switchScreenCallback: function(params) {
-            console.log("viewObject: switchScreenCallback(): start", params);
-            viewObject.initializeUI(params);
-        },
         switchScreen: function(event) {
             console.log("viewObject :switchScreen(event): start", event);
             if (event.data.screen == this.currentScreen) {
@@ -98,10 +94,11 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             console.log("viewObject: switchScreen(): Invisible start");
             $('html').invisible();
             console.log("viewObject: switchScteen(): Invisible end");
-            $('#maincontainer').load(event.data.screen + '.html');
+            $('#maincontainer').load(event.data.screen + '.html', function() {
+                viewObject.initializeUI(event);
+                
+            });
             $('#mainheader h2').html(event.data.title);
-            //callWhenReady('#' + event.data.screen, viewObject.switchScreenCallback, viewObject, event);
-            $(document).ready(function() {viewObject.initializeUI(event);});
             this.currentScreen = event.data.screen;
             console.log("viewObject :switchScreen(event): end", event);
         },
