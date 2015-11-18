@@ -16,19 +16,19 @@ requirejs.config({
         
         //'datatables' : 'DataTables/datatables',
         //'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
-        //'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
+        'datatables.net-bs' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
         
         //STACKOVERFLOW
         'datatables.net' : 'DataTables/DataTables-1.10.10/js/jquery.dataTables',
         'datatables' : 'DataTables/DataTables-1.10.10/js/dataTables.bootstrap',
         
-        /*
+        
         'datatables.net-autofill' : 'DataTables/AutoFill-2.1.0/js/dataTables.autoFill',
         'datatables.net-editor' : "DataTables/Editor-1.5.2/js/dataTables.editor",
         'datatables-editor-bootstrap' : "DataTables/Editor-1.5.2/js/editor.bootstrap",
         //'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/dataTables.buttons',
         'datatables.net-buttons' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
-        */
+        
         //'datatables.net-buttons-bs' : 'DataTables/Buttons-1.1.0/js/buttons.bootstrap',
         'datatables.net-colreorder' : "DataTables/ColReorder-1.3.0/js/dataTables.colReorder",
         'datatables.net-rowreorder' : "DataTables/RowReorder-1.1.0/js/dataTables.rowReorder",
@@ -47,19 +47,22 @@ requirejs.config({
         'handler': '../js/handler',
         'utils': '../js/utils',
         'script': '../js/script',
-        'vTab': '../js/vTab',
-        'vStep': '../js/vStep'
+        'viewTab': '../js/viewTab',
+        'viewTabStep': '../js/viewTabStep'
     },
     shim: {
         'jquery' : {
             deps: [],
-            exports: $
+            exports: '$'
         },
         'bootstrap' : {
             deps: ['jquery']
         },
         'datatables' : {
            deps: ['jquery','bootstrap','datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select']  
+        },
+        'datatables.net-editor' : {
+            deps: ['jquery','bootstrap','datatables',],//,'datatables-editor-bootstrap','datatables.net-buttons','datatables.net-editor'
         },
         /*'datatables.net' : {
             deps: [ 'jquery', 'datatables' ],
@@ -80,20 +83,20 @@ requirejs.config({
             deps: []
         },
         'controllerObject': {
-            deps: ['viewObject','utils'],
+            deps: ['viewObject','utils','datatables.net-editor'],
             exports: 'controllerObject'
         },
         'viewObject': {
-            deps: ['jquery-ui','tabslideout','bootstrap','utils','vTab'],
+            deps: ['jquery-ui','tabslideout','slick','utils','viewTab'],
             exports: 'viewObject'
         },
-        'vTab': {
-            deps: ['jquery-ui','tabslideout','bootstrap','utils','vStep'],
-            exports: 'vTab'
+        'viewTab': {
+            deps: ['jquery-ui','tabslideout','slick','utils','viewTabStep'],
+            exports: 'viewTabObject'
         },
-        'vStep': {
-            deps: ['jquery-ui','tabslideout','bootstrap','utils'],
-            exports: 'vStep'
+        'viewTabStep': {
+            deps: ['jquery-ui','tabslideout','slick','utils'],
+            exports: 'viewStepObject'
         }
     }
 });

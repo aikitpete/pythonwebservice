@@ -12,6 +12,8 @@ function($,viewObject,utils) {
 
         var controllerObject = {
             currentScreen: null,
+            currentTab: null,
+            currentStep: null,
             workflowStep: 0,
             minTabs: 0,
             maxTabs: 3,
@@ -263,38 +265,28 @@ function($,viewObject,utils) {
                 controllerObject.workflowStep++;
 
             },
-            navigateTo: function(params) {
-                console.log("controllerObject: navigateTo",params);
-                var event = {};
-                if (params["data"]["screen"]=="workflow") {
-                    event["data"] = {};
-                    event["data"]["screen"] = "workflow";
-                    event["data"]["title"] = "My data";
-                    event["data"]["disabledTabs"] = [1,2,3];
-                    event["data"]["tab"] = 0;
-                    event["data"]["step"] = 0;
-                    event["data"]["initial"] = true;
-                } else if (params["data"]["screen"]=="welcome") {
-                    event["data"] = {};
-                    event["data"]["screen"] = "welcome";
-                    event["data"]["title"] = "Welcome";
-                    event["data"]["disabledTabs"] = [];
-                    event["data"]["tab"] = 0;
-                    event["data"]["step"] = null;
-                    event["data"]["initial"] = true;
-                } else if (params["data"]["screen"]=="marketplace") {
-                    event["data"] = {};
-                    event["data"]["screen"] = "marketplace";
-                    event["data"]["title"] = "Data market";
-                    event["data"]["disabledTabs"] = [];
-                    event["data"]["tab"] = 0;
-                    event["data"]["step"] = null;
-                    event["data"]["initial"] = true;
-                }
+            navigateTo: function(event) {
+                updateLogic(event);
+                
+                updateScreen();
+                updateTab();
+                updateStep();
+                
                 if (this.currentScreen!=event.data.screen) {
                     viewObject.switchScreen(event, controllerObject);
-                } else {
-                    updateLogic(event);
+                }
+                
+                if (this.currentTab!=event.data.tab) {
+                    viewObject.switchTab(event, controllerObject);
+                }
+                
+                if (this.currentStep!=event.data.step) {
+                    viewObject.switchStep(event, controllerObject);
+                }
+                
+                if (!this.initialized) {
+                    viewObject.initialize();
+                    this.initialized=true;
                 }
                 
             },
@@ -306,16 +298,49 @@ function($,viewObject,utils) {
                     controllerObject.nextWorkflowStep();
                     console.log("controlObject: updateLogic(event): nextWorkflowStep call end");
                 } else if (this.currentScreen=="welcome") {
-                    if (!this.initialized) {
-                        viewObject.initialize();
-                        this.initialized=true;
-                    }
+                    
                 } else if (this.currentScreen=="marketplace") {
 
                 }
                 console.log("controlObject: updateLogic(event): initializeUI call");
                 viewObject.initializeUI(event);
                 console.log("controlObject: updateLogic(event): end");
+            },
+            updateScreen: function(event) {
+                console.log("controllerObject: navigateTo",event);
+                var event = {};
+                if (event["data"]["screen"]=="workflow") {
+                    event["data"] = {};
+                    event["data"]["screen"] = "workflow";
+                    event["data"]["title"] = "My data";
+                    event["data"]["disabledTabs"] = [1,2,3];
+                    event["data"]["tab"] = 0;
+                    event["data"]["step"] = 0;
+                    event["data"]["initial"] = true;
+                } else if (event["data"]["screen"]=="welcome") {
+                    event["data"] = {};
+                    event["data"]["screen"] = "welcome";
+                    event["data"]["title"] = "Welcome";
+                    event["data"]["disabledTabs"] = [];
+                    event["data"]["tab"] = 0;
+                    event["data"]["step"] = null;
+                    event["data"]["initial"] = true;
+                } else if (event["data"]["screen"]=="marketplace") {
+                    event["data"] = {};
+                    event["data"]["screen"] = "marketplace";
+                    event["data"]["title"] = "Data market";
+                    event["data"]["disabledTabs"] = [];
+                    event["data"]["tab"] = 0;
+                    event["data"]["step"] = null;
+                    event["data"]["initial"] = true;
+                }
+                return event;
+            },
+            updateTab: function(event) {
+                return event;
+            },
+            updateStep: function(event) {
+                return event;
             },
             dbSelectChanged: function() {
                 console.log("dbSelect changed");

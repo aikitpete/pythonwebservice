@@ -1,10 +1,9 @@
-define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
+define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject) {
     "use strict";
 
     //$(function() {
     console.log("Start initializing view");
-    console.log("0");
-    console.log("viewTab test", vTab === undefined);
+    console.log("viewTab test", viewTabObject === undefined);
 
     $.fn.visible = function() {
         return this.css('visibility', 'visible');
@@ -15,13 +14,13 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
     };
 
     var viewObject = {
-        initializeUI: function(params) {
-            var tab = params.data['tab'];
-            var step = params.data['step'];
-            var initial = params.data['initial'];
-            var screen = params.data['screen'];
-            var disabledTabs = params.data['disabledTabs'];
-            var tabController = params.data['tabController'];
+        initializeUI: function(event) {
+            var tab = event.data['tab'];
+            var step = event.data['step'];
+            var initial = event.data['initial'];
+            var screen = event.data['screen'];
+            var disabledTabs = event.data['disabledTabs'];
+            var tabController = event.data['tabController'];
             console.log("viewObject: initializeUI(): start", tab, step, initial, screen, disabledTabs, tabController);
             console.log("viewObject: initializeUI(): content validations",$('#maincontainer .nav-tabs'), $('#maincontainer .nav-tabs > li'), $('.nav-tabs #furniture'));
             if (initial) {
@@ -78,12 +77,12 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                 console.log("viewObject: initializeUI(): visible end");
             }
 
-            console.log("viewObject: initializeUI(): viewTab test", vTab === undefined);
+            console.log("viewObject: initializeUI(): viewTab test", viewTabObject === undefined);
             console.log("viewObject: initializeUI(): tabController test", tabController === undefined);
 
             //viewTab.switchTab(0,0);  
             //this.viewTabObject.switchTab(tab,step);  
-            vTab.switchTab(tab, step);
+            viewTabObject.switchTab(tab, step);
             //switchTab.call(tab,step);
             //tabController.switchTab(tab,step);
 
@@ -106,16 +105,28 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
                 }
             });
         },
+        switchTab: function(event, callback) {
+            $('#maincontainer').invisible();
+            $('#maincontainer').load('tabs/'+event.data.tab + '.html', function() {
+                if (typeof callback != 'undefined') {
+                    callback.updateLogic(event);
+                } else {
+                    console.error("viewObject: switchTab: Undefined callback",event.data.tab);
+                }
+            });
+        },
+        switchStep: function(event, callback) {
+            initializeUI(event);
+        },
         initialize: function() {
             console.log("viewObject: initialize(): start");
-            //$("#previous").button();
-            //$("#next").button();
 
             $('#mainmenu .navbar-nav > li').on('click', function(e) {
                 $('#mainmenu .navbar-nav > li').removeClass('active');
                 $(this).addClass('active');
             });
-
+            
+            console.log("viewObject: initialize(): tabslideout initialized");
             $('.slide-out-div').tabSlideOut({
                 tabHandle: '.handle', //class of the element that will become your tab
                 pathToTabImage: 'imgs/contact_tab.gif', //path to the image for the tab //Optionally can be set using css
@@ -131,8 +142,6 @@ define(['jquery', 'bootstrap', 'vTab'], function($, bootstrap, vTab) {
             console.log("viewObject: initialize(): end");
         }
     }
-
-    viewObject.initialize();
     console.log("View: viewObject initialized");
     return viewObject;
     //});
