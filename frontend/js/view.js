@@ -1,5 +1,5 @@
 define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject) {
-    "use strict";
+    //"use strict";
 
     //$(function() {
     console.log("Start initializing view");
@@ -14,18 +14,32 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
     };
 
     var viewObject = {
+        initialized: false,
+        table: null,
+        callbacks: $.Callbacks(),
+        performUpdate: function(event, callback) {
+            viewObject.switchScreen(event, callback)
+            if (!this.initialized) {
+                viewObject.initialize();
+                this.initialized = true;
+            }
+        },
         initializeUI: function(event) {
             var tab = event.data['tab'];
             var step = event.data['step'];
             var initial = event.data['initial'];
+            var first = event.data['first'];
             var screen = event.data['screen'];
             var disabledTabs = event.data['disabledTabs'];
             var tabController = event.data['tabController'];
+            var tableColumns = event.data['tableColumns'];
+            var tableRows = event.data['tableRows'];
             console.log("viewObject: initializeUI(): start", tab, step, initial, screen, disabledTabs, tabController);
-            console.log("viewObject: initializeUI(): content validations",$('#maincontainer .nav-tabs'), $('#maincontainer .nav-tabs > li'), $('.nav-tabs #furniture'));
+            if (viewObject.table != null) {
+                    $('#example').DataTable().destroy();
+                    $('#example').empty();
+             }
             if (initial) {
-
-
                 $('input:text, input:password, input[type=submit], button')
                     .button()
                     .css({
@@ -37,10 +51,10 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                     });
                 //var $tabs = $('#tabs');
                 //$tabs.tabs();
-                $('#maincontainer .nav-tabs').tab('show');
-                $('#maincontainer .nav-tabs > li').on('click', function(e) {
-                    console.log("viewObject: initializeUI(): onclick",e,this);
-                    $('#maincontainer .nav-tabs > li').removeClass('active');
+                $('.nav-tabs').tab('show');
+                $('.nav-tabs > li').on('click', function(e) {
+                    console.log("viewObject: initializeUI(): onclick", e, this);
+                    $('.nav-tabs > li').removeClass('active');
                     $(e.currentTarget).addClass('active');
                 });
 
@@ -48,32 +62,106 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                 if (screen == "marketplace") {
                     console.log("viewObject: initializeUI(): initialize marketplace tab");
                     $('.nav-tabs #furniture').addClass('active');
-                } else if (screen == "welcome") {
+                }
+                else if (screen == "welcome") {
                     //$('#single-item').slick({
                     //    autoplaySpeed: 1000,
                     //});
                     //$('#mainCarousel').carousel({
                     //    interval: 4000
                     //});
-                    $(function () {
+                    $(function() {
                         $('.carousel').carousel({
-                        interval: 3000
+                            interval: 3000
+                        });
+                        $('.carousel').carousel('cycle');
                     });
-                    $('.carousel').carousel('cycle');
-                    });
-                    $('#maincontainer .nav-tabs #welcome').addClass('active');
+                    $('.nav-tabs #welcome').addClass('active');
                 }
-                else if (screen == "workflow" && tab == 0) {
+                else if (screen == "workflow" && tab == "import") {
                     $('.loadanimation').clone().appendTo('#tabs-1-right');
                     $('#tabs-1-right .loadanimation').visible();
-                    $('#maincontainer .nav-tabs #import').addClass('active');
+                    $('.nav-tabs #import').addClass('active');
+                    $('#dbSelect').on("change", function() {
+                        $('#form1').invisible();
+                        $('#form2').invisible();
+                        $('#form2').hide("slow");
+                        $('#loadanimation').show();
+                        setTimeout(
+                            function() {
+                                $('#loadanimation').hide();
+                                $('#form1').show("slow");
+                                $('#form1').visible();
+                                $('#form2').visible();
+
+                            }, 2000);
+                    });
+                    $('#dbLogin').on("click", function() {
+                        $('#form1').invisible();
+                        $('#form2').invisible();
+                        $('#form1').hide("slow");
+                        $('#loadanimation').show();
+                        setTimeout(
+                            function() {
+                                $('#loadanimation').hide();
+                                $('#form2').show("slow");
+                                $('#form1').visible();
+                                $('#form2').visible();
+                            }, 500);
+                    });
                 }
-                else if (screen == "workflow" && tab == 1) {
+                else if (screen == "workflow" && tab == "validate") {
                     $('.loadanimation').clone().appendTo('#tabs-2');
                     $('#tabs-2 .loadanimation').visible();
                 }
+                
+                if (tableColumns != null && tableRows != null) {
+                    $('#loadanimation').hide();
+                    viewObject.table = $('#example').DataTable({
+                        data: tableRows,
+                        columns: tableColumns,
+                        dom: 'Bfrpit',
+                        
+                        /*
+                        buttons: [{
+                                extend: "create",
+                                editor: editor
+                            }, {
+                                extend: "edit",
+                                editor: editor
+                            }, {
+                                extend: "remove",
+                                editor: editor
+                            //}, {
+                            //    extend: 'print',
+                            //    exportOptions: {
+                            //        columns: ':visible'
+                            //    }
+                            },
+                            'colvis'
+                        ],
+                        */
+                        
+                        columnDefs: [{
+                            targets: -1,
+                            visible: true
+                        }],
+                        select: true,
+                        //autoFill: true,
+                        responsive: true,
+                        rowReorder: true,
+                        colReorder: true,
+                        //fixedHeader: true,
+                        //fixedColumns: true,
+                        scrollY: 680,
+                        deferRender: true,
+                        scroller: true
+                    });
+                }
+                
                 console.log("viewObject: initializeUI(): visible start");
                 $('html').visible();
+                $('#container').visible();
                 console.log("viewObject: initializeUI(): visible end");
             }
 
@@ -92,31 +180,48 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
         },
         switchScreen: function(event, callback) {
             console.log("viewObject :switchScreen(event): start", event);
-            console.log("viewObject: switchScreen(): Invisible start");
-            $('html').invisible();
-            console.log("viewObject: switchScteen(): Invisible end");
-            $('#maincontainer').load(event.data.screen + '.html', function() {
-                if (typeof callback != 'undefined') {
-                    callback.updateLogic(event);
+            if (event["data"]["updateScreen"] == true) {
+                console.log("viewObject: switchScreen(): Invisible start");
+                $('#container').invisible();
+                console.log("viewObject: switchScteen(): Invisible end");
+                $('#tabsarea').load(event.data.screen + '.html', function() {
                     $('#mainheader h2').html(event.data.title);
+                    viewObject.switchTab(event,callback);
                     console.log("viewObject :switchScreen(event): end", event);
-                } else {
-                    console.error("viewObject: switchScreen: Undefined callback",event.data.screen);
-                }
-            });
+                });
+            }
+            else {
+                viewObject.switchTab(event,callback);
+            }
+            console.log("viewObject: switchScreen(event): start", event);
         },
-        switchTab: function(event, callback) {
-            $('#maincontainer').invisible();
-            $('#maincontainer').load('tabs/'+event.data.tab + '.html', function() {
-                if (typeof callback != 'undefined') {
-                    callback.updateLogic(event);
-                } else {
-                    console.error("viewObject: switchTab: Undefined callback",event.data.tab);
-                }
-            });
+        switchTab: function(event,callback) {
+            console.log("viewObject: switchTab(event): start", event);
+
+             
+            if (event["data"]["updateTab"] == true) {
+                $('#maincontainer').invisible();
+                $('#container').visible();
+                $('#maincontainer').load('tabs/' + event.data.tab + '.html', function() {
+                    callback(event);
+                    viewObject.switchStep(event);
+                });
+            }
+            else {
+                $('#container').visible();
+                viewObject.callbacks.controllerNavigationObject.updateBindings(event);
+                viewObject.switchStep(event);
+            }
+            console.log("viewObject: switchTab(event): end", event);
         },
-        switchStep: function(event, callback) {
-            initializeUI(event);
+        switchStep: function(event) {
+            if (event["data"]["updateStep"] == true) {
+                $('#maincontainer').visible();
+                viewObject.initializeUI(event);
+            }
+            else {
+                $('#maincontainer').visible();
+            }
         },
         initialize: function() {
             console.log("viewObject: initialize(): start");
@@ -125,7 +230,7 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                 $('#mainmenu .navbar-nav > li').removeClass('active');
                 $(this).addClass('active');
             });
-            
+
             console.log("viewObject: initialize(): tabslideout initialized");
             $('.slide-out-div').tabSlideOut({
                 tabHandle: '.handle', //class of the element that will become your tab

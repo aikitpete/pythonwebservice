@@ -44,6 +44,7 @@ requirejs.config({
         //'sugar': '//sugarjs.com/release/current/sugar.min',
         'viewObject': '../js/view',
         'controllerObject': '../js/controller',
+        'controllerTableObject': '../js/controllerTable',
         'handler': '../js/handler',
         'utils': '../js/utils',
         'script': '../js/script',
@@ -85,6 +86,14 @@ requirejs.config({
         'controllerObject': {
             deps: ['viewObject','utils','datatables.net-editor'],
             exports: 'controllerObject'
+        },
+        'controllerNavigationObject': {
+            deps: ['jquery','utils'],
+            exports: 'controllerNavigationObject'
+        },
+        'controllerTableObject': {
+            deps: ['jquery','utils'],
+            exports: 'controllerTableObject'
         },
         'viewObject': {
             deps: ['jquery-ui','tabslideout','slick','utils','viewTab'],

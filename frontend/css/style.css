@@ -90,6 +90,8 @@ a.disabled {
 	width:50%;
 }
 
+.hidden { visibility:hidden; }
+
 .overflow {
 	overflow: hidden;
 }

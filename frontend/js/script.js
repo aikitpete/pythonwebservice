@@ -1,35 +1,35 @@
-define(['controllerObject'], function(controllerObject) {
+define(['controllerNavigationObject'], function(controllerNavigationObject) {
 	
 	console.log("Start mapping handlers");
 	$('#next').on("click",controllerObject.nextStep);
 	$('#previous').on("click",controllerObject.previousStep);
-	$('#home').on("click",{screen:"welcome"},controllerObject.navigateTo);
-	$('#startimport').on("click",{screen:"workflow"},controllerObject.navigateTo);
-	$('#marketplace').on("click",{screen:"marketplace"},controllerObject.navigateTo);
-	//$('#dbSelect').on("selectmenuchange",{},controllerObject.dbSelectChanged);
-	//$('#dbLogin').on("click",{},controllerObject.dbLoginClicked);
-	//$('#dbTable').on("click",{},controllerObject.dbTableClicked);
+	$('#home').on("click",{screen:"welcome",initial:true},controllerObject.navigateTo);
+	$('#startimport').on("click",{screen:"workflow",initial:true},controllerObject.navigateTo);
+	$('#marketplace').on("click",{screen:"marketplace",initial:true},controllerObject.navigateTo);
+	//$('#dbSelect').on("selectmenuchange",{},controllerNavigationObject.dbSelectChanged);
+	//$('#dbLogin').on("click",{},controllerNavigationObject.dbLoginClicked);
+	//$('#dbTable').on("click",{},controllerNavigationObject.dbTableClicked);
 	console.log("End mapping handlers");
 	
 	/*
 	function nextClicked() {
-		controllerObject.nextStep();
+		controllerNavigationObject.nextStep();
 	}
 
 	function previousClicked() {
-		controllerObject.previousStep();
+		controllerNavigationObject.previousStep();
 	}
 
 	function homeClicked() {
-		controllerObject.navigateTo("Welcome");
+		controllerNavigationObject.navigateTo("Welcome");
 	}
 
 	function startImportClicked() {
-		controllerObject.navigateTo("Workflow");
+		controllerNavigationObject.navigateTo("Workflow");
 	}
 
 	function marketplaceClicked() {
-		controllerObject.navigateTo("Marketplace");
+		controllerNavigationObject.navigateTo("Marketplace");
 	}
 
 

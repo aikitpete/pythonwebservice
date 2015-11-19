@@ -1,389 +1,178 @@
-define(['jquery','viewObject','utils'], 
-function($,viewObject,utils) {
+define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavigationObject'], function($, viewObject, utils, controllerTableObject, controllerNavigationObject) {
     //,colreorder,rowreorder,scroller,select
     //,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
-    
+
     //$(function() {
-        console.log("Start initializing controller");
+    console.log("Start initializing controller");
 
-        $.fn.exists = function () {
-            return this.length !== 0;
+    $.fn.exists = function() {
+        return this.length !== 0;
+    }
+
+    var controllerObject = {
+        updateEvent: function(event) {
+            console.log("controllerObject: navigateTo(): After update logic", event, event["data"]["updateScreen"]);
+            
+            event = controllerObject.updateLogic(event);
+
+            event = controllerObject.updateScreen(event);
+            event = controllerObject.updateTab(event);
+            event = controllerObject.updateStep(event);
+
+            viewObject.performUpdate(event, controllerObject.updateBindings,controllerTableObject);
+
+            controllerObject.saveState(event);
+        },
+        updateLogic: function(event) {
+            console.log("controlObject: updateLogic(event): start", event);
+            if (event.data.screen == "workflow") {
+                if (event.data.advance == true) {
+                    controllerNavigationObject.advanceStep();
+                }
+                if (controllerObject.currentTab=="validate") {
+                    controllerObject.loadTable(controllerObject.sampledataURL, event);
+                } else if (controllerObject.currentTab=="organize") {
+                    controllerObject.loadTable(controllerObject.simpledataURL, event);
+                }
+            }
+            else if (event.data.screen == "welcome") {
+
+            }
+            else if (event.data.screen == "marketplace") {
+
+            }
+            console.log("controlObject: updateLogic(event): end", event);
+            return event;
+        },
+        updateScreen: function(event) {
+            console.log("controllerObject: updateScreen(event): start", event);
+            if (event["data"]["screen"] == "workflow") {
+                event["data"]["title"] = "My data";
+                controllerObject.currentTabs = controllerObject.workflowTabs;
+            }
+            else if (event["data"]["screen"] == "welcome") {
+                event["data"]["title"] = "Welcome";
+                controllerObject.currentTabs = controllerObject.welcomeTabs;
+            }
+            else if (event["data"]["screen"] == "marketplace") {
+                event["data"]["title"] = "Data market";
+                controllerObject.currentTabs = controllerObject.marketplaceTabs;
+            }
+            console.log("controllerObject: updateScreen(event): (this.currentScreen != event.data.screen)", this.currentScreen, event.data.screen);
+            if (this.currentScreen != event.data.screen) {
+                console.log("controllerObject: updateScreen(event): (this.currentScreen != event.data.screen) true");
+                event["data"]["updateScreen"] = true;
+                controllerObject.allowedTabs = controllerObject.currentTabs.length;
+            }
+            else {
+                console.log("controllerObject: updateScreen(event): (this.currentScreen != event.data.screen) false");
+                event["data"]["updateScreen"] = false;
+            }
+            console.log("controllerObject: updateScreen(param): end", event);
+            return event;
+        },
+        updateTab: function(event) {
+            console.log("controllerObject: updateTab(event): start", event, event["data"]["updateScreen"]);
+            if (typeof event["data"]["tab"] != 'undefined') {
+                return event;
+            }
+            console.log("controllerObject: updateTab(event): event[data][updateScreen]", event["data"]["updateScreen"]);
+            if (event["data"]["updateScreen"] == true) {
+                
+                if (event["data"]["screen"] == "workflow") {
+
+                    event["data"]["tab"] = "import";
+                }
+                else if (event["data"]["screen"] == "welcome") {
+                    //event["data"]["disabledTabs"] = [];
+                    event["data"]["tab"] = "welcome";
+                }
+                else if (event["data"]["screen"] == "marketplace") {
+                    //event["data"]["disabledTabs"] = [];
+                    event["data"]["tab"] = "furniture";
+                }
+            } else {
+                
+                console.log("controllerObject: updateTab(event): event[data][tab]", controllerObject.currentTab);
+                event["data"]["tab"] = controllerObject.currentTab;
+            }
+            if (event.data.tab == "organize") {
+                controllerTableObject.loadTable(controllerTableObject.sampledataURL);
+            } else if (event.data.tab == "validate") {
+                controllerTableObject.loadTable(controllerTableObject.simpledataURL);
+            }
+            event["data"]["disabledTabs"] = controllerObject.currentTabs.slice(controllerObject.allowedTabs, controllerObject.currentTabs.length - 1);
+            
+            //if (this.currentTab!=event.data.tab) {
+            event["data"]["updateTab"] = true;
+            //} else {
+            //    event["data"]["updateTab"] = false;
+            //}
+            console.log("controllerObject: updateTab(event): end", event);
+            return event;
+        },
+        updateStep: function(event) {
+            console.log("controllerObject: updateStep(param): start", event);
+            if (event["data"]["screen"] == "workflow") {
+                event["data"]["step"] = 0;
+            }
+            else if (event["data"]["screen"] == "welcome") {
+                event["data"]["step"] = null;
+            }
+            else if (event["data"]["screen"] == "marketplace") {
+                event["data"]["step"] = null;
+            }
+            //if (this.currentStep!=event.data.step) {
+            event["data"]["updateStep"] = true;
+            //} else {
+            //    event["data"]["updateStep"] = false;
+            //}
+            console.log("controllerObject: updateStep(event): end", event);
+            return event;
+        },
+        updateBindings: function(event) {
+            if (event.data.screen == "workflow" && event.data.tab == "import") {
+                console.log("controllerObject: updateBindings(event): dbTable");
+                if ($('#dbTable').length == 0) {
+                    console.error("dbTable does not exist");
+                }
+                $('#dbTable').on("click", {
+                    screen: "workflow",
+                    tab: "validate",
+                    allowed: true,
+                    disabledTabs: ["organize", "preview", "export"],
+                    updateTab: true,
+                    advance: true,
+                }, controllerObject.navigateTo);
+            }
+        },
+        saveState: function(event) {
+            console.log("controllerObject: saveState(event): start", event);
+            this.currentScreen = event.data.screen;
+            this.currentTab = event.data.tab;
+            this.currentStep = event.data.step;
+            console.log("controllerObject: saveState(event): end", event);
+        },
+        nextStep: function() {
+            controllerNavigationObject.nextStep();
+        },
+        previousStep: function() {
+            controllerNavigationObject.previousStep();
+        },
+        advanceStep: function() {
+            controllerNavigationObject.advanceStep();
+        },
+        navigateTo: function(screen) {
+            controllerNavigationObject.navigateTo(screen);
         }
-
-        var controllerObject = {
-            currentScreen: null,
-            currentTab: null,
-            currentStep: null,
-            workflowStep: 0,
-            minTabs: 0,
-            maxTabs: 3,
-            currentTab: 0,
-            activeTab: 0,
-            allowedTabs: 0,
-            initialized: false,
-
-            previousStep: function() {
-                console.log("previous step");
-                if (controllerObject.currentTab == controllerObject.minTabs) {
-                    return;
-                }
-                controllerObject.currentTab--;
-                $('#tabs').tabs("option", "active", controllerObject.currentTab);
-            },
-            nextStep: function() {
-
-                console.log("next step");
-                if (controllerObject.currentTab == controllerObject.maxTabs) {
-                    return;
-                }
-                if (controllerObject.currentTab == controllerObject.allowedTabs) {
-                    return;
-                }
-                controllerObject.currentTab++;
-                if (controllerObject.currentTab > controllerObject.activeTab) {
-                    controllerObject.activeTab = controllerObject.currentTab;
-                }
-                controllerObject.allowedTabs++;
-                if (controllerObject.currentTab == 0) {
-                    var event = {};
-                    event["data"] = {};
-                    event["data"]["screen"] = "workflow";
-                    event["data"]["title"] = "My data";
-                    event["data"]["disabledTabs"] = [2,3];
-                    event["data"]["step"] = null;
-                    event["data"]["tab"] = 1;
-                    event["data"]["initial"] = false;
-                    viewObject.initializeUI(event);
-                    }
-                else if (controllerObject.currentTab == 1) {
-                    var event = {};
-                    event["data"] = {};
-                    event["data"]["screen"] = "workflow";
-                    event["data"]["title"] = "My data";
-                    event["data"]["disabledTabs"] = [2,3];
-                    event["data"]["step"] = null;
-                    event["data"]["tab"] = 2;
-                    event["data"]["initial"] = false;
-                    viewObject.initializeUI(event);
-                    console.log("nextStep(): Loading table", controllerObject.currentTab);
-                    /*var editor = new $.fn.dataTable.Editor({
-                        table: "#example",
-                        fields: [{
-                            label: "Doc.",
-                            name: "Doc."
-                        }, {
-                            label: "Order no.",
-                            name: "Order no."
-                        }, {
-                            label: "Nothing",
-                            name: "Nothing"
-                        }]
-                    });*/
-                    console.log("nextStep(): Editor loaded", controllerObject.currentTab);
-                    $.ajax({
-                        //url: 'http://www.petegerhat.com:8000/simpledata.json',
-                        url: 'https://www.petegerhat.com:8000/sampledata.json',
-                        type: 'GET',
-                        contentType: "application/json",
-                        dataType: "jsonp",
-                        success: function(json) {
-                            console.log("SUCCESS:", json);
-                            json.data = sanitizeData(json.data);
-                            json.columns = sanitizeColumns(json.columns);
-                            $('#loadanimation').hide();
-                            $('#example').DataTable({
-                                data: json.data,
-                                columns: json.columns,
-                                dom: 'Bfrpit',
-                                /*buttons: [{
-                                        extend: "create",
-                                        editor: editor
-                                    }, {
-                                        extend: "edit",
-                                        editor: editor
-                                    }, {
-                                        extend: "remove",
-                                        editor: editor
-                                    //}, {
-                                    //    extend: 'print',
-                                    //    exportOptions: {
-                                    //        columns: ':visible'
-                                    //    }
-                                    },
-                                    'colvis'
-                                ],*/
-                                columnDefs: [{
-                                    targets: -1,
-                                    visible: true
-                                }],
-                                select: true,
-                                //autoFill: true,
-                                responsive: true,
-                                rowReorder: true,
-                                colReorder: true,
-                                //fixedHeader: true,
-                                //fixedColumns: true,
-                                scrollY: 680,
-                                deferRender: true,
-                                scroller: true
-                            });
-                        },
-                        error: function(exception, textStatus, errorThrown) {
-                            //alert("ERROR:" + JSON.stringify(exception) + " STATUS:" + textStatus + " ERRORTHROW:" + errorThrown);
-                            console.error("ERROR:", exception, textStatus + ";" + errorThrown);
-                            //$('#debugconsole').append("<h1>Response Error</h1>");
-                            //$('#debugconsole').append(prettyPrint(exception));
-                        },
-                    });
-
-                }
-                else if (controllerObject.currentTab == 2) {
-                    var event = {};
-                    event["data"] = {};
-                    event["data"]["screen"] = "workflow";
-                    event["data"]["title"] = "My data";
-                    event["data"]["visibleTabs"] = [0];
-                    event["data"]["step"] = 2;
-                    viewObject.initializeUI(event);
-
-                    console.log("nextStep(): Loading table", controllerObject.currentTab);
-                    $('#example').DataTable().destroy();
-                    $('#example').empty();
-                    /*var editor = new $.fn.dataTable.Editor({
-                        //ajax: "../php/join.php",
-                        table: "#example",
-                        fields: [{
-                            label: "Supplier:",
-                            name: "supplier"
-                        }, {
-                            label: "Color:",
-                            name: "color"
-                        }]
-                    });*/
-                    console.log("nextStep(): Editor loaded", controllerObject.currentTab);
-                    $.ajax({
-                        url: 'http://www.petegerhat.com:8000/smalldata.json',
-                        type: 'GET',
-                        contentType: "application/json",
-                        dataType: "jsonp",
-                        success: function(json) {
-                            console.log("SUCCESS:", json);
-                            json.data = sanitizeData(json.data);
-                            json.columns = sanitizeColumns(json.columns);
-                            $('#loadanimation').hide();
-                            $('#example').DataTable({
-                                data: json.data,
-                                columns: json.columns,
-                                dom: 'Bfrtip',
-                                /*buttons: [{
-                                        extend: "create",
-                                        editor: editor
-                                    }, {
-                                        extend: "edit",
-                                        editor: editor
-                                    }, {
-                                        extend: "remove",
-                                        editor: editor
-                                    //}, {
-                                    //    extend: 'print',
-                                    //    exportOptions: {
-                                    //        columns: ':visible'
-                                    //    }
-                                    },
-                                    'colvis'
-                                ],*/
-                                columnDefs: [{
-                                    targets: -1,
-                                    visible: true
-                                }],
-                                select: true,
-                                //autoFill: true,
-                                responsive: true,
-                                rowReorder: true,
-                                colReorder: true,
-                                //fixedHeader: true,
-                                //fixedColumns: true,
-                                scrollY: 680,
-                                deferRender: true,
-                                scroller: true
-                            });
-                        },
-                        error: function(exception, textStatus, errorThrown) {
-                            //alert("ERROR:" + JSON.stringify(exception) + " STATUS:" + textStatus + " ERRORTHROW:" + errorThrown);
-                            console.error("ERROR:", exception, textStatus + ";" + errorThrown);
-                            //$('#debugconsole').append("<h1>Response Error</h1>");
-                            //$('#debugconsole').append(prettyPrint(exception));
-                        },
-                    });
-                }
-                else if (controllerObject.currentTab == 3) {
-                    console.error("Controller: nextStep: No event initialization");
-                    viewObject.initializeUI(3);
-                    $('#example').DataTable().destroy();
-                    $('#example').empty();
-                }
-                $('#tabs').tabs('enable', controllerObject.currentTab).tabs("option", "active", controllerObject.currentTab);
-            },
-            nextWorkflowStep: function() {
-
-                console.log("nextWorkflowStep(): IMPORT STEP", controllerObject.workflowStep);
-
-                if (controllerObject.workflowStep == 0) {//REMOVE?
-                    //callWhenReady('#dbSelect', function() {
-                        console.log("Controller: navigateTo: Create dbselect selectmenuchange event");
-                        if ($('#dbSelect').exists()) {
-                            $('#dbSelect').on("change",{},controllerObject.dbSelectChanged);
-                        } else {
-                            console.error('#dbSelect does not exist')
-                        }
-                        
-                    //}, controllerObject, null);
-                }
-                else if (controllerObject.workflowStep == 1) {
-                    //callWhenReady('#dbLogin', function() {
-                        console.log("Controller: navigateTo: Create dblogin click event");
-                        if (!$('#dbLogin').exists()) {
-                            console.error('#dbLogin does not exist')
-                        }
-                        $('#dbLogin').on("click",{},controllerObject.dbLoginClicked);
-                    //}, controllerObject, null);
-                }
-                else if (controllerObject.workflowStep == 2) {
-                    //callWhenReady('#dbTable', function() {
-                        console.log("Controller: navigateTo: Create dbtable click event");
-                        if (!$('#dbTable').exists()) {
-                            console.error('#dbTable does not exist')
-                        }
-                        $('#dbTable').on("click",{},controllerObject.dbTableClicked);
-                    //}, controllerObject, null);
-                }
-                else if (controllerObject.workflowStep == 3) {
-                    controllerObject.allowedTabs++;
-                    controllerObject.nextStep();
-                }
-
-                controllerObject.workflowStep++;
-
-            },
-            navigateTo: function(event) {
-                updateLogic(event);
-                
-                updateScreen();
-                updateTab();
-                updateStep();
-                
-                if (this.currentScreen!=event.data.screen) {
-                    viewObject.switchScreen(event, controllerObject);
-                }
-                
-                if (this.currentTab!=event.data.tab) {
-                    viewObject.switchTab(event, controllerObject);
-                }
-                
-                if (this.currentStep!=event.data.step) {
-                    viewObject.switchStep(event, controllerObject);
-                }
-                
-                if (!this.initialized) {
-                    viewObject.initialize();
-                    this.initialized=true;
-                }
-                
-            },
-            updateLogic: function(event) {
-                console.log("controlObject: updateLogic(event): start",event);
-                this.currentScreen=event.data.screen;
-                if (this.currentScreen=="workflow") {
-                    console.log("controlObject: updateLogic(event): nextWorkflowStep call start");
-                    controllerObject.nextWorkflowStep();
-                    console.log("controlObject: updateLogic(event): nextWorkflowStep call end");
-                } else if (this.currentScreen=="welcome") {
-                    
-                } else if (this.currentScreen=="marketplace") {
-
-                }
-                console.log("controlObject: updateLogic(event): initializeUI call");
-                viewObject.initializeUI(event);
-                console.log("controlObject: updateLogic(event): end");
-            },
-            updateScreen: function(event) {
-                console.log("controllerObject: navigateTo",event);
-                var event = {};
-                if (event["data"]["screen"]=="workflow") {
-                    event["data"] = {};
-                    event["data"]["screen"] = "workflow";
-                    event["data"]["title"] = "My data";
-                    event["data"]["disabledTabs"] = [1,2,3];
-                    event["data"]["tab"] = 0;
-                    event["data"]["step"] = 0;
-                    event["data"]["initial"] = true;
-                } else if (event["data"]["screen"]=="welcome") {
-                    event["data"] = {};
-                    event["data"]["screen"] = "welcome";
-                    event["data"]["title"] = "Welcome";
-                    event["data"]["disabledTabs"] = [];
-                    event["data"]["tab"] = 0;
-                    event["data"]["step"] = null;
-                    event["data"]["initial"] = true;
-                } else if (event["data"]["screen"]=="marketplace") {
-                    event["data"] = {};
-                    event["data"]["screen"] = "marketplace";
-                    event["data"]["title"] = "Data market";
-                    event["data"]["disabledTabs"] = [];
-                    event["data"]["tab"] = 0;
-                    event["data"]["step"] = null;
-                    event["data"]["initial"] = true;
-                }
-                return event;
-            },
-            updateTab: function(event) {
-                return event;
-            },
-            updateStep: function(event) {
-                return event;
-            },
-            dbSelectChanged: function() {
-                console.log("dbSelect changed");
-                var event = {};
-                event["data"] = {};
-                event["data"]["screen"] = "workflow";
-                event["data"]["title"] = "My data";
-                event["data"]["disabledTabs"] = [1,2,3];
-                event["data"]["step"] = 1;
-                event["data"]["tab"] = 0;
-                event["data"]["initial"] = false;
-                viewObject.initializeUI(event);
-                controllerObject.nextWorkflowStep();
-            },
-            dbLoginClicked: function() {
-                var event = {};
-                event["data"] = {};
-                event["data"]["screen"] = "workflow";
-                event["data"]["title"] = "My data";
-                event["data"]["disabledTabs"] = [1,2,3];
-                event["data"]["step"] = 2;
-                event["data"]["tab"] = 0;
-                event["data"]["initial"] = false;
-                viewObject.initializeUI(event);
-                controllerObject.nextWorkflowStep();
-            },
-            dbTableClicked: function() {
-                var event = {};
-                event["data"] = {};
-                event["data"]["screen"] = "workflow";
-                event["data"]["title"] = "My data";
-                event["data"]["disabledTabs"] = [2,3];
-                event["data"]["tab"] = 1;
-                event["data"]["initial"] = false;
-                viewObject.initializeUI(event);
-                controllerObject.nextWorkflowStep();
-            },
-        }
-        var event = {};
-        event["data"] = {};
-        event["data"]["screen"] = "welcome";
-        controllerObject.navigateTo(event);
-        console.log("Controller: controllerObject initialized");
-        return controllerObject;
+    }
+    var event = {};
+    event["data"] = {};
+    event["data"]["screen"] = "welcome";
+    event["data"]["initial"] = true;
+    event["data"]["first"] = true;
+    controllerObject.updateEvent();
+    console.log("Controller: controllerObject initialized");
+    return controllerObject;
     //});
 });
