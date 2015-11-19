@@ -70,7 +70,10 @@ define(['jquery', 'viewObject', 'utils', 'controllerTableObject', 'controllerNav
             else if (event["data"]["screen"] == "marketplace") {
                 event["data"]["title"] = "Data market";
                 //controllerNavigationObject.currentTabs = controllerNavigationObject.marketplaceTabs;
+            } else {//alert("SCREEN UPDATED");
+                event["data"]["screen"] = controllerNavigationObject.currentScreen;
             }
+            //alert(event["data"]["screen"]);
             console.log("controllerObject: updateScreen(event): (this.currentScreen != event.data.screen)", this.currentScreen, event.data.screen);
 
             event["data"]["updateScreen"] = controllerNavigationObject.updateScreen;
@@ -141,15 +144,17 @@ define(['jquery', 'viewObject', 'utils', 'controllerTableObject', 'controllerNav
                 if ($('#dbTable').length == 0) {
                     console.error("dbTable does not exist");
                 }
-                $('#dbTable').on("click", {
-                    //screen: "workflow",
-                    //tab: "validate",
-                    //allowed: true,
-                    //disabledTabs: ["organize", "preview", "export"],
-                    //updateTab: true,
-                    //advance: true,
-                }, controllerObject.advanceStep);
+                $('#dbTable').on("click", {}, controllerObject.advanceStep);
             }
+            $('#import').on("click", {screen:"workflow",tab:"import"}, controllerObject.navigateTo);
+            $('#validate').on("click", {screen:"workflow",tab:"validate"}, controllerObject.navigateTo);
+            $('#organize').on("click", {screen:"workflow",tab:"organize"}, controllerObject.navigateTo);
+            $('#preview').on("click", {screen:"workflow",tab:"preview"}, controllerObject.navigateTo);
+            $('#export').on("click", {screen:"workflow",tab:"export"}, controllerObject.navigateTo);
+            $('#furniture').on("click", {screen:"marketplace",tab:"furniture"}, controllerObject.navigateTo);
+            $('#fashion').on("click", {screen:"marketplace",tab:"fashion"}, controllerObject.navigateTo);
+            $('#household').on("click", {screen:"marketplace",tab:"household"}, controllerObject.navigateTo);
+            $('#other').on("click", {screen:"marketplace",tab:"other"}, controllerObject.navigateTo);
         },
         saveState: function(event) {
             console.log("controllerObject: saveState(event): start", event);

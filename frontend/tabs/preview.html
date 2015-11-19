@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+<head>
+    <style>
+        .left {
+            float: left;
+        }
+        
+        .right {
+            float: right;
+        }
+        
+        .inline {
+            display: inline-block;
+        }
+        
+        .preview-border {
+            border: 1px solid black;
+        }
+        
+        .black {
+            color: white;
+            background-color: black;
+        }
+        
+        .red {
+            color: black;
+            background-color: red;
+        }
+        .yellow {
+            color: black;
+            background-color: yellow;
+        }
+        .green {
+            color: black;
+            background-color: green;
+        }
+        
+        .blue {
+            color: black;
+            background-color: blue;
+        }
+        
+        .highlight,
+        .details > *:hover {
+            background-color: purple;
+            font-size: 150%;
+        }
+        
+        .preview-list {
+            font-size: 1.6em;
+        }
+        
+        .circle {
+            /*display: block;*/
+            height: 60px;
+            width: 60px;
+            line-height: 60px;
+            -moz-border-radius: 30px;
+            /* or 50% */
+            border-radius: 30px;
+            /* or 50% */
+            text-align: center;
+            
+        }
+    </style>
+    <script>
+        $(function() {
+            $('#sofa001 .black').on('mouseover', {}, function() {
+                $('#sofa001 .small').addClass('highlight');
+            });
+            $('#sofa001 .black').on('mouseover', {}, function() {
+                $('#sofa001 .medium').addClass('highlight');
+            });
+
+            $('#sofa001 .black').on('mouseleave', {}, function() {
+                $('#sofa001 .small').removeClass('highlight');
+            });
+            $('#sofa001 .black').on('mouseleave', {}, function() {
+                $('#sofa001 .medium').removeClass('highlight');
+            });
+
+            $('#sofa001 .green').on('mouseover', {}, function() {
+                $('#sofa001 .small').addClass('highlight');
+            });
+            $('#sofa001 .green').on('mouseover', {}, function() {
+                $('#sofa001 .large').addClass('highlight');
+            });
+
+            $('#sofa001 .green').on('mouseleave', {}, function() {
+                $('#sofa001 .small').removeClass('highlight');
+            });
+            $('#sofa001 .green').on('mouseleave', {}, function() {
+                $('#sofa001 .large').removeClass('highlight');
+            });
+
+            $('#sofa001 .blue').on('mouseover', {}, function() {
+                $('#sofa001 .small').addClass('highlight');
+            });
+
+            $('#sofa001 .blue').on('mouseleave', {}, function() {
+                $('#sofa001 .large').removeClass('highlight');
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <ul class="list-group preview-list">
+        <li id="sofa001" class="list-group-item" style="overflow:hidden">
+            <div class="inline left" style="width:24%">
+                Textile sofa
+            </div>
+            <div class="inline right" style="width:5%">
+                <div class="circle yellow">!</div>
+            </div>
+            <div class="inline right details" style="width:71%">
+                <div class="inline left black" style="">Black</div>
+                <div class="inline left red" style="">Red</div>
+                <div class="inline left green" style="">Green</div>
+                <div class="inline left blue" style="">Blue</div>
+
+                <div class="inline right preview-border small" style="">Small</div>
+                <div class="inline right preview-border medium" style="">Medium</div>
+                <div class="inline right preview-border large" style="">Large</div>
+            </div>
+        </li>
+        <li id="sofa002" class="list-group-item" style="overflow:hidden">
+            <div class="inline left" style="width:24%">
+                Leather sofa
+            </div>
+            <div class="inline right" style="width:5%">
+                &nbsp;
+            </div>
+            <div class="inline right details" style="width:71%">
+                <div class="inline left black" style="">Black</div>
+                <div class="inline left red" style="">Red</div>
+                <div class="inline left green" style="">Green</div>
+                <div class="inline left blue" style="">Blue</div>
+
+                <div class="inline right preview-border small" style="">Small</div>
+                <div class="inline right preview-border medium" style="">Medium</div>
+                <div class="inline right preview-border large" style="">Large</div>
+            </div>
+        </li>
+    </ul>
+</body>
+
+</html>

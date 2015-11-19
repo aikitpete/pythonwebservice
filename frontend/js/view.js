@@ -57,6 +57,8 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                 
 
                 console.log("viewObject: initializeUI: #single-item test", $('#single-item').length);
+                
+                
                 if (screen == "marketplace") {
                     console.log("viewObject: initializeUI(): initialize marketplace tab");
                     //$('.nav-tabs #furniture').addClass('active');
@@ -76,7 +78,8 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                     });
                     //$('.nav-tabs #welcome').addClass('active');
                 }
-                else if (screen == "workflow" && tab == "import") {
+                else if (screen == "workflow" && (tab == "import" | tab == "export")) {
+                    
                     $('.loadanimation').clone().appendTo('#tabs-1-right');
                     $('#tabs-1-right .loadanimation').visible();
                     //$('.nav-tabs #import').addClass('active');
