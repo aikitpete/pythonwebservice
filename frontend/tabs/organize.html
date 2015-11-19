@@ -2,6 +2,7 @@
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 
@@ -38,10 +39,12 @@
             color: black;
             background-color: red;
         }
+        
         .yellow {
             color: black;
             background-color: yellow;
         }
+        
         .green {
             color: black;
             background-color: green;
@@ -64,28 +67,151 @@
         
         .circle {
             /*display: block;*/
-            height: 60px;
-            width: 60px;
+            height: 30px;
+            width: 30px;
             line-height: 60px;
             -moz-border-radius: 30px;
             /* or 50% */
             border-radius: 30px;
             /* or 50% */
             text-align: center;
-            
         }
+        
+        .block {
+            display: block;
+            width: 100%;
+        }
+        
+        .ui-draggable-helper {
+            border: 1px dotted #000;
+            padding: 6px;
+            background: #fff;
+            font-size: 1.2em;
+            width:30%;
+        }
+        
+        .draganddrop {display: inline-block; border-top: 2px solid grey; width: 25px; padding-top: 2px; cursor: -webkit-grab; cursor: -moz-grab; }
+        .draganddrop:before,
+        .draganddrop:after {display: block; content: ""; border-top: 2px solid grey; padding-top: 2px;}
+        .draganddrop:hover,
+        .draganddrop:hover:before,
+        .dragme:hover, .draganddrop:hover:after {border-color: blue;}
+        .draganddrop:active,
+        .draganddrop:active:before,
+        .dragme:active, .draganddrop:active:after {cursor: -webkit-grabbing; cursor: -moz-grabbing;visibility:hidden;}
+        .dragme{cursor: -webkit-grab; cursor: -moz-grab;}
     </style>
     <script>
-
+        $(function() {
+            $(".dragme").draggable({
+                helper: "clone",
+                start: function(e, ui) {
+                    $(ui.helper).addClass("ui-draggable-helper");
+                }
+            });
+        });
     </script>
 </head>
 
 <body>
-    <div class="inline left" style="width:30%">
-        
-    </div>
-    <div class="inline right" style="width:70%">
-        
+    <div class="block overflow">
+        <div class="inline left" style="width:30%">
+            <h2>Columns</h2>
+            <ul class="list-group">
+                <li class="list-group-item dragme">
+                    SOrg.
+                    <div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item dragme">
+                    Cty<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item dragme">
+                    Sold-to pt<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item dragme">
+                    Name 1
+                    <div class="circle yellow inline"></div>
+                    <div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item dragme">
+                    OrdRs<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item dragme">
+                    Dv<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item dragme">
+                    SaTy<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Sales doc.<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Purchase order no.<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Item
+                    <div class="circle yellow inline"></div>
+                    <div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Material
+                    <div class="circle yellow inline"></div>
+                    <div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    maktx
+                    <div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Color
+                    <div class="circle yellow inline"></div>
+                    <div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Color description<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Size
+                    <div class="circle yellow inline"></div>
+                    <div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    GrV<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    EANNO<div class="draganddrop right"></div>
+                </li>
+                <li class="list-group-item  dragme">
+                    Comments<div class="draganddrop right"></div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="inline right" style="width:70%">
+            <h2>Auto-recognized fields</h2>
+            <label>ID :</label>
+            <br/>
+            <input type="text" class="form-control" id="address" placeholder="-- drag item here--">
+            <br/>
+            <br/>
+            <label>Name :</label>
+            <br/>
+            <input type="text" class="form-control" id="port" placeholder="-- drag item here--">
+            <br/>
+            <br/>
+
+            <label>Category 1 :</label>
+            <br/>
+            <input type="text" class="form-control" id="email" placeholder="-- drag item here--">
+            <br/>
+            <br/>
+            <label>Category 2 :</label>
+            <br/>
+            <input type="password" class="form-control" id="password" placeholder="-- drag item here--">
+            <br/>
+            <br/>
+            <button type="button" class="btn btn-default">Add category</button>
+        </div>
     </div>
 </body>
 

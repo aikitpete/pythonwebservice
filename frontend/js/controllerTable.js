@@ -1,11 +1,11 @@
-define(['jquery','utils'], function($, utils) {    
-    
+define(['jquery', 'utils'], function($, utils) {
+
     var controllerTableObject = {
         sampledataURL: 'https://www.petegerhat.com:8000/sampledata.json',
         simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
         loadTable: function(urlParam, event, callback) {
-            console.log("nextStep(): Loading table",urlParam,event,callback);
-            
+            console.log("nextStep(): Loading table", urlParam, event, callback);
+
             /*var editor = new $.fn.dataTable.Editor({
                 table: "#example",
                 fields: [{
@@ -28,11 +28,13 @@ define(['jquery','utils'], function($, utils) {
                 dataType: "jsonp",
                 success: function(json) {
                     console.log("SUCCESS:", json);
-                    json.data = sanitizeData(json.data);
-                    json.columns = sanitizeColumns(json.columns);
-                    event["data"]["tableColumns"]=json.columns;
-                    event["data"]["tableRows"]=json.data;
-                    
+                    json.data = controllerTableObject.sanitizeData(json.data);
+                    json.columns = controllerTableObject.sanitizeColumns(json.columns);
+                    console.log("controllerTable: loadTable()",json.data);
+                    console.log("controllerTable: loadTable()",json.columns);
+                    event["data"]["tableColumns"] = json.columns;
+                    event["data"]["tableRows"] = json.data;
+
                     callback(event);
                     /*
                     $('#loadanimation').hide();
@@ -41,26 +43,26 @@ define(['jquery','utils'], function($, utils) {
                         columns: json.columns,
                         dom: 'Bfrpit',
                         */
-                        /*
-                        buttons: [{
-                                extend: "create",
-                                editor: editor
-                            }, {
-                                extend: "edit",
-                                editor: editor
-                            }, {
-                                extend: "remove",
-                                editor: editor
-                            //}, {
-                            //    extend: 'print',
-                            //    exportOptions: {
-                            //        columns: ':visible'
-                            //    }
-                            },
-                            'colvis'
-                        ],
-                        */
-                        /*
+                    /*
+                    buttons: [{
+                            extend: "create",
+                            editor: editor
+                        }, {
+                            extend: "edit",
+                            editor: editor
+                        }, {
+                            extend: "remove",
+                            editor: editor
+                        //}, {
+                        //    extend: 'print',
+                        //    exportOptions: {
+                        //        columns: ':visible'
+                        //    }
+                        },
+                        'colvis'
+                    ],
+                    */
+                    /*
                         columnDefs: [{
                             targets: -1,
                             visible: true
@@ -87,6 +89,28 @@ define(['jquery','utils'], function($, utils) {
             });
 
         },
+        sanitizeData: function(jsonArray) {
+            var newKey;
+            jsonArray.forEach(function(item) {
+                for (key in item) {
+                    newKey = key.replace(/\s/g, '').replace(/\./g, '');
+                    if (key != newKey) {
+                        item[newKey] = item[key];
+                        delete item[key];
+                    }
+                }
+            })
+            return jsonArray;
+        },
+        //remove whitespace and dots from data : <propName> references
+        sanitizeColumns: function(jsonArray) {
+            var dataProp = [];
+            jsonArray.forEach(function(item) {
+                dataProp = item['data'].replace(/\s/g, '').replace(/\./g, '');
+                item['data'] = dataProp;
+            })
+            return jsonArray;
+        }
     }
     return controllerTableObject;
 });
