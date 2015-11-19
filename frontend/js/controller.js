@@ -1,4 +1,4 @@
-define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavigationObject'], function($, viewObject, utils, controllerTableObject, controllerNavigationObject) {
+define(['jquery', 'viewObject', 'utils', 'controllerTableObject', 'controllerNavigationObject'], function($, viewObject, utils, controllerTableObject, controllerNavigationObject) {
     //,colreorder,rowreorder,scroller,select
     //,'datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select'
 
@@ -11,15 +11,32 @@ define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavig
 
     var controllerObject = {
         updateEvent: function(event) {
-            console.log("controllerObject: navigateTo(): After update logic", event, event["data"]["updateScreen"]);
-            
+            console.log("controllerObject: navigateTo(): start");
+
+            if (!event) {
+                console.log("controller: updateEvent(event): nothing to update");
+                return;
+            }
+
             event = controllerObject.updateLogic(event);
 
             event = controllerObject.updateScreen(event);
             event = controllerObject.updateTab(event);
             event = controllerObject.updateStep(event);
 
-            viewObject.performUpdate(event, controllerObject.updateBindings,controllerTableObject);
+            if (event.data.tab == "organize") {
+                controllerTableObject.loadTable(controllerTableObject.simpledataURL, event, controllerObject.updateEventCallback);
+            }
+            else if (event.data.tab == "validate") {
+                controllerTableObject.loadTable(controllerTableObject.sampledataURL, event, controllerObject.updateEventCallback);
+            }
+            else {
+                controllerObject.updateEventCallback(event);
+            }
+
+        },
+        updateEventCallback: function(event) {
+            viewObject.performUpdate(event, controllerObject.updateBindings, controllerTableObject);
 
             controllerObject.saveState(event);
         },
@@ -28,11 +45,6 @@ define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavig
             if (event.data.screen == "workflow") {
                 if (event.data.advance == true) {
                     controllerNavigationObject.advanceStep();
-                }
-                if (controllerObject.currentTab=="validate") {
-                    controllerObject.loadTable(controllerObject.sampledataURL, event);
-                } else if (controllerObject.currentTab=="organize") {
-                    controllerObject.loadTable(controllerObject.simpledataURL, event);
                 }
             }
             else if (event.data.screen == "welcome") {
@@ -46,39 +58,34 @@ define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavig
         },
         updateScreen: function(event) {
             console.log("controllerObject: updateScreen(event): start", event);
+            event["data"]["initial"] = controllerNavigationObject.initial;
             if (event["data"]["screen"] == "workflow") {
                 event["data"]["title"] = "My data";
-                controllerObject.currentTabs = controllerObject.workflowTabs;
+                //controllerNavigationObject.currentTabs = controllerNavigationObject.workflowTabs;
             }
             else if (event["data"]["screen"] == "welcome") {
                 event["data"]["title"] = "Welcome";
-                controllerObject.currentTabs = controllerObject.welcomeTabs;
+                //controllerNavigationObject.currentTabs = controllerNavigationObject.welcomeTabs;
             }
             else if (event["data"]["screen"] == "marketplace") {
                 event["data"]["title"] = "Data market";
-                controllerObject.currentTabs = controllerObject.marketplaceTabs;
+                //controllerNavigationObject.currentTabs = controllerNavigationObject.marketplaceTabs;
             }
             console.log("controllerObject: updateScreen(event): (this.currentScreen != event.data.screen)", this.currentScreen, event.data.screen);
-            if (this.currentScreen != event.data.screen) {
-                console.log("controllerObject: updateScreen(event): (this.currentScreen != event.data.screen) true");
-                event["data"]["updateScreen"] = true;
-                controllerObject.allowedTabs = controllerObject.currentTabs.length;
-            }
-            else {
-                console.log("controllerObject: updateScreen(event): (this.currentScreen != event.data.screen) false");
-                event["data"]["updateScreen"] = false;
-            }
+
+            event["data"]["updateScreen"] = controllerNavigationObject.updateScreen;
             console.log("controllerObject: updateScreen(param): end", event);
             return event;
         },
         updateTab: function(event) {
             console.log("controllerObject: updateTab(event): start", event, event["data"]["updateScreen"]);
-            if (typeof event["data"]["tab"] != 'undefined') {
-                return event;
-            }
+            //if (typeof event["data"]["tab"] != 'undefined') {//?????
+            //    return event;
+            //}
             console.log("controllerObject: updateTab(event): event[data][updateScreen]", event["data"]["updateScreen"]);
             if (event["data"]["updateScreen"] == true) {
                 
+
                 if (event["data"]["screen"] == "workflow") {
 
                     event["data"]["tab"] = "import";
@@ -91,18 +98,16 @@ define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavig
                     //event["data"]["disabledTabs"] = [];
                     event["data"]["tab"] = "furniture";
                 }
-            } else {
                 
-                console.log("controllerObject: updateTab(event): event[data][tab]", controllerObject.currentTab);
-                event["data"]["tab"] = controllerObject.currentTab;
             }
-            if (event.data.tab == "organize") {
-                controllerTableObject.loadTable(controllerTableObject.sampledataURL);
-            } else if (event.data.tab == "validate") {
-                controllerTableObject.loadTable(controllerTableObject.simpledataURL);
+            else {
+                
+
+                console.log("controllerObject: updateTab(event): event[data][tab]", controllerNavigationObject.currentTab);
+                event["data"]["tab"] = controllerNavigationObject.currentTab;
             }
-            event["data"]["disabledTabs"] = controllerObject.currentTabs.slice(controllerObject.allowedTabs, controllerObject.currentTabs.length - 1);
-            
+            event["data"]["disabledTabs"] = controllerNavigationObject.currentTabs.slice(controllerNavigationObject.allowedTabs, controllerNavigationObject.currentTabs.length - 1);
+
             //if (this.currentTab!=event.data.tab) {
             event["data"]["updateTab"] = true;
             //} else {
@@ -137,13 +142,13 @@ define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavig
                     console.error("dbTable does not exist");
                 }
                 $('#dbTable').on("click", {
-                    screen: "workflow",
-                    tab: "validate",
-                    allowed: true,
-                    disabledTabs: ["organize", "preview", "export"],
-                    updateTab: true,
-                    advance: true,
-                }, controllerObject.navigateTo);
+                    //screen: "workflow",
+                    //tab: "validate",
+                    //allowed: true,
+                    //disabledTabs: ["organize", "preview", "export"],
+                    //updateTab: true,
+                    //advance: true,
+                }, controllerObject.advanceStep);
             }
         },
         saveState: function(event) {
@@ -153,25 +158,27 @@ define(['jquery', 'viewObject', 'utils','controllerTableObject','controllerNavig
             this.currentStep = event.data.step;
             console.log("controllerObject: saveState(event): end", event);
         },
-        nextStep: function() {
-            controllerNavigationObject.nextStep();
+        nextStep: function(event) {
+            event = controllerNavigationObject.nextStep(event);
+            controllerObject.updateEvent(event);
         },
-        previousStep: function() {
-            controllerNavigationObject.previousStep();
+        previousStep: function(event) {
+            event = controllerNavigationObject.previousStep(event);
+            controllerObject.updateEvent(event);
         },
-        advanceStep: function() {
-            controllerNavigationObject.advanceStep();
+        advanceStep: function(event) {
+            event = controllerNavigationObject.advanceStep(event);
+            controllerObject.updateEvent(event);
         },
-        navigateTo: function(screen) {
-            controllerNavigationObject.navigateTo(screen);
+        navigateTo: function(event) {
+            event = controllerNavigationObject.navigateTo(event);
+            controllerObject.updateEvent(event);
         }
     }
     var event = {};
     event["data"] = {};
     event["data"]["screen"] = "welcome";
-    event["data"]["initial"] = true;
-    event["data"]["first"] = true;
-    controllerObject.updateEvent();
+    controllerObject.navigateTo(event);
     console.log("Controller: controllerObject initialized");
     return controllerObject;
     //});

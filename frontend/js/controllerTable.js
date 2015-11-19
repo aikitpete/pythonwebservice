@@ -3,8 +3,9 @@ define(['jquery','utils'], function($, utils) {
     var controllerTableObject = {
         sampledataURL: 'https://www.petegerhat.com:8000/sampledata.json',
         simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
-        loadTable: function(urlParam, callback) {
-            console.log("nextStep(): Loading table");
+        loadTable: function(urlParam, event, callback) {
+            console.log("nextStep(): Loading table",urlParam,event,callback);
+            
             /*var editor = new $.fn.dataTable.Editor({
                 table: "#example",
                 fields: [{
@@ -26,14 +27,13 @@ define(['jquery','utils'], function($, utils) {
                 contentType: "application/json",
                 dataType: "jsonp",
                 success: function(json) {
-                    alert(json);
                     console.log("SUCCESS:", json);
                     json.data = sanitizeData(json.data);
                     json.columns = sanitizeColumns(json.columns);
-                    alert(json.data);
-                    alert(json.columns);
                     event["data"]["tableColumns"]=json.columns;
                     event["data"]["tableRows"]=json.data;
+                    
+                    callback(event);
                     /*
                     $('#loadanimation').hide();
                     $('#example').DataTable({

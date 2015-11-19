@@ -44,6 +44,7 @@ requirejs.config({
         //'sugar': '//sugarjs.com/release/current/sugar.min',
         'viewObject': '../js/view',
         'controllerObject': '../js/controller',
+        'controllerNavigationObject': '../js/controllerNavigation',
         'controllerTableObject': '../js/controllerTable',
         'handler': '../js/handler',
         'utils': '../js/utils',

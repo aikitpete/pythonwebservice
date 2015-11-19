@@ -33,12 +33,15 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
             var disabledTabs = event.data['disabledTabs'];
             var tabController = event.data['tabController'];
             var tableColumns = event.data['tableColumns'];
+
             var tableRows = event.data['tableRows'];
+
             console.log("viewObject: initializeUI(): start", tab, step, initial, screen, disabledTabs, tabController);
             if (viewObject.table != null) {
-                    $('#example').DataTable().destroy();
-                    $('#example').empty();
-             }
+                viewObject.table.destroy();
+                $('#example').empty();
+            }
+
             if (initial) {
                 $('input:text, input:password, input[type=submit], button')
                     .button()
@@ -51,17 +54,12 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                     });
                 //var $tabs = $('#tabs');
                 //$tabs.tabs();
-                $('.nav-tabs').tab('show');
-                $('.nav-tabs > li').on('click', function(e) {
-                    console.log("viewObject: initializeUI(): onclick", e, this);
-                    $('.nav-tabs > li').removeClass('active');
-                    $(e.currentTarget).addClass('active');
-                });
+                
 
                 console.log("viewObject: initializeUI: #single-item test", $('#single-item').length);
                 if (screen == "marketplace") {
                     console.log("viewObject: initializeUI(): initialize marketplace tab");
-                    $('.nav-tabs #furniture').addClass('active');
+                    //$('.nav-tabs #furniture').addClass('active');
                 }
                 else if (screen == "welcome") {
                     //$('#single-item').slick({
@@ -76,12 +74,12 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                         });
                         $('.carousel').carousel('cycle');
                     });
-                    $('.nav-tabs #welcome').addClass('active');
+                    //$('.nav-tabs #welcome').addClass('active');
                 }
                 else if (screen == "workflow" && tab == "import") {
                     $('.loadanimation').clone().appendTo('#tabs-1-right');
                     $('#tabs-1-right .loadanimation').visible();
-                    $('.nav-tabs #import').addClass('active');
+                    //$('.nav-tabs #import').addClass('active');
                     $('#dbSelect').on("change", function() {
                         $('#form1').invisible();
                         $('#form2').invisible();
@@ -110,59 +108,62 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                             }, 500);
                     });
                 }
-                else if (screen == "workflow" && tab == "validate") {
-                    $('.loadanimation').clone().appendTo('#tabs-2');
-                    $('#tabs-2 .loadanimation').visible();
-                }
-                
-                if (tableColumns != null && tableRows != null) {
-                    $('#loadanimation').hide();
-                    viewObject.table = $('#example').DataTable({
-                        data: tableRows,
-                        columns: tableColumns,
-                        dom: 'Bfrpit',
-                        
-                        /*
-                        buttons: [{
-                                extend: "create",
-                                editor: editor
-                            }, {
-                                extend: "edit",
-                                editor: editor
-                            }, {
-                                extend: "remove",
-                                editor: editor
-                            //}, {
-                            //    extend: 'print',
-                            //    exportOptions: {
-                            //        columns: ':visible'
-                            //    }
-                            },
-                            'colvis'
-                        ],
-                        */
-                        
-                        columnDefs: [{
-                            targets: -1,
-                            visible: true
-                        }],
-                        select: true,
-                        //autoFill: true,
-                        responsive: true,
-                        rowReorder: true,
-                        colReorder: true,
-                        //fixedHeader: true,
-                        //fixedColumns: true,
-                        scrollY: 680,
-                        deferRender: true,
-                        scroller: true
-                    });
-                }
-                
+
                 console.log("viewObject: initializeUI(): visible start");
                 $('html').visible();
                 $('#container').visible();
+
+
                 console.log("viewObject: initializeUI(): visible end");
+            }
+            else if (screen == "workflow" && tab == "validate") {//????????
+                $('.loadanimation').clone().appendTo('#tabs-2');
+                $('#tabs-2 .loadanimation').visible();
+            }
+
+            if (typeof tableColumns != "undefined" && typeof tableRows != "undefined") {
+
+                $('#loadanimation').hide();
+                viewObject.table = $('#example').DataTable({
+                    data: tableRows,
+                    columns: tableColumns,
+                    dom: 'Bfrpit',
+
+                    /*
+                    buttons: [{
+                            extend: "create",
+                            editor: editor
+                        }, {
+                            extend: "edit",
+                            editor: editor
+                        }, {
+                            extend: "remove",
+                            editor: editor
+                        //}, {
+                        //    extend: 'print',
+                        //    exportOptions: {
+                        //        columns: ':visible'
+                        //    }
+                        },
+                        'colvis'
+                    ],
+                    */
+
+                    columnDefs: [{
+                        targets: -1,
+                        visible: true
+                    }],
+                    select: true,
+                    //autoFill: true,
+                    responsive: true,
+                    rowReorder: true,
+                    colReorder: true,
+                    //fixedHeader: true,
+                    //fixedColumns: true,
+                    scrollY: 680,
+                    deferRender: true,
+                    scroller: true
+                });
             }
 
             console.log("viewObject: initializeUI(): viewTab test", viewTabObject === undefined);
@@ -186,20 +187,31 @@ define(['jquery', 'bootstrap', 'viewTab'], function($, bootstrap, viewTabObject)
                 console.log("viewObject: switchScteen(): Invisible end");
                 $('#tabsarea').load(event.data.screen + '.html', function() {
                     $('#mainheader h2').html(event.data.title);
-                    viewObject.switchTab(event,callback);
+                    $('.nav-tabs').tab('show');
+                    $('.nav-tabs > li').removeClass('active');//NOT NEEDED
+                    $('#'+event.data.tab).addClass('active');
+                    console.log("viewObject: initializeUI(): onclick");
+                    $('.nav-tabs > li').on('click', function(e) {
+                        $('.nav-tabs > li').removeClass('active');
+                        $(e.currentTarget).addClass('active');
+                    });
+                    viewObject.switchTab(event, callback);
                     console.log("viewObject :switchScreen(event): end", event);
                 });
             }
             else {
-                viewObject.switchTab(event,callback);
+                $('.nav-tabs > li').removeClass('active');//NOT NEEDED
+                $('#'+event.data.tab).addClass('active');
+                viewObject.switchTab(event, callback);
             }
             console.log("viewObject: switchScreen(event): start", event);
         },
-        switchTab: function(event,callback) {
+        switchTab: function(event, callback) {
             console.log("viewObject: switchTab(event): start", event);
 
-             
+
             if (event["data"]["updateTab"] == true) {
+                $('#form2').invisible();
                 $('#maincontainer').invisible();
                 $('#container').visible();
                 $('#maincontainer').load('tabs/' + event.data.tab + '.html', function() {
