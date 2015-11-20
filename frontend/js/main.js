@@ -79,13 +79,13 @@ requirejs.config({
             deps: [ 'datatables.net-editor' ],
         },*/
         'tabslideout': {
-            deps: []
+            deps: ['jquery','bootstrap']
         },
         'jquery-ui': {
-            deps: []
+            deps: ['jquery']
         },
         'controllerObject': {
-            deps: ['viewObject','utils','datatables.net-editor'],
+            deps: ['jquery','viewObject','utils','datatables.net-editor','tabslideout'],
             exports: 'controllerObject'
         },
         'controllerNavigationObject': {

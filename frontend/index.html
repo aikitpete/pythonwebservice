@@ -68,8 +68,8 @@
     <script type="text/javascript" src="js/utils.js?a=b"></script>
     -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 </head>
 
 <body>
@@ -132,16 +132,34 @@
         <div id="main" class="border">
             <div id="mainheader" class="overflow">
                 <h2 class="inline left"></h2>
-                <button type="button" id="next" class="btn btn-default inline right">Next >></button>
-                <button type="button" id="previous" class="btn btn-default inline right">
-                    << Previous</button>
+                <div class="btn-toolbar right">
+                        
+                            
+                            <div class="btn-group right">
+                                <button type="button" id="small-data" class="btn btn-default inline right">
+                                    <span class="glyphicon glyphicon-stop">
+                                    <!--<img src="imgs/128x128/small.jpg" height="18">-->Small data</button>
+                                <button type="button" id="medium-data" class="btn btn-default inline right">
+                                    <span class="glyphicon glyphicon-th-large">
+                                    <!--<img src="imgs/128x128/medium.jpg" height="18">-->Medium data</button>
+                                <button type="button" id="large-data" class="btn btn-default inline right">
+                                    <span class="glyphicon glyphicon-th">
+                                    <!--<img src="imgs/128x128/large.jpg" height="18">-->Big data</button>
+                                
+                            </div>
+                            <div class="btn-group right">
+                            <button type="button" id="previous" class="btn btn-default inline right">
+                        <span class="glyphicon glyphicon-chevron-left"> Previous</button>
+                            <button type="button" id="next" class="btn btn-default inline right"><span class="glyphicon">Next <span class="glyphicon glyphicon-chevron-right"></button>
+                            </div>
+                </div>
             </div>
             <div id="tabsarea" class="textcenter">
             </div>
             <div id="maincontainer">
 
             </div>
-            
+
         </div>
     </div>
     <p>&copy; 2015 CommerceBoard.com</p>

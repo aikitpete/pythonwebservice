@@ -112,11 +112,7 @@ a.disabled {
 	height: auto !important;
 }
 
-.carousel-inner > .item > img,
-  .carousel-inner > .item > a > img {
-      width: 70%;
-      margin: auto;
-  }
+
 
 /*
 @media not all, (-webkit-transform-3d)

@@ -87,27 +87,90 @@
             padding: 6px;
             background: #fff;
             font-size: 1.2em;
-            width:30%;
+            width: 30%;
         }
         
-        .draganddrop {display: inline-block; border-top: 2px solid grey; width: 25px; padding-top: 2px; cursor: -webkit-grab; cursor: -moz-grab; }
+        .draganddrop {
+            display: inline-block;
+            border-top: 2px solid grey;
+            width: 25px;
+            padding-top: 2px;
+            cursor: -webkit-grab;
+            cursor: -moz-grab;
+        }
+        
         .draganddrop:before,
-        .draganddrop:after {display: block; content: ""; border-top: 2px solid grey; padding-top: 2px;}
+        .draganddrop:after {
+            display: block;
+            content: "";
+            border-top: 2px solid grey;
+            padding-top: 2px;
+        }
+        
         .draganddrop:hover,
         .draganddrop:hover:before,
-        .dragme:hover, .draganddrop:hover:after {border-color: blue;}
+        .dragme:hover,
+        .draganddrop:hover:after {
+            border-color: blue;
+        }
+        
         .draganddrop:active,
         .draganddrop:active:before,
-        .dragme:active, .draganddrop:active:after {cursor: -webkit-grabbing; cursor: -moz-grabbing;visibility:hidden;}
-        .dragme{cursor: -webkit-grab; cursor: -moz-grab;}
+        .dragme:active,
+        .draganddrop:active:after {
+            cursor: -webkit-grabbing;
+            cursor: -moz-grabbing;
+            visibility: hidden;
+        }
+        
+        .dragme {
+            cursor: -webkit-grab;
+            cursor: -moz-grab;
+        }
+        
+        .lists {
+            height: 200px;
+            width: 300px;
+            border: 1px solid #000000;
+        }
+        
+        .list-group li.active {
+            background-color: blue;
+        }
+        .role-field {
+            width:250px;
+            height:40px;
+            padding:10 17;
+            /*border-width:1px;*/
+        }
     </style>
     <script>
         $(function() {
-            $(".dragme").draggable({
+            /*$(".dragme").draggable({
                 helper: "clone",
+                appendTo: ".form-control",
                 start: function(e, ui) {
                     $(ui.helper).addClass("ui-draggable-helper");
                 }
+            });*/
+            $('.list-group').sortable({
+                appendTo: "body",
+                helper: "clone"
+            }).disableSelection();
+            $('.form-control').droppable({
+                activeClass: "ui-state-default",
+                hoverClass: "ui-state-hover",
+                accept: ":not(.ui-sortable-helper)",
+                drop: function(event, ui) {
+                    $(this).find(".placeholder").remove();
+                    $(this).empty();
+
+                    $("<div></div").text(ui.draggable.text()).appendTo(this);
+                }
+            });
+            $('#templates > li').on('click', {}, function(e) {
+                $('#templates li').removeClass('active');
+                $(this).addClass('active');
             });
         });
     </script>
@@ -115,103 +178,184 @@
 
 <body>
     <div class="block overflow">
-        <div class="inline left" style="width:30%">
-            <h2>Columns</h2>
-            <ul class="list-group">
-                <li class="list-group-item dragme">
+        <div class="inline left" style="margin-left:5%;margin-right:5%;width:23%">
+            <h3>Columns</h3>
+            <ul class="list-group sortable" style="">
+                <li class="list-group-item dragme role-field">
                     SOrg.
-                    <div class="draganddrop right"></div>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item dragme">
-                    Cty<div class="draganddrop right"></div>
+                <li class="list-group-item dragme role-field">
+                    Cty
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item dragme">
-                    Sold-to pt<div class="draganddrop right"></div>
+                <li class="list-group-item dragme role-field">
+                    Sold-to pt
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item dragme">
+                <li class="list-group-item dragme role-field">
                     Name 1
-                    <div class="circle yellow inline"></div>
-                    <div class="draganddrop right"></div>
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item dragme">
-                    OrdRs<div class="draganddrop right"></div>
+                <li class="list-group-item dragme role-field">
+                    OrdRs
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item dragme">
-                    Dv<div class="draganddrop right"></div>
+                <li class="list-group-item dragme role-field">
+                    Dv
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item dragme">
-                    SaTy<div class="draganddrop right"></div>
+                <li class="list-group-item dragme role-field">
+                    SaTy
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
-                    Sales doc.<div class="draganddrop right"></div>
+                <li class="list-group-item  dragme role-field">
+                    Sales doc.
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
-                    Purchase order no.<div class="draganddrop right"></div>
+                <li class="list-group-item  dragme role-field">
+                    Purchase order no.
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
+                <li class="list-group-item  dragme role-field">
                     Item
-                    <div class="circle yellow inline"></div>
-                    <div class="draganddrop right"></div>
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
+                <li class="list-group-item  dragme role-field">
                     Material
-                    <div class="circle yellow inline"></div>
-                    <div class="draganddrop right"></div>
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
+                <li class="list-group-item  dragme role-field">
                     maktx
-                    <div class="draganddrop right"></div>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
+                <li class="list-group-item  dragme role-field">
                     Color
-                    <div class="circle yellow inline"></div>
-                    <div class="draganddrop right"></div>
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
-                    Color description<div class="draganddrop right"></div>
+                <li class="list-group-item  dragme role-field">
+                    Color description
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
+                <li class="list-group-item  dragme role-field">
                     Size
-                    <div class="circle yellow inline"></div>
-                    <div class="draganddrop right"></div>
+                    <!--<div class="circle yellow inline"></div>-->
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                    <!--<span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>-->
                 </li>
-                <li class="list-group-item  dragme">
-                    GrV<div class="draganddrop right"></div>
+                <li class="list-group-item  dragme role-field">
+                    GrV
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
-                    EANNO<div class="draganddrop right"></div>
+                <li class="list-group-item  dragme role-field">
+                    EANNO
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
-                <li class="list-group-item  dragme">
-                    Comments<div class="draganddrop right"></div>
+                <li class="list-group-item  dragme role-field">
+                    Comments
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
                 </li>
 
             </ul>
         </div>
-        <div class="inline right" style="width:70%">
-            <h2>Auto-recognized fields</h2>
-            <label>ID :</label>
-            <br/>
-            <input type="text" class="form-control" id="address" placeholder="-- drag item here--">
-            <br/>
-            <br/>
-            <label>Name :</label>
-            <br/>
-            <input type="text" class="form-control" id="port" placeholder="-- drag item here--">
-            <br/>
-            <br/>
 
-            <label>Category 1 :</label>
-            <br/>
-            <input type="text" class="form-control" id="email" placeholder="-- drag item here--">
-            <br/>
-            <br/>
-            <label>Category 2 :</label>
-            <br/>
-            <input type="password" class="form-control" id="password" placeholder="-- drag item here--">
-            <br/>
-            <br/>
-            <button type="button" class="btn btn-default">Add category</button>
+        <div class="inline right" style="margin-left:5%;margin-right:5%;width:23%">
+            <h3>Data templates</h3>
+            <ul id="templates" style="" class="list-group">
+                <li class="list-group-item active">
+                    No template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Furniture items template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Householf items template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Fashion items template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Sports items template
+                    <div class="right"></div>
+                </li>
+            </ul>
         </div>
+
+        <div class="inline right" style="width:23%;margin-left:5%;margin-right:5%">
+            <h3>Auto-recognized roles</h3>
+                    <!--<p>In this panel you create a standardized Produch Information Model (PIM) to keep track of your produucts and consistency between product categories.</p>-->
+                
+            <ul style="">
+
+                <li>
+                    <p><label>ID :</label> is a unique identifier of each product (catalog number), the product can have multiple fields assigned as ID1, ID2, ID#, etc... 
+                    </p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>    
+                <li>    
+                    <p><label>Brand :</label> is a product name in human-readable format, which is displayed in a store 
+                    </p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>    
+                <li>    
+                    <p><label>Name :</label> is a product name in human-readable format, which is displayed in a store and should therefore be accurate.
+                    </p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>
+                <li>    
+                    <p><label>Category 1 :</label></p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>
+                <li>
+                    <p><label>Category 2 :</label></p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                    <div class="inline overflow" style="width:100%">
+                        <button type="button" class="btn btn-default right inline" style="width:30%">Add role</button>
+                        <select class="form-control left inline" style="width:70%">
+                            <option>--select field type--</option>
+                            <option>Category</option>
+                            <option>ID</option>
+                            <option>Item</option>
+                            <option>Description</option>
+                            <option>Custon</option>
+                            <option>Brand</option>
+                            <option>Description</option>
+                            <option>Manufacturer</option>
+                            <option>Distributor</option>
+                            <option>Designer</option>
+                            <option>Comments</option>
+                        </select>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
     </div>
 </body>
 
