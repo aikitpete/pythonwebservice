@@ -107,6 +107,9 @@ requirejs.config({
         'viewTabStep': {
             deps: ['jquery-ui','tabslideout','slick','utils'],
             exports: 'viewStepObject'
+        },
+        'utils': {
+            deps: ['jquery']
         }
     }
 });
