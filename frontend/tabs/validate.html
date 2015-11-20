@@ -10,8 +10,20 @@
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>-->
 <script type="text/javascript">
     $(function() {
-        $('#myModal').on('show.bs.modal', function (e) {
-            $(this).find('.modal-body').html('Fired By: ' + e.relatedTarget.id);
+        $('#selectTests').on('show.bs.modal', function (e) {
+            $(this).find('.modal-body').load('widgets/selecttests.html');
+        })
+        $('#selectColumns').on('show.bs.modal', function (e) {
+            $(this).find('.modal-body').load('widgets/selectcolumns.html');
+        })
+        $('#addRow').on('show.bs.modal', function (e) {
+            $(this).find('.modal-body').load('widgets/addrow.html');
+        })
+        $('#editRow').on('show.bs.modal', function (e) {
+            $(this).find('.modal-body').load('widgets/editrow.html');
+        })
+         $('#deleteRow').on('show.bs.modal', function (e) {
+            $(this).find('.modal-body').load('widgets/deleterow.html');
         })
     });
 </script>
@@ -21,27 +33,28 @@
         
         <select class="form-control left inline" style="width:300px">
             <option>--select test--</option>
-            <option>Category</option>
-            <option>ID</option>
-            <option>Item</option>
-            <option>Description</option>
+            <option>Check value types</option>
+            <option>Check missing values</option>
+            <option>Check missing categories</option>
+            <option>Check misinputted values</option>
+            <option>Learn from past imports</option>
         </select>
         <button type="button" class="btn btn-default right inline" style="">Run test</button>
     </div>
     <div class="btn-group left">
-    <button type="button" class="btn btn-default inline left" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-default inline left" data-toggle="modal" data-target="#selectTests">
         Select tests</button>
     </div>
     <div class="btn-group left">
-    <button type="button" class="btn btn-default inline left" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-default inline left" data-toggle="modal" data-target="#selectColumns">
         Select columns</button>
     </div>
     <div class="btn-group left">
-        <button type="button" id="large-data" class="btn btn-default inline right">
+        <button type="button" id="addRow" class="btn btn-default inline right">
             Add row</button>
-        <button type="button" id="medium-data" class="btn btn-default inline right">
+        <button type="button" id="editRow" class="btn btn-default inline right">
             Edit row</button>
-        <button type="button" id="small-data" class="btn btn-default inline right">
+        <button type="button" id="deleteRow" class="btn btn-default inline right">
             Delete row</button>
     </div>
     </div>

@@ -134,9 +134,36 @@ a.disabled {
     text-align:center !important;
 }
 
-.carousel-inner .item img{
-    width: 100%;
+.carousel {
+  /*position: absolute;*/
+  /*top: 0;*/
+  /*left: 0;*/
+  /*min-width: 100%;*/
+  height: 709px;
+  /*max-width: none;*/
 }
+
+.carousel .item {
+  /*position: absolute;*/
+  /*top: 0;*/
+  /*left: 0;*/
+  min-width: 100%;
+  height: 709px;
+  max-width: none;
+}
+
+.carousel img {
+  /*position: absolute;*/
+  /*top: 0;*/
+  /*left: 0;*/
+  min-width: 100%;
+  height: 709px;
+  max-width: none;
+}
+
+/*.carousel-inner .item img{*/
+/*    width: 100%;*/
+/*}*/
 
 .lazy-load {
     background: url("http://www.mozart.it/images/preloader.gif") center center no-repeat;
