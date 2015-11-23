@@ -13,7 +13,13 @@ requirejs.config({
         text: 'lib/require/text',
         'durandal/composition': 'lib/Durandal/js/composition', 
         'durandal/activator': 'lib/Durandal/js/activator', 
-        'durandal/viewEngine': 'lib/Durandal/js/viewEngine' 
+        'durandal/viewEngine': 'lib/Durandal/js/viewEngine',
+        'plugins/router': 'lib/Durandal/js/plugins/router',
+        'durandal/events': 'lib/Durandal/js/events', 
+        'plugins/history': 'lib/Durandal/js/plugins/history',
+        'plugins/http': 'lib/Durandal/js/plugins/http',
+        'durandal/viewEngine': 'lib/Durandal/js/viewEngine',
+        'transitions/entrance': 'lib/Durandal/js/transitions/entrance',
     }
 });
 
