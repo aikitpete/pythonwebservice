@@ -20,6 +20,15 @@ requirejs.config({
         'plugins/http': 'lib/Durandal/js/plugins/http',
         'durandal/viewEngine': 'lib/Durandal/js/viewEngine',
         'transitions/entrance': 'lib/Durandal/js/transitions/entrance',
+        'bootstrap' :  '//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min'
+    },
+    shim: {
+        'bootstrap': {
+            deps: ['jquery']
+        },
+        'durandal/app': {
+            deps: ['bootstrap']
+        }
     }
 });
 

@@ -1,10 +1,362 @@
-<section>
-  <h2>Hello! What is your name?</h2>
-  <form class="form-inline">
-    <fieldset>
-       <label>Name</label>
-       <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'"/>
-       <button type="submit" class="btn" data-bind="click: sayHello, enable: name">Click Me</button>
-    </fieldset>
-  </form>
-</section>
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+<head>
+    <style>
+        .left {
+            float: left;
+        }
+        
+        .right {
+            float: right;
+        }
+        
+        .inline {
+            display: inline-block;
+        }
+        
+        .preview-border {
+            border: 1px solid black;
+        }
+        
+        .black {
+            color: white;
+            background-color: black;
+        }
+        
+        .red {
+            color: black;
+            background-color: red;
+        }
+        
+        .yellow {
+            color: black;
+            background-color: yellow;
+        }
+        
+        .green {
+            color: black;
+            background-color: green;
+        }
+        
+        .blue {
+            color: black;
+            background-color: blue;
+        }
+        
+        .highlight,
+        .details > *:hover {
+            background-color: purple;
+            font-size: 150%;
+        }
+        
+        .preview-list {
+            font-size: 1.6em;
+        }
+        
+        .circle {
+            /*display: block;*/
+            height: 30px;
+            width: 30px;
+            line-height: 60px;
+            -moz-border-radius: 30px;
+            /* or 50% */
+            border-radius: 30px;
+            /* or 50% */
+            text-align: center;
+        }
+        
+        .block {
+            display: block;
+            width: 100%;
+        }
+        
+        .ui-draggable-helper {
+            border: 1px dotted #000;
+            padding: 6px;
+            background: #fff;
+            font-size: 1.2em;
+            width: 30%;
+        }
+        
+        .draganddrop {
+            display: inline-block;
+            border-top: 2px solid grey;
+            width: 25px;
+            padding-top: 2px;
+            cursor: -webkit-grab;
+            cursor: -moz-grab;
+        }
+        
+        .draganddrop:before,
+        .draganddrop:after {
+            display: block;
+            content: "";
+            border-top: 2px solid grey;
+            padding-top: 2px;
+        }
+        
+        .draganddrop:hover,
+        .draganddrop:hover:before,
+        .dragme:hover,
+        .draganddrop:hover:after {
+            border-color: blue;
+        }
+        
+        .draganddrop:active,
+        .draganddrop:active:before,
+        .dragme:active,
+        .draganddrop:active:after {
+            cursor: -webkit-grabbing;
+            cursor: -moz-grabbing;
+            visibility: hidden;
+        }
+        
+        .dragme {
+            cursor: -webkit-grab;
+            cursor: -moz-grab;
+        }
+        
+        .lists {
+            height: 200px;
+            width: 300px;
+            border: 1px solid #000000;
+        }
+        
+        .list-group li.active {
+            background-color: blue;
+        }
+        .role-field {
+            width:250px;
+            height:40px;
+            padding:10 17;
+            /*border-width:1px;*/
+        }
+    </style>
+    <script>
+        $(function() {
+            /*$(".dragme").draggable({
+                helper: "clone",
+                appendTo: ".form-control",
+                start: function(e, ui) {
+                    $(ui.helper).addClass("ui-draggable-helper");
+                }
+            });*/
+            $('.list-group').sortable({
+                appendTo: "body",
+                helper: "clone"
+            }).disableSelection();
+            $('.form-control').droppable({
+                activeClass: "ui-state-default",
+                hoverClass: "ui-state-hover",
+                accept: ":not(.ui-sortable-helper)",
+                drop: function(event, ui) {
+                    $(this).find(".placeholder").remove();
+                    $(this).empty();
+
+                    $("<div></div").text(ui.draggable.text()).appendTo(this);
+                }
+            });
+            $('#templates > li').on('click', {}, function(e) {
+                $('#templates li').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="block overflow">
+        <div class="inline left" style="margin-left:5%;margin-right:5%;width:23%">
+            <h3>Columns</h3>
+            <ul class="list-group sortable" style="">
+                <li class="list-group-item dragme role-field">
+                    SOrg.
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item dragme role-field">
+                    Cty
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item dragme role-field">
+                    Sold-to pt
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item dragme role-field">
+                    Name 1
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item dragme role-field">
+                    OrdRs
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item dragme role-field">
+                    Dv
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item dragme role-field">
+                    SaTy
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Sales doc.
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Purchase order no.
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Item
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Material
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    maktx
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Color
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Color description
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Size
+                    <!--<div class="circle yellow inline"></div>-->
+                    <span style="color:yellow;font-size:1.2em" class="glyphicon glyphicon-asterisk"></span>
+                    
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                    <!--<span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>-->
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    GrV
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    EANNO
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+                <li class="list-group-item  dragme role-field">
+                    Comments
+                    <span style="font-size:1.2em" class="glyphicon glyphicon-menu-hamburger right"></span>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="inline right" style="margin-left:5%;margin-right:5%;width:23%">
+            <h3>Data templates</h3>
+            <ul id="templates" style="" class="list-group">
+                <li class="list-group-item active">
+                    No template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Furniture items template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Householf items template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Fashion items template
+                    <div class="right"></div>
+                </li>
+                <li class="list-group-item">
+                    Sports items template
+                    <div class="right"></div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="inline right" style="width:23%;margin-left:5%;margin-right:5%">
+            <h3>Auto-recognized roles</h3>
+                    <!--<p>In this panel you create a standardized Produch Information Model (PIM) to keep track of your produucts and consistency between product categories.</p>-->
+                
+            <ul style="">
+
+                <li>
+                    <p><label>ID :</label> is a unique identifier of each product (catalog number), the product can have multiple fields assigned as ID1, ID2, ID#, etc... 
+                    </p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>    
+                <li>    
+                    <p><label>Brand :</label> is a product name in human-readable format, which is displayed in a store 
+                    </p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>    
+                <li>    
+                    <p><label>Name :</label> is a product name in human-readable format, which is displayed in a store and should therefore be accurate.
+                    </p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>
+                <li>    
+                    <p><label>Category 1 :</label></p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                </li>
+                <li>
+                    <p><label>Category 2 :</label></p>
+                    <br/>
+                    <div class="form-control placeholder role-field">-- drag item here--</div>
+                    <br/>
+                    <br/>
+                    <div class="inline overflow" style="width:100%">
+                        <button type="button" class="btn btn-default right inline" style="width:30%">Add role</button>
+                        <select class="form-control left inline" style="width:70%">
+                            <option>--select field type--</option>
+                            <option>Category</option>
+                            <option>ID</option>
+                            <option>Item</option>
+                            <option>Description</option>
+                            <option>Custon</option>
+                            <option>Brand</option>
+                            <option>Description</option>
+                            <option>Manufacturer</option>
+                            <option>Distributor</option>
+                            <option>Designer</option>
+                            <option>Comments</option>
+                        </select>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
