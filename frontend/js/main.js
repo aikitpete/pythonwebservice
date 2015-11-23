@@ -114,7 +114,7 @@ requirejs.config({
     }
 });
 
-/* 
+
 define(function (require) {
    var system = require('durandal/system'),
        app = require('durandal/app');
@@ -132,7 +132,7 @@ define(function (require) {
      app.setRoot('shell');
    });
 });
-*/
+
 
 // Start loading the main app file. Put all of
 // your application logic in there.
