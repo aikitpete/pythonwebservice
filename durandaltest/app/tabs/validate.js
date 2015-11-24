@@ -1,4 +1,4 @@
-define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable'], function($, ko, app, router, viewTabStepObject, controllerTableObject) {
+define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable', 'datatables.net-editor'], function($, ko, app, router, viewTabStepObject, controllerTableObject) {
 
 
 
