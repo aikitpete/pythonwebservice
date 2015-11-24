@@ -98,7 +98,7 @@ define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','c
         attached: function() {
             var event = {};
             event["data"] = {};
-            controllerTableObject.loadTable(controllerTableObject.sampledataURL, event, this.afterDisplayTable);
+            controllerTableObject.loadTable(controllerTableObject.simpledataURL, event, this.afterDisplayTable);
         },
         
         doneValidating: function() {

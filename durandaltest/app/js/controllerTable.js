@@ -4,7 +4,7 @@ define(['jquery', 'utils'], function($, utils) {
         sampledataURL: 'https://www.petegerhat.com:8000/sampledata.json',
         simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
         loadTable: function(urlParam, event,callback) {
-            alert("Loading table");
+            //alert("Loading table");
             console.log("nextStep(): Loading table", urlParam, event, callback);
 
             /*var editor = new $.fn.dataTable.Editor({
@@ -24,7 +24,7 @@ define(['jquery', 'utils'], function($, utils) {
             $.ajax({
                 //url: 'http://www.petegerhat.com:8000/simpledata.json',
                 url: urlParam,
-                type: 'GET',
+                type: 'POST',
                 contentType: "application/json",
                 dataType: "jsonp",
                 success: function(json) {
@@ -115,3 +115,6 @@ define(['jquery', 'utils'], function($, utils) {
     }
     return controllerTableObject;
 });
+
+
+css: { hasErrors: row.has_errors == true }
