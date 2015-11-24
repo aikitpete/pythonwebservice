@@ -1,12 +1,13 @@
 <div class="overflow">
-    <h3>Choose your output from the list</h3>
+    <h3>Choose your input from the list</h3>
 
     <div id="tabs-1-left" class="left half inline">
 
         <label for="database">Select a database format :</label>
         <br/>
-        <select id="dbSelect" class="form-control">
-            <option disabled selected> -- select an option -- </option>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>-->
+        <select id="dbSelect" class="form-control" data-bind="options: databaseOptions, optionsCaption: ' -- select an option -- ', value: database">
+            <!--<option disabled selected> -- select an option -- </option>
             <option>SAP database format</option>
             <option>MySQL database format</option>
             <option>PostgreSQL database format</option>
@@ -21,14 +22,14 @@
             <option>Teradata database format</option>
             <option>Informix database format</option>
             <option>MariaDB database format</option>
-            <option>Other format</option>
+            <option>Other format</option>-->
         </select>
 
 
     </div>
     <div id="tabs-1-right" class="right half inline">
 
-        <div id="form1">
+        <div data-bind="if: database()">
 
             <label>Address :</label>
             <br/>
@@ -53,7 +54,7 @@
             <br/>
 
 
-            <button type="button" id="dbLogin" class="btn btn-default">Login</button>
+            <button type="button" id="dbLogin" data-bind="click: selectLogin" class="btn btn-default">Login</button>
             <!--<input type="submit" name="login" id="dbLogin" value="Login">
           <button type="button" id="next" class="btn btn-default inline right">Next >></button>-->
 
@@ -61,7 +62,7 @@
             <br/>
         </div>
 
-        <div id="form2">
+        <div data-bind="if: logged()">
             <label>Database :</label>
             <br/>
             <input type="text" class="form-control" id="databaseb" placeholder="Product Data">
@@ -73,7 +74,7 @@
             <br/>
             <br/>
 
-            <button type="button" id="dbTable" class="btn btn-default">Select</button>
+            <button type="button" id="dbTable" data-bind="click: selectTable" class="btn btn-default">Select</button>
             <!--<input type="submit" name="select" id="dbTable" value="Select">-->
             <br/>
             <br/>

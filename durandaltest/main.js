@@ -23,9 +23,10 @@ requirejs.config({
         'bootstrap' :  '//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
         
         'slick': '//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min',
-        'prettyprint': 'prettyprint.js?a=b',
-        'tabslideout': 'tabslideout.1.3.js?a=b',
-        'utils': '../js/utils',
+        'prettyprint': 'lib/prettyprint.js?a=b',
+        'tabslideout': 'lib/tabslideout.1.3.js?a=b',
+        'jquery-ui': 'lib/jquery-ui.js?a=b',
+        'utils': 'app/js/utils',
         
         //'datatables': 'https://cdn.datatables.net/s/bs/dt-1.10.10,cr-1.3.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables',
         
@@ -49,6 +50,9 @@ requirejs.config({
         'datatables.net-rowreorder' : "lib/DataTables/RowReorder-1.1.0/js/dataTables.rowReorder",
         'datatables.net-scroller' : "lib/DataTables/Scroller-1.4.0/js/dataTables.scroller",
         'datatables.net-select' : "lib/DataTables/Select-1.1.0/js/dataTables.select",
+        
+        'viewTabStep': 'app/js/viewTabStep',
+        'controllerTable': 'app/js/controllerTable'
     },
     shim: {
         'jquery' : {
@@ -73,6 +77,10 @@ requirejs.config({
         },
         'jquery-ui': {
             deps: ['jquery']
+        },
+        'viewTabStep': {
+            deps: ['jquery-ui','tabslideout','slick','utils'],
+            exports: 'viewStepObject'
         },
     }
 });

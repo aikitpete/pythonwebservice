@@ -3,7 +3,8 @@ define(['jquery', 'utils'], function($, utils) {
     var controllerTableObject = {
         sampledataURL: 'https://www.petegerhat.com:8000/sampledata.json',
         simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
-        loadTable: function(urlParam, event, callback) {
+        loadTable: function(urlParam, event,callback) {
+            alert("Loading table");
             console.log("nextStep(): Loading table", urlParam, event, callback);
 
             /*var editor = new $.fn.dataTable.Editor({

@@ -1,32 +1,109 @@
-﻿define(['plugins/http', 'durandal/app', 'knockout'], function (http, app, ko) {
-    //Note: This module exports an object.
-    //That means that every module that "requires" it will get the same object instance.
-    //If you wish to be able to create multiple instances, instead export a function.
-    //See the "welcome" module for an example of function export.
+define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable'], function($, ko, app, router, viewTabStepObject, controllerTableObject) {
+
+
+
+    //$(function() {
+
+    /*
+    if (typeof jQuery == 'undefined') {
+        console.log("jQuery is not loaded");
+    }
+    else {
+        console.log("jQuery is loaded");
+    }
+
+    $.fn.visible = function() {
+        return this.css('visibility', 'visible');
+    };
+
+    $.fn.invisible = function() {
+        return this.css('visibility', 'hidden');
+    };
+
+    $.fn.exists = function() {
+        return this.length !== 0;
+    }
+    */
+
+    //});
+
+
 
     return {
-        displayName: 'Flickr',
-        images: ko.observableArray([]),
-        activate: function () {
-            //the router's activator calls this function and waits for it to complete before proceeding
-            if (this.images().length > 0) {
-                return;
-            }
 
-            var that = this;
-            return http.jsonp('https://api.flickr.com/services/feeds/photos_public.gne', { tags: 'mount ranier', tagmode: 'any', format: 'json' }, 'jsoncallback').then(function(response) {
-                that.images(response.items);
-            });
+        validationOptions: ko.observableArray([
+            "Check value types",
+            "Check missing values",
+            "Check missing categories",
+            "Check misinputted values",
+            "Learn from past imports",
+            ]),
+        validation: ko.observable(),
+
+        activate: function() {
+
         },
-        select: function(item) {
-            //the app model allows easy display of modal dialogs by passing a view model
-            //views are usually located by convention, but you an specify it as well with viewUrl
-            item.viewUrl = 'views/detail';
-            app.showDialog(item);
+        
+        afterDisplayTable: function(event) {
+            if (this.table != null) {
+                this.table.destroy();
+                $('#example').empty();
+            }
+            
+            var tableColumns = event.data['tableColumns'];
+            var tableRows = event.data['tableRows'];
+            
+            this.table = $('#example').DataTable({
+                    data: tableRows,
+                    columns: tableColumns,
+                    dom: 'Bfrpit',
+
+                    /*
+                    buttons: [{
+                            extend: "create",
+                            editor: editor
+                        }, {
+                            extend: "edit",
+                            editor: editor
+                        }, {
+                            extend: "remove",
+                            editor: editor
+                        //}, {
+                        //    extend: 'print',
+                        //    exportOptions: {
+                        //        columns: ':visible'
+                        //    }
+                        },
+                        'colvis'
+                    ],
+                    */
+
+                    columnDefs: [{
+                        targets: -1,
+                        visible: true
+                    }],
+                    select: true,
+                    //autoFill: true,
+                    responsive: true,
+                    rowReorder: true,
+                    colReorder: true,
+                    //fixedHeader: true,
+                    //fixedColumns: true,
+                    scrollY: 680,
+                    deferRender: true,
+                    scroller: true
+                });
         },
-        canDeactivate: function () {
-            //the router's activator calls this function to see if it can leave the screen
-            return app.showMessage('Are you sure you want to leave this page?', 'Navigate', ['Yes', 'No']);
+        
+        attached: function() {
+            var event = {};
+            event["data"] = {};
+            controllerTableObject.loadTable(controllerTableObject.sampledataURL, event, this.afterDisplayTable);
+        },
+        
+        doneValidating: function() {
+            router.navigate('organize');
         }
+        
     };
 });
