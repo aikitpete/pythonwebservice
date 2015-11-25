@@ -1,7 +1,8 @@
 define(['jquery', 'utils'], function($, utils) {
 
     var controllerTableObject = {
-        sampledataURL: 'https://www.petegerhat.com:8000/sampledata.json',
+        //sampledataURL: 'https://www.petegerhat.com:8000/sampledata.json',
+        //simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
         simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
         loadTable: function(urlParam, event,callback) {
             //alert("Loading table");
@@ -117,4 +118,4 @@ define(['jquery', 'utils'], function($, utils) {
 });
 
 
-css: { hasErrors: row.has_errors == true }
+// css: { hasErrors: row.has_errors == true }
