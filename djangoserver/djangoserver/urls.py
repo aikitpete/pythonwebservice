@@ -21,6 +21,11 @@ from snippets import views as SnippetsViews
 from django.contrib import admin # OLD
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf.urls import include
+from snippets.models import Snippet
+from snippets.serializers import SnippetSerializer
+from rest_framework import mixins
+from rest_framework import generics
 
 router = routers.DefaultRouter()
 router.register(r'users', TestappViews.UserViewSet)
@@ -37,14 +42,11 @@ urlpatterns = [
     url(r'^snippets/(?P<pk>[0-9]+)/$', SnippetsViews.snippet_detail),
     url(r'^snippets3/$', SnippetsViews.SnippetList.as_view()),
     url(r'^snippets3/(?P<pk>[0-9]+)/$', SnippetsViews.SnippetDetail.as_view()),
+    url(r'^users/$', SnippetsViews.UserList.as_view()),
+    url(r'^users/(?P<pk>[0-9]+)/$', SnippetsViews.UserDetail.as_view()),
 ]
 
 #urlpatterns = format_suffix_patterns(urlpatterns)
-
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
-from rest_framework import mixins
-from rest_framework import generics
 
 class SnippetList(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
@@ -57,6 +59,9 @@ class SnippetList(mixins.ListModelMixin,
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+        
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
         
 class SnippetDetail(mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,
@@ -73,11 +78,6 @@ class SnippetDetail(mixins.RetrieveModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
-        
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
-from rest_framework import generics
-
 
 class SnippetList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
