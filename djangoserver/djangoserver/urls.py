@@ -23,7 +23,7 @@ from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.conf.urls import include
 from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from snippets.serializers import SnippetSerializer5
 from rest_framework import mixins
 from rest_framework import generics
 
@@ -34,8 +34,8 @@ router.register(r'groups', TestappViews.GroupViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # url(r'^', include(router.urls)),
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)), # OLD
     # url(r'^', include('snippets.urls')),
     url(r'^snippets/$', SnippetsViews.snippet_list),
@@ -44,6 +44,8 @@ urlpatterns = [
     url(r'^snippets3/(?P<pk>[0-9]+)/$', SnippetsViews.SnippetDetail.as_view()),
     url(r'^users/$', SnippetsViews.UserList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/$', SnippetsViews.UserDetail.as_view()),
+    url(r'^$', SnippetsViews.api_root),
+    url(r'^snippets5/(?P<pk>[0-9]+)/highlight/$', SnippetsViews.SnippetHighlight.as_view()),
 ]
 
 #urlpatterns = format_suffix_patterns(urlpatterns)
@@ -52,7 +54,7 @@ class SnippetList(mixins.ListModelMixin,
                   mixins.CreateModelMixin,
                   generics.GenericAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = SnippetSerializer5
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -68,7 +70,7 @@ class SnippetDetail(mixins.RetrieveModelMixin,
                     mixins.DestroyModelMixin,
                     generics.GenericAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = SnippetSerializer5
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -81,9 +83,37 @@ class SnippetDetail(mixins.RetrieveModelMixin,
 
 class SnippetList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = SnippetSerializer5
 
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    serializer_class = SnippetSerializer5
+    
+
+
+# API endpoints
+urlpatterns += format_suffix_patterns([
+    url(r'^$', SnippetsViews.api_root),
+    url(r'^snippets5/$',
+        SnippetsViews.SnippetList.as_view(),
+        name='snippet-list'),
+    url(r'^snippets5/(?P<pk>[0-9]+)/$',
+        SnippetsViews.SnippetDetail.as_view(),
+        name='snippet-detail'),
+    url(r'^snippets5/(?P<pk>[0-9]+)/highlight/$',
+        SnippetsViews.SnippetHighlight.as_view(),
+        name='snippet-highlight'),
+    url(r'^users5/$',
+        SnippetsViews.UserList.as_view(),
+        name='user-list5'),
+    url(r'^users5/(?P<pk>[0-9]+)/$',
+        SnippetsViews.UserDetail.as_view(),
+        name='user-detail')
+])
+
+# Login and logout views for the browsable API
+urlpatterns += [
+    url(r'^api-auth/', include('rest_framework.urls',
+                               namespace='rest_framework')),
+]

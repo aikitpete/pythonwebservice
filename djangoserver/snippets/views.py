@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from snippets.serializers import SnippetSerializer5
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -77,11 +77,11 @@ class SnippetList(APIView):
     
     def get(self, request, format=None):
         snippets = Snippet.objects.all()
-        serializer = SnippetSerializer(snippets, many=True)
+        serializer = SnippetSerializer5(snippets, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = SnippetSerializer(data=request.data)
+        serializer = SnippetSerializer5(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -102,12 +102,12 @@ class SnippetDetail(APIView):
 
     def get(self, request, pk, format=None):
         snippet = self.get_object(pk)
-        serializer = SnippetSerializer(snippet)
+        serializer = SnippetSerializer5(snippet)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         snippet = self.get_object(pk)
-        serializer = SnippetSerializer(snippet, data=request.data)
+        serializer = SnippetSerializer5(snippet, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -119,14 +119,37 @@ class SnippetDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
         
 from django.contrib.auth.models import User
-from snippets.serializers import UserSerializer
+from snippets.serializers import UserSerializer5
 from rest_framework import generics
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializer5
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializer5
+    
+from rest_framework import renderers
+from rest_framework.response import Response
+
+class SnippetHighlight(generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    renderer_classes = (renderers.StaticHTMLRenderer,)
+
+    def get(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+        
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
+
+@api_view(('GET',))
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'snippets': reverse('snippet-list', request=request, format=format)
+    })
