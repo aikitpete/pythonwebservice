@@ -16,12 +16,15 @@ Including another URLconf
 from django.conf.urls import include, url # OLD AND NEW
 
 from rest_framework import routers
-from testapp import views
+from testapp import views as TestappViews
+from snippets import views as SnippetsViews
 from django.contrib import admin # OLD
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+router.register(r'users', TestappViews.UserViewSet)
+router.register(r'groups', TestappViews.GroupViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -29,4 +32,58 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)), # OLD
+    # url(r'^', include('snippets.urls')),
+    url(r'^snippets/$', SnippetsViews.snippet_list),
+    url(r'^snippets/(?P<pk>[0-9]+)/$', SnippetsViews.snippet_detail),
+    url(r'^snippets3/$', SnippetsViews.SnippetList.as_view()),
+    url(r'^snippets3/(?P<pk>[0-9]+)/$', SnippetsViews.SnippetDetail.as_view()),
 ]
+
+#urlpatterns = format_suffix_patterns(urlpatterns)
+
+from snippets.models import Snippet
+from snippets.serializers import SnippetSerializer
+from rest_framework import mixins
+from rest_framework import generics
+
+class SnippetList(mixins.ListModelMixin,
+                  mixins.CreateModelMixin,
+                  generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+        
+class SnippetDetail(mixins.RetrieveModelMixin,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin,
+                    generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+        
+from snippets.models import Snippet
+from snippets.serializers import SnippetSerializer
+from rest_framework import generics
+
+
+class SnippetList(generics.ListCreateAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+
+
+class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
