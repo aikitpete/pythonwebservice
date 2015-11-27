@@ -4,6 +4,7 @@ from django import forms
 from django.template import RequestContext
 import django_excel as excel
 from polls.models import Question, Choice, Product, Simple
+from polls.serializers import QuestionSerializer, ChoiceSerializer, ProductSerializer, SimpleSerializer
 import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import sys
@@ -12,7 +13,11 @@ if PY2:
     import pyexcel.ext.ods
 else:
     import pyexcel.ext.ods3
-
+from rest_framework import permissions
+from rest_framework import renderers
+from rest_framework import viewsets
+from rest_framework.decorators import detail_route
+from rest_framework.response import Response
 
 data = [
     [1, 2, 3],
@@ -146,19 +151,18 @@ def import_sampledata(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST,
                               request.FILES)
-        def choice_func(row):
-            p = Product.objects.filter(slug=row[0])[0]
-            row[0] = p
-            return row
         if form.is_valid():
             request.FILES['file'].save_book_to_database(
                 models=[Product],
-                initializers=[None, choice_func],
+                initializers=[None],
                 mapdicts=[
-                    ['SOrg','Cty','Soldto','pt','Name1','OrdRs','Dv','SaTy','Salesdoc','Purchaseorderno','Item','Material','maktx','Color',
-                    'ColorDescription','Size','GrV','EANNO','commcode','Desc','Descriptn','Quality','COO','Orig','Descpdthierlevel1',
+                    ['SOrg','Cty','Soldtopt','Name1','OrdRs','Dv','SaTy','Salesdoc',
+                    'Purchaseorderno','Item','Material','maktx','Color',
+                    'ColorDescription','Size','GrV','EANNO','commcode','Desc','Descriptn','Quality','COO',
+                    'Orig','Descpdthierlevel1',
                     'Descpdthierlevel2','Descpdthierlevel3','Descpdthierlevel4','Descpdthierlevel5',
-                    'Descpdthierlevel6','Col','Thm','Dldat','Confirmedqty','SU','Listprice','UVP','NetWeight','WUn','GrossWeight','WUn']
+                    'Descpdthierlevel6','Col','Thm','Dldat','Confirmedqty','SU','Listprice','UVP','NetWeight',
+                    'WUn','GrossWeight','WUn']
                 ]
             )
             return HttpResponse("OK", status=200)
@@ -179,14 +183,10 @@ def import_supersimpledata(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST,
                               request.FILES)
-        def choice_func(row):
-            s = Simple.objects.filter(slug=row[0])[0]
-            row[0] = s
-            return row
         if form.is_valid():
             request.FILES['file'].save_book_to_database(
                 models=[Simple],
-                initializers=[None, choice_func],
+                initializers=[None],
                 mapdicts=[
                     ['doc','order','nothing']
                 ]
@@ -204,3 +204,31 @@ def import_supersimpledata(request):
             'header': 'Please upload supersimpledata.xls:'
         },
         context_instance=RequestContext(request))
+        
+class QuestionViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents questions.
+    """
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    
+class ChoiceViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents choices.
+    """
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
+    
+class ProductViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents products.
+    """
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    
+class SimpleViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents simples.
+    """
+    queryset = Simple.objects.all()
+    serializer_class = SimpleSerializer
