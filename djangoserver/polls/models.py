@@ -65,16 +65,16 @@ class Product(models.Model):
         return self.maktx
 
 class Simple(models.Model):
-    doc = models.CharField(max_length=200)
-    order = models.CharField(max_length=200)
-    nothing = models.CharField(max_length=200)
+    doc = models.CharField(max_length=200, blank=True, null=True)
+    order = models.CharField(max_length=200, blank=True, null=True)
+    nothing = models.CharField(max_length=200, blank=True, null=True)
     
     def __str__(self):
         return self.order
         
 class Column(models.Model):
-    title = models.CharField(max_length=200)
-    data = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, blank=True, null=True)
+    data = models.CharField(max_length=200, blank=True, null=True)
     
 class Sampledata(models.Model):
     def get_absolute_url(self):

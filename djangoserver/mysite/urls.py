@@ -8,6 +8,7 @@ router.register(r'questions', views.QuestionViewSet)
 router.register(r'choices', views.ChoiceViewSet)
 router.register(r'products', views.ProductViewSet)
 router.register(r'simples', views.SimpleViewSet)
+router.register(r'columns', views.ColumnViewSet)
 router.register(r'sampledata', views.SampledataViewSet)
 
 urlpatterns = patterns('',

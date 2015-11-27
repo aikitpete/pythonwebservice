@@ -184,13 +184,21 @@ def import_supersimpledata(request):
         form = UploadFileForm(request.POST,
                               request.FILES)
         if form.is_valid():
-            request.FILES['file'].save_book_to_database(
+            file = request.FILES['file']
+            file.save_book_to_database(
                 models=[Simple],
                 initializers=[None],
                 mapdicts=[
                     ['doc','order','nothing']
                 ]
             )
+            # file.save_book_to_database(
+            #     models=[Simple],
+            #     initializers=[None],
+            #     mapdicts=[
+            #         ['doc','title']
+            #     ]
+            # )
             return HttpResponse("OK", status=200)
         else:
             return HttpResponseBadRequest()
@@ -232,6 +240,13 @@ class SimpleViewSet(viewsets.ModelViewSet):
     """
     queryset = Simple.objects.all()
     serializer_class = SimpleSerializer
+    
+class ColumnViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents simples.
+    """
+    queryset = Column.objects.all()
+    serializer_class = ColumnSerializer
     
 class SampledataViewSet(viewsets.ModelViewSet):
     """

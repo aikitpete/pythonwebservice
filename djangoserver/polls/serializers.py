@@ -40,11 +40,11 @@ class ColumnSerializer(serializers.ModelSerializer):
 class SampledataSerializer(serializers.Serializer):
     
     columns = ColumnSerializer(many=True)
-    rows = SimpleSerializer(many=True)
+    data = SimpleSerializer(many=True)
     
     def create(self, validated_data):
         columns_data = validated_data.pop('columns')
-        rows_data = validated_data.pop('data')
+        data_data = validated_data.pop('data')
     # takeoutOrder = TakeoutOrder.objects.create(**validated_data)
 
     # for rows_data in Simple.objects.all():
