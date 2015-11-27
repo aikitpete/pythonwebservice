@@ -3,8 +3,8 @@ from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django import forms
 from django.template import RequestContext
 import django_excel as excel
-from polls.models import Question, Choice, Product, Simple
-from polls.serializers import QuestionSerializer, ChoiceSerializer, ProductSerializer, SimpleSerializer
+from polls.models import Question, Choice, Product, Simple, Column, Sampledata
+from polls.serializers import QuestionSerializer, ChoiceSerializer, ProductSerializer, SimpleSerializer, ColumnSerializer, SampledataSerializer
 import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import sys
@@ -232,3 +232,10 @@ class SimpleViewSet(viewsets.ModelViewSet):
     """
     queryset = Simple.objects.all()
     serializer_class = SimpleSerializer
+    
+class SampledataViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint presents simples.
+    """
+    queryset = Sampledata.objects.all()
+    serializer_class = SampledataSerializer

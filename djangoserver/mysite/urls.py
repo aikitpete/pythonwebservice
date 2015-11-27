@@ -8,6 +8,7 @@ router.register(r'questions', views.QuestionViewSet)
 router.register(r'choices', views.ChoiceViewSet)
 router.register(r'products', views.ProductViewSet)
 router.register(r'simples', views.SimpleViewSet)
+router.register(r'sampledata', views.SampledataViewSet)
 
 urlpatterns = patterns('',
     # Examples:
@@ -16,5 +17,6 @@ urlpatterns = patterns('',
     
     url(r'^', include(router.urls)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^polls/', include('polls.urls'))
+    url(r'^polls/', include('polls.urls')),
+
 )

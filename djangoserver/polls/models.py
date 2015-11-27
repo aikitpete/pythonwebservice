@@ -20,9 +20,9 @@ class Choice(models.Model):
         return self.choice_text
         
 class Product(models.Model):
-    SOrg = models.CharField(max_length=200, blank=True, null=True)
-    Cty = models.CharField(max_length=200, blank=True, null=True)
-    Soldtopt = models.CharField(max_length=200, blank=True, null=True)
+    SOrg = models.CharField(max_length=200, blank=True, null=True)#, related_name='SOrg')
+    Cty = models.CharField(max_length=200, blank=True, null=True)#, related_name='Cty')
+    Soldtopt = models.CharField(max_length=200, blank=True, null=True)#, related_name='Sold-to pt')
     Name1 = models.CharField(max_length=200, blank=True, null=True)
     OrdRs = models.CharField(max_length=200, blank=True, null=True)
     Dv = models.CharField(max_length=200, blank=True, null=True)
@@ -71,3 +71,11 @@ class Simple(models.Model):
     
     def __str__(self):
         return self.order
+        
+class Column(models.Model):
+    title = models.CharField(max_length=200)
+    data = models.CharField(max_length=200)
+    
+class Sampledata(models.Model):
+    def get_absolute_url(self):
+        return "/sampledata/"
