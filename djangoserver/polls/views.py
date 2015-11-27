@@ -3,7 +3,7 @@ from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django import forms
 from django.template import RequestContext
 import django_excel as excel
-from polls.models import Question, Choice
+from polls.models import Question, Choice, Product, Simple
 import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import sys
@@ -141,3 +141,66 @@ def parse(request, data_struct_type):
             return HttpResponseBadRequest()
     else:
         return HttpResponseBadRequest()
+
+def import_sampledata(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.POST,
+                              request.FILES)
+        def choice_func(row):
+            p = Product.objects.filter(slug=row[0])[0]
+            row[0] = p
+            return row
+        if form.is_valid():
+            request.FILES['file'].save_book_to_database(
+                models=[Product],
+                initializers=[None, choice_func],
+                mapdicts=[
+                    ['SOrg','Cty','Soldto','pt','Name1','OrdRs','Dv','SaTy','Salesdoc','Purchaseorderno','Item','Material','maktx','Color',
+                    'ColorDescription','Size','GrV','EANNO','commcode','Desc','Descriptn','Quality','COO','Orig','Descpdthierlevel1',
+                    'Descpdthierlevel2','Descpdthierlevel3','Descpdthierlevel4','Descpdthierlevel5',
+                    'Descpdthierlevel6','Col','Thm','Dldat','Confirmedqty','SU','Listprice','UVP','NetWeight','WUn','GrossWeight','WUn']
+                ]
+            )
+            return HttpResponse("OK", status=200)
+        else:
+            return HttpResponseBadRequest()
+    else:
+        form = UploadFileForm()
+    return render_to_response(
+        'upload_form.html',
+        {
+            'form': form,
+            'title': 'Import excel data into database example',
+            'header': 'Please upload NOS Artikelstammdaten 16B.xlsx:'
+        },
+        context_instance=RequestContext(request))
+        
+def import_supersimpledata(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.POST,
+                              request.FILES)
+        def choice_func(row):
+            s = Simple.objects.filter(slug=row[0])[0]
+            row[0] = s
+            return row
+        if form.is_valid():
+            request.FILES['file'].save_book_to_database(
+                models=[Simple],
+                initializers=[None, choice_func],
+                mapdicts=[
+                    ['doc','order','nothing']
+                ]
+            )
+            return HttpResponse("OK", status=200)
+        else:
+            return HttpResponseBadRequest()
+    else:
+        form = UploadFileForm()
+    return render_to_response(
+        'upload_form.html',
+        {
+            'form': form,
+            'title': 'Import excel data into database example',
+            'header': 'Please upload supersimpledata.xls:'
+        },
+        context_instance=RequestContext(request))
