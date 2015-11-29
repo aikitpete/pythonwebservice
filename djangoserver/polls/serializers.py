@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from polls.models import Question, Choice, Product, Simple, Column
+from polls.models import Question, Choice, Product, Line, Column, Table, Samplemodel
 from django.contrib.auth.models import User
 from rest_framework.renderers import JSONRenderer
 
@@ -24,40 +24,42 @@ class ProductSerializer(serializers.ModelSerializer):
                     'ColorDescription','Size','GrV','EANNO','commcode','Desc','Descriptn','Quality','COO','Orig','Descpdthierlevel1',
                     'Descpdthierlevel2','Descpdthierlevel3','Descpdthierlevel4','Descpdthierlevel5',
                     'Descpdthierlevel6','Col','Thm','Dldat','Confirmedqty','SU','Listprice','UVP','NetWeight','WUn','GrossWeight','WUn')
-        
-class SimpleSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Simple
-        fields = ('doc', 'order', 'nothing')
+class SamplemodelSerializer(serializers.Serializer):
+    
+    data = Samplemodel.objects.all()
+    
+    # class Meta:
+    #     data = Samplemodel.objects.all()
+    #     model = Samplemodel
+    #     fields = ('doc','order','nothing')
         
 class ColumnSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Column
-        fields = ('title', 'data')
-        
-class SampledataSerializer(serializers.Serializer):
-    
+        fields = [
+            'data',
+            'title'
+        ]
+
+class LineSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Line
+        fields = [
+            'doc',
+            'order',
+            'nothing'
+        ]
+
+class TableSerializer(serializers.ModelSerializer):
     columns = ColumnSerializer(many=True)
-    data = SimpleSerializer(many=True)
-    
-    def create(self, validated_data):
-        columns_data = validated_data.pop('columns')
-        data_data = validated_data.pop('data')
-    # takeoutOrder = TakeoutOrder.objects.create(**validated_data)
+    lines = LineSerializer(many=True)
 
-    # for rows_data in Simple.objects.all():
-    #     Component.objects.create(**component_data)
-
-    # for meal_data in meals_data:
-    #     meal_data.update({'takeoutOrder':takeoutOrder}
-    #     meal = Meal.objects.create(**meal_data)
-    #     meal_components = meal_data.pop('components')
-
-    #     for meal_comp in meal_components:
-    #         component = Component.objects.get(pk=meal_comp)
-    #         MealComponent.objects.create(meal=meal,component=component)
-    
-    
-    
+    class Meta:
+        model = Table
+        fields = [
+            'columns',
+            'lines'
+        ]

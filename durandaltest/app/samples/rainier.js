@@ -18,10 +18,16 @@
                 that.images(response.items);
             });
         },
-        select: function(item) {
+        selectTests: function(item) {
             //the app model allows easy display of modal dialogs by passing a view model
             //views are usually located by convention, but you an specify it as well with viewUrl
-            item.viewUrl = 'views/detail';
+            item.viewUrl = 'app/widgets/selecttests';
+            app.showDialog(item);
+        },
+        selectColumns: function(item) {
+            //the app model allows easy display of modal dialogs by passing a view model
+            //views are usually located by convention, but you an specify it as well with viewUrl
+            item.viewUrl = 'app/widgets/selectcolumns';
             app.showDialog(item);
         },
         canDeactivate: function () {

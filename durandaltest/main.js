@@ -18,6 +18,8 @@ requirejs.config({
         'durandal/events': 'lib/Durandal/js/events', 
         'plugins/history': 'lib/Durandal/js/plugins/history',
         'plugins/http': 'lib/Durandal/js/plugins/http',
+        'plugins/http': 'lib/Durandal/js/plugins/dialog',
+        
         'durandal/viewEngine': 'lib/Durandal/js/viewEngine',
         'transitions/entrance': 'lib/Durandal/js/transitions/entrance',
         'bootstrap' :  '//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
@@ -27,6 +29,8 @@ requirejs.config({
         'tabslideout': 'lib/tabslideout.1.3.js?a=b',
         'jquery-ui': 'lib/jquery-ui.js?a=b',
         'utils': 'app/js/utils',
+        'columnsModal': 'app/widgets/selectcolumns',
+        'testsModal': 'app/widgets/selecttests',
         
         //'datatables': 'https://cdn.datatables.net/s/bs/dt-1.10.10,cr-1.3.0,rr-1.1.0,sc-1.4.0,se-1.1.0/datatables',
         

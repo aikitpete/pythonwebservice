@@ -3,8 +3,8 @@ from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django import forms
 from django.template import RequestContext
 import django_excel as excel
-from polls.models import Question, Choice, Product, Simple, Column, Sampledata
-from polls.serializers import QuestionSerializer, ChoiceSerializer, ProductSerializer, SimpleSerializer, ColumnSerializer, SampledataSerializer
+from polls.models import Question, Choice, Product, Line, Column, Table, Samplemodel
+from polls.serializers import QuestionSerializer, ChoiceSerializer, ProductSerializer, LineSerializer, ColumnSerializer, TableSerializer, SamplemodelSerializer
 import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import sys
@@ -18,6 +18,7 @@ from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
+import pyexcel
 
 data = [
     [1, 2, 3],
@@ -147,7 +148,7 @@ def parse(request, data_struct_type):
     else:
         return HttpResponseBadRequest()
 
-def import_sampledata(request):
+def import_realdata(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST,
                               request.FILES)
@@ -178,20 +179,56 @@ def import_sampledata(request):
             'header': 'Please upload NOS Artikelstammdaten 16B.xlsx:'
         },
         context_instance=RequestContext(request))
-        
-def import_supersimpledata(request):
+
+def import_sampledata(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST,
                               request.FILES)
         if form.is_valid():
-            file = request.FILES['file']
-            file.save_book_to_database(
-                models=[Simple],
+            request.FILES['file'].save_book_to_database(
+                models=[Samplemodel],
                 initializers=[None],
                 mapdicts=[
                     ['doc','order','nothing']
                 ]
             )
+            return HttpResponse("OK", status=200)
+        else:
+            return HttpResponseBadRequest()
+    else:
+        form = UploadFileForm()
+    return render_to_response(
+        'upload_form.html',
+        {
+            'form': form,
+            'title': 'Import excel data into database example',
+            'header': 'Please upload simpledata.xls:'
+        },
+        context_instance=RequestContext(request))
+        
+def import_supersimpledata(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.POST,
+                              request.FILES)
+        def init_func(row):
+            print('Something1')
+            table = Table()
+            line = Line(doc=row[0],order=row[1],nothing=row[2],table=table)
+            column = Column(data=row[0],title=row[0],table=table)
+            table.save()
+            print('Something2')
+            return row
+        if form.is_valid():
+            file = request.FILES['file']
+            print('SomethingA')
+            file.save_to_database(
+                # models=[Table],
+                initializer=init_func
+                # mapdicts=[
+                #     ['doc','order','nothing']
+                # ]
+            )
+            print('SomethingB')
             # file.save_book_to_database(
             #     models=[Simple],
             #     initializers=[None],
@@ -234,12 +271,12 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
-class SimpleViewSet(viewsets.ModelViewSet):
+class LineViewSet(viewsets.ModelViewSet):
     """
     This endpoint presents simples.
     """
-    queryset = Simple.objects.all()
-    serializer_class = SimpleSerializer
+    queryset = Line.objects.all()
+    serializer_class = LineSerializer
     
 class ColumnViewSet(viewsets.ModelViewSet):
     """
@@ -248,9 +285,9 @@ class ColumnViewSet(viewsets.ModelViewSet):
     queryset = Column.objects.all()
     serializer_class = ColumnSerializer
     
-class SampledataViewSet(viewsets.ModelViewSet):
+class TableViewSet(viewsets.ModelViewSet):
     """
     This endpoint presents simples.
     """
-    queryset = Sampledata.objects.all()
-    serializer_class = SampledataSerializer
+    queryset = Table.objects.all()
+    serializer_class = TableSerializer

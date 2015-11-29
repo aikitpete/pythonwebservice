@@ -45,11 +45,13 @@ class ExcelMixin(webio.ExcelInput):
             name_columns_by_row=name_columns_by_row,
             name_rows_by_column=name_rows_by_column,
             **keywords)
+        print(sheet)
         if sheet:
             sheet.save_to_django_model(model, **keywords)
 
     def save_book_to_database(self, models=None, **keywords):
         book = self.load_book(**keywords)
+        print(book)
         if book:
             book.save_to_django_models(models, **keywords)
 

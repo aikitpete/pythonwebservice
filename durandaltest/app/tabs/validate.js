@@ -1,4 +1,4 @@
-define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable', 'datatables.net-editor'], function($, ko, app, router, viewTabStepObject, controllerTableObject) {
+define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable', 'columnsModal', 'testsModal', 'plugins/dialog', 'datatables.net-editor'], function($, ko, app, router, viewTabStepObject, controllerTableObject,columnsModal, testsModal, dialog) {
 
 
 
@@ -42,6 +42,26 @@ define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','c
 
         activate: function() {
 
+        },
+        
+        selectTests: function(item) {
+            //the app model allows easy display of modal dialogs by passing a view model
+            //views are usually located by convention, but you an specify it as well with viewUrl
+            item.viewUrl = 'app/widgets/selecttests';
+            app.showDialog(item);
+            //app.showDialog();
+        },
+        
+        selectColumns: function(item) {
+            //the app model allows easy display of modal dialogs by passing a view model
+            //views are usually located by convention, but you an specify it as well with viewUrl
+            item.viewUrl = 'app/widgets/selectcolumns';
+            app.showDialog(item);
+            //app.showDialog();
+        },
+        
+        closeDialog: function() {
+            dialog.close(this, this.input());  
         },
         
         afterDisplayTable: function(event) {

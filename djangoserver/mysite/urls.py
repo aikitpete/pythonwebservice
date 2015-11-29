@@ -7,9 +7,9 @@ router = DefaultRouter()
 router.register(r'questions', views.QuestionViewSet)
 router.register(r'choices', views.ChoiceViewSet)
 router.register(r'products', views.ProductViewSet)
-router.register(r'simples', views.SimpleViewSet)
+router.register(r'lines', views.LineViewSet)
 router.register(r'columns', views.ColumnViewSet)
-router.register(r'sampledata', views.SampledataViewSet)
+router.register(r'tables', views.TableViewSet)
 
 urlpatterns = patterns('',
     # Examples:
