@@ -68,32 +68,26 @@ class Samplemodel(models.Model):
     doc = models.CharField(max_length=200, blank=True, null=True)
     order = models.CharField(max_length=200, blank=True, null=True)
     nothing = models.CharField(max_length=200, blank=True, null=True)
-    
-    @property
-    def table():
-        table = Table()
-        
-        return table
 
     def __str__(self):
         return self.order
 
-class Table(models.Model):
-    pass
+# class Table(models.Model):
+#     pass
 
-class Column(models.Model):
-    data = models.CharField(max_length=200, blank=True, null=True)
-    title = models.CharField(max_length=200, blank=True, null=True)
-    table = models.ForeignKey(Table)
+# class Column(models.Model):
+#     data = models.CharField(max_length=200, blank=True, null=True)
+#     title = models.CharField(max_length=200, blank=True, null=True)
+#     table = models.ForeignKey(Table)
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
 
-class Line(models.Model):
-    doc = models.CharField(max_length=200, blank=True, null=True)
-    order = models.CharField(max_length=200, blank=True, null=True)
-    nothing = models.CharField(max_length=200, blank=True, null=True)
-    table = models.ForeignKey(Table)
+# class Line(models.Model):
+#     doc = models.CharField(max_length=200, blank=True, null=True)
+#     order = models.CharField(max_length=200, blank=True, null=True)
+#     nothing = models.CharField(max_length=200, blank=True, null=True)
+#     table = models.ForeignKey(Table)
 
-    def __str__(self):
-        return self.order
+#     def __str__(self):
+#         return self.order

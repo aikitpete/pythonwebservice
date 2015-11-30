@@ -3,8 +3,8 @@ from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django import forms
 from django.template import RequestContext
 import django_excel as excel
-from polls.models import Question, Choice, Product, Line, Column, Table, Samplemodel
-from polls.serializers import QuestionSerializer, ChoiceSerializer, ProductSerializer, LineSerializer, ColumnSerializer, TableSerializer, SamplemodelSerializer
+from polls.models import Question, Choice, Product, Samplemodel
+from polls.serializers import QuestionSerializer, ChoiceSerializer, SamplemodelSerializer
 import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import sys
@@ -264,30 +264,49 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
     
-class ProductViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint presents products.
-    """
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+# class ProductViewSet(viewsets.ModelViewSet):
+#     """
+#     This endpoint presents products.
+#     """
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
     
-class LineViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint presents simples.
-    """
-    queryset = Line.objects.all()
-    serializer_class = LineSerializer
+# class LineViewSet(viewsets.ModelViewSet):
+#     """
+#     This endpoint presents simples.
+#     """
+#     queryset = Line.objects.all()
+#     serializer_class = LineSerializer
     
-class ColumnViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint presents simples.
-    """
-    queryset = Column.objects.all()
-    serializer_class = ColumnSerializer
+# class ColumnViewSet(viewsets.ModelViewSet):
+#     """
+#     This endpoint presents simples.
+#     """
+#     queryset = Column.objects.all()
+#     serializer_class = ColumnSerializer
     
-class TableViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint presents simples.
-    """
-    queryset = Table.objects.all()
-    serializer_class = TableSerializer
+# class TableViewSet(viewsets.ModelViewSet):
+#     """
+#     This endpoint presents simples.
+#     """
+#     queryset = Table.objects.all()
+#     serializer_class = TableSerializer
+
+from rest_framework.renderers import JSONRenderer    
+from django.http import JsonResponse
+import collections
+from collections import OrderedDict
+
+def sampledata(request):
+
+    bunch = SamplemodelSerializer(Samplemodel.objects.all(), many=True)                                                                              
+
+    headers = bunch.data[0].keys()                                                                                                                   
+    
+    headers_prepared = list(map (lambda x: {'data': x} , headers))
+    
+    ordered_all = ( ('columns', headers_prepared), ('lines', bunch.data) )
+    
+    data = collections.OrderedDict(ordered_all)
+    
+    return JsonResponse(data)

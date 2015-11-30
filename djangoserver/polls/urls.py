@@ -13,4 +13,6 @@ urlpatterns = patterns(
     
     url(r'^import_sampledata/', views.import_sampledata, name="import_sampledata"),
     url(r'^import_supersimpledata/', views.import_supersimpledata, name="import_supersimpledata"),
+    
+    url(r'^sampledata.json', views.sampledata, name="sampledata"),
 )
