@@ -4,8 +4,8 @@ from polls import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register(r'questions', views.QuestionViewSet)
-router.register(r'choices', views.ChoiceViewSet)
+# router.register(r'questions', views.QuestionViewSet)
+# router.register(r'choices', views.ChoiceViewSet)
 # router.register(r'products', views.ProductViewSet)
 # router.register(r'lines', views.LineViewSet)
 # router.register(r'columns', views.ColumnViewSet)

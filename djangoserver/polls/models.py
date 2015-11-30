@@ -1,23 +1,4 @@
 from django.db import models
-
-# Create your models here.
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-    slug = models.CharField(max_length=10, unique=True,
-                            default="question")
-
-    def __str__(self):
-        return self.question_text
-
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.choice_text
         
 class Product(models.Model):
     SOrg = models.CharField(max_length=200, blank=True, null=True)#, related_name='SOrg')
@@ -71,23 +52,3 @@ class Samplemodel(models.Model):
 
     def __str__(self):
         return self.order
-
-# class Table(models.Model):
-#     pass
-
-# class Column(models.Model):
-#     data = models.CharField(max_length=200, blank=True, null=True)
-#     title = models.CharField(max_length=200, blank=True, null=True)
-#     table = models.ForeignKey(Table)
-
-#     def __str__(self):
-#         return self.title
-
-# class Line(models.Model):
-#     doc = models.CharField(max_length=200, blank=True, null=True)
-#     order = models.CharField(max_length=200, blank=True, null=True)
-#     nothing = models.CharField(max_length=200, blank=True, null=True)
-#     table = models.ForeignKey(Table)
-
-#     def __str__(self):
-#         return self.order

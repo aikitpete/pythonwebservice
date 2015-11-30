@@ -3,8 +3,8 @@ from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
 from django import forms
 from django.template import RequestContext
 import django_excel as excel
-from polls.models import Question, Choice, Product, Samplemodel
-from polls.serializers import QuestionSerializer, ChoiceSerializer, SamplemodelSerializer
+from polls.models import Product, Samplemodel
+from polls.serializers import SamplemodelSerializer, ProductSerializer
 import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import sys
@@ -249,48 +249,6 @@ def import_supersimpledata(request):
             'header': 'Please upload supersimpledata.xls:'
         },
         context_instance=RequestContext(request))
-        
-class QuestionViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint presents questions.
-    """
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
-    
-class ChoiceViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint presents choices.
-    """
-    queryset = Choice.objects.all()
-    serializer_class = ChoiceSerializer
-    
-# class ProductViewSet(viewsets.ModelViewSet):
-#     """
-#     This endpoint presents products.
-#     """
-#     queryset = Product.objects.all()
-#     serializer_class = ProductSerializer
-    
-# class LineViewSet(viewsets.ModelViewSet):
-#     """
-#     This endpoint presents simples.
-#     """
-#     queryset = Line.objects.all()
-#     serializer_class = LineSerializer
-    
-# class ColumnViewSet(viewsets.ModelViewSet):
-#     """
-#     This endpoint presents simples.
-#     """
-#     queryset = Column.objects.all()
-#     serializer_class = ColumnSerializer
-    
-# class TableViewSet(viewsets.ModelViewSet):
-#     """
-#     This endpoint presents simples.
-#     """
-#     queryset = Table.objects.all()
-#     serializer_class = TableSerializer
 
 from rest_framework.renderers import JSONRenderer    
 from django.http import JsonResponse
@@ -303,9 +261,27 @@ def sampledata(request):
 
     bunch = SamplemodelSerializer(Samplemodel.objects.all(), many=True)                                                                              
 
-    headers = bunch.data[0].keys()                                                                                                                   
+    headers = bunch.data[0].keys()   
+    titles = bunch.data[0].keys()   
     
-    headers_prepared = list(map (lambda x,y: {'data': x,'title': x} , headers, headers))
+    headers_prepared = list(map (lambda x,y: {'data': x,'title': y} , headers, titles))
+    
+    
+    ordered_all = ( ('columns', headers_prepared), ('data', bunch.data) )
+    
+    data = collections.OrderedDict(ordered_all)
+    
+    return data
+    
+@json_response
+def productdata(request):
+
+    bunch = ProductSerializer(Product.objects.all(), many=True)                                                                              
+
+    headers = bunch.data[0].keys()   
+    titles = bunch.data[0].keys()   
+    
+    headers_prepared = list(map (lambda x,y: {'data': x,'title': y} , headers, titles))
     
     
     ordered_all = ( ('columns', headers_prepared), ('data', bunch.data) )

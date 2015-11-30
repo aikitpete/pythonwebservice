@@ -15,4 +15,5 @@ urlpatterns = patterns(
     url(r'^import_supersimpledata/', views.import_supersimpledata, name="import_supersimpledata"),
     
     url(r'^sampledata.json', views.sampledata, name="sampledata"),
+    url(r'^productdata.json', views.productdata, name="productdata"),
 )
