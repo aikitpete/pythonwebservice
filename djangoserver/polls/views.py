@@ -321,4 +321,5 @@ def sampledata(request):
     
     data = OrderedDict([('doc', '546546545'), ('order', '98745'), ('nothing', '0.0')])
     
-    return JsonResponse(data)
+    # return JsonResponse(data)
+    return data
