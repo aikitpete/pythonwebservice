@@ -51,3 +51,10 @@ section {
     max-width: 425px;
 }
 
+.left {
+	float: left !important;
+}
+
+.right {
+	float:right !important;
+}
