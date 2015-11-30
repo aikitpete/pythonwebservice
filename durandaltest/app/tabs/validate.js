@@ -116,9 +116,9 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
         },
         
         attached: function() {
-            $(document).ready(function() {
-                $("#view-selector .btn").slice(2,3).button("toggle");
-            });
+            // $(document).ready(function() {
+                $("#view-selector #large-data").button("toggle");
+            // });
             var event = {};
             event["data"] = {};
             controllerTableObject.loadTable(controllerTableObject.simpledataURL, event, this.afterDisplayTable);
