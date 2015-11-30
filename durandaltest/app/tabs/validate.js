@@ -1,4 +1,4 @@
-define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable', 'columnsModal', 'testsModal', 'plugins/dialog', 'datatables.net-editor'], function($, ko, app, router, viewTabStepObject, controllerTableObject,columnsModal, testsModal, dialog) {
+define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable', 'columnsModal', 'testsModal', 'plugins/dialog', 'datatables'], function($, ko, app, router, viewTabStepObject, controllerTableObject,columnsModal, testsModal, dialog) {
 
 
 

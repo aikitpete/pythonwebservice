@@ -45,7 +45,7 @@ requirejs.config({
         
         'datatables.net-autofill' : 'lib/DataTables/AutoFill-2.1.0/js/dataTables.autoFill',
         'datatables.net-editor' : "lib/DataTables/Editor-1.5.2/js/dataTables.editor",
-        'datatables-editor-bootstrap' : "lib/DataTables/Editor-1.5.2/js/editor.bootstrap",
+        // 'datatables-editor-bootstrap' : "lib/DataTables/Editor-1.5.2/js/editor.bootstrap",
         //'datatables.net-buttons' : 'lib/DataTables/Buttons-1.1.0/js/dataTables.buttons',
         'datatables.net-buttons' : 'lib/DataTables/Buttons-1.1.0/js/buttons.bootstrap',
         
@@ -73,9 +73,9 @@ requirejs.config({
         'datatables' : {
            deps: ['jquery','bootstrap','datatables.net-colreorder','datatables.net-rowreorder','datatables.net-scroller','datatables.net-select']  
         },
-        'datatables.net-editor' : {
-            deps: ['jquery','bootstrap','datatables',],//,'datatables-editor-bootstrap','datatables.net-buttons','datatables.net-editor'
-        },
+        // 'datatables.net-editor' : {
+        //     deps: ['jquery','bootstrap','datatables',],
+        // },
         'tabslideout': {
             deps: ['jquery','bootstrap']
         },
