@@ -296,7 +296,9 @@ from rest_framework.renderers import JSONRenderer
 from django.http import JsonResponse
 import collections
 from collections import OrderedDict
+from polls.jsonp_decorator import json_response
 
+@json_response
 def sampledata(request):
 
     bunch = SamplemodelSerializer(Samplemodel.objects.all(), many=True)                                                                              
@@ -308,5 +310,15 @@ def sampledata(request):
     ordered_all = ( ('columns', headers_prepared), ('lines', bunch.data) )
     
     data = collections.OrderedDict(ordered_all)
+    
+    # response = {"data":"bbb"}
+    
+    # response = JsonResponse(data)
+    
+    # if (request.params.callback != null)
+    #     response = request.params.callback + '(' + response + ')'
+    # }
+    
+    data = OrderedDict([('doc', '546546545'), ('order', '98745'), ('nothing', '0.0')])
     
     return JsonResponse(data)
