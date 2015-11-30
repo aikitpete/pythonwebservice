@@ -5,7 +5,7 @@ define(['jquery', 'utils'], function($, utils) {
         //simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
         //simpledataURL: 'https://www.petegerhat.com:8000/simpledata.json',
         //simpledataURL: 'https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json',
-        simpledataURL: 'https://appprototype-petegerhat.c9users.io:8080/data/productdata.json',
+        simpledataURL: 'https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json',
         loadTable: function(urlParam, event,callback) {
             //alert("Loading table");
             console.log("nextStep(): Loading table", urlParam, event, callback);

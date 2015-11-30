@@ -47,8 +47,19 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
 
         bindingComplete: function() {
             vm.viewOptions.subscribe(function(newViewOptions) {
-                alert("Hello there!");
-                alert(newViewOptions);
+                $("#view-selector #large-data").button("toggle");
+                var event = {};
+                event["data"] = {};
+                var dataURL;
+                if (newViewOptions == "large-data") {
+                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?size=large";
+                } else if (newViewOptions == "medium-data") {
+                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?size=medium";
+                } else if (newViewOptions == "small-data") {
+                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?size=small";
+                }
+                controllerTableObject.loadTable(dataURL, event, this.afterDisplayTable);
+
             }, vm);
             vm.viewOptions("large-data");
         },
@@ -129,11 +140,7 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
         },
 
         attached: function() {
-            // $("#view-selector #large-data").button("toggle");
-            // var event = {};
-            // event["data"] = {};
-            // controllerTableObject.loadTable(controllerTableObject.simpledataURL, event, this.afterDisplayTable);
-
+            
         },
 
         doneValidating: function() {
