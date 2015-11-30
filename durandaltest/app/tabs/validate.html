@@ -52,10 +52,10 @@ define(['jquery','bootstrap'], function() {});
             <button type="button" id="deleteRow" class="btn btn-default inline right">
                 Delete row</button>
         </div>
-        <div class="btn-group right" id="view-selector" data-toggle="buttons">
-            <button type="button" id="small-data" class="btn btn-default inline right"><span class="glyphicon glyphicon-stop"><input type="radio" name="options" id="option5">Small data</button>
-            <button type="button" id="medium-data" class="btn btn-default inline right"><span class="glyphicon glyphicon-th-large"><input type="radio" name="options" id="option6">Medium data</button>
-            <button type="button" id="large-data" class="btn btn-default inline right"><span class="glyphicon glyphicon-th"><input type="radio" name="options" id="option7">Big data</button>
+        <div class="btn-group right" id="view-selector" data-toggle="buttons" data-bind="radio: viewOptions">
+            <button type="button" id="small-data" class="btn btn-default inline right"><span class="glyphicon glyphicon-stop" data-bind="css: {active: viewOptions() == 'small-data'}" data-value="small-data">Small data</button>
+            <button type="button" id="medium-data" class="btn btn-default inline right"><span class="glyphicon glyphicon-th-large" data-bind="css: {active: viewOptions() == 'medium-data'}" data-value="medium-data">Medium data</button>
+            <button type="button" id="large-data" class="btn btn-default inline right"><span class="glyphicon glyphicon-th" data-bind="css: {active: viewOptions() == 'large-data'}" data-value="large-data">Big data</button>
         </div>
     </div>
 </div>
