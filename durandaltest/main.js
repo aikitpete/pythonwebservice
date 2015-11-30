@@ -64,7 +64,7 @@ requirejs.config({
             exports: '$'
         },
         'bootstrap': {
-            deps: ['jquery']
+            deps: ['jquery', 'jquery-ui']
         },
         'durandal/app': {
             deps: ['bootstrap']

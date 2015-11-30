@@ -1,4 +1,4 @@
-define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable', 'columnsModal', 'testsModal', 'plugins/dialog', 'datatables'], function($, ko, app, router, viewTabStepObject, controllerTableObject,columnsModal, testsModal, dialog) {
+define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','controllerTable', 'columnsModal', 'testsModal', 'plugins/dialog', 'datatables'], function($, jqueryui, bootstrap, ko, app, router, viewTabStepObject, controllerTableObject,columnsModal, testsModal, dialog) {
 
 
 
@@ -27,7 +27,7 @@ define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','c
 
     //});
 
-
+    
 
     return {
 
@@ -109,13 +109,16 @@ define(['jquery', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep','c
                     colReorder: true,
                     //fixedHeader: true,
                     //fixedColumns: true,
-                    scrollY: 680,
+                    scrollY: 880,
                     deferRender: true,
                     scroller: true
                 });
         },
         
         attached: function() {
+            $(document).ready(function() {
+                $("#view-selector .btn").slice(2,3).button("toggle");
+            });
             var event = {};
             event["data"] = {};
             controllerTableObject.loadTable(controllerTableObject.simpledataURL, event, this.afterDisplayTable);
