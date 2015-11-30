@@ -93,6 +93,7 @@ define(['jquery', 'utils'], function($, utils) {
 
         },
         sanitizeData: function(jsonArray) {
+            console.log("controllerTable: sanitizeData():",jsonArray);
             var newKey;
             jsonArray.forEach(function(item) {
                 for (key in item) {

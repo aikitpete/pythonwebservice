@@ -307,17 +307,8 @@ def sampledata(request):
     
     headers_prepared = list(map (lambda x: {'data': x} , headers))
     
-    ordered_all = ( ('columns', headers_prepared), ('lines', bunch.data) )
+    ordered_all = ( ('columns', headers_prepared), ('data', bunch.data) )
     
     data = collections.OrderedDict(ordered_all)
     
-    # response = {"data":"bbb"}
-    
-    # response = JsonResponse(data)
-    
-    # if (request.params.callback != null)
-    #     response = request.params.callback + '(' + response + ')'
-    # }
-    
-    # return JsonResponse(data)
     return data
