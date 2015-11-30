@@ -1,69 +1,5 @@
 define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins/router', 'viewTabStep', 'controllerTable', 'columnsModal', 'testsModal', 'plugins/dialog', 'datatables'], function($, jqueryui, bootstrap, ko, app, router, viewTabStepObject, controllerTableObject, columnsModal, testsModal, dialog) {
 
-
-
-    //$(function() {
-
-    /*
-    if (typeof jQuery == 'undefined') {
-        console.log("jQuery is not loaded");
-    }
-    else {
-        console.log("jQuery is loaded");
-    }
-
-    $.fn.visible = function() {
-        return this.css('visibility', 'visible');
-    };
-
-    $.fn.invisible = function() {
-        return this.css('visibility', 'hidden');
-    };
-
-    $.fn.exists = function() {
-        return this.length !== 0;
-    }
-    */
-
-    //});
-
-    // ko.bindingHandlers.radio = {
-    //     init: function(element, valueAccessor, allBindings, data, context) {
-    //         var $buttons, $element, observable;
-    //         observable = valueAccessor();
-    //         if (!ko.isWriteableObservable(observable)) {
-    //             throw "You must pass an observable or writeable computed";
-    //         }
-    //         $element = $(element);
-    //         if ($element.hasClass("btn")) {
-    //             $buttons = $element;
-    //         }
-    //         else {
-    //             $buttons = $(".btn", $element);
-    //         }
-    //         var elementBindings = allBindings();
-    //         $buttons.each(function() {
-    //             var $btn, btn, radioValue;
-    //             btn = this;
-    //             $btn = $(btn);
-    //             radioValue = $btn.attr("id");
-    //             $btn.on("click", function(event) {
-    //                 observable(ko.utils.unwrapObservable(radioValue));
-    //                 alert("Hello there!");
-    //                 alert(radioValue);
-    //             });
-    //             return ko.computed({
-    //                 disposeWhenNodeIsRemoved: btn,
-    //                 read: function() {
-    //                     $btn.toggleClass("active", observable() === ko.utils.unwrapObservable(radioValue));
-    //                 }
-    //             });
-    //         });
-    //     }
-    // };
-
-    var viewOptions = ko.observable();
-
     ko.bindingHandlers.radio = {
         init: function(element, valueAccessor, allBindings, data, context) {
             var $buttons, $element, observable;
@@ -97,7 +33,7 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
         }
     };
 
-    return {
+    var vm = {
 
         validationOptions: ko.observableArray([
             "Check value types",
@@ -107,18 +43,14 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
             "Learn from past imports",
         ]),
         validation: ko.observable(),
-        viewOptions: viewOptions,
+        viewOptions: ko.observable(),
 
         bindingComplete: function() {
-            alert("start");
-            console.log("validate: this:", this);
-            console.log("validate: viewOptions:", this.viewOptions);
-            this.viewOptions.subscribe(function(newViewOptions) {
+            vm.viewOptions.subscribe(function(newViewOptions) {
                 alert("Hello there!");
                 alert(newViewOptions);
-            }, this);
-            ko.utils.unwrapObservable("large-data")
-            alert("end");
+            }, vm);
+            vm.viewOptions("large-data");
         },
 
         activate: function() {
@@ -142,19 +74,19 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
         },
 
         closeDialog: function() {
-            dialog.close(this, this.input());
+            dialog.close(vm, vm.input());
         },
 
         afterDisplayTable: function(event) {
-            if (this.table != null) {
-                this.table.destroy();
+            if (vm.table != null) {
+                vm.table.destroy();
                 $('#example').empty();
             }
 
             var tableColumns = event.data['tableColumns'];
             var tableRows = event.data['tableRows'];
 
-            this.table = $('#example').DataTable({
+            vm.table = $('#example').DataTable({
                 data: tableRows,
                 columns: tableColumns,
                 dom: 'Bfrpit',
@@ -209,4 +141,6 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
         }
 
     };
+
+    return vm;
 });
