@@ -305,7 +305,8 @@ def sampledata(request):
 
     headers = bunch.data[0].keys()                                                                                                                   
     
-    headers_prepared = list(map (lambda x: {'data': x} , headers))
+    headers_prepared = list(map (lambda x,y: {'data': x,'title': x} , headers, headers))
+    
     
     ordered_all = ( ('columns', headers_prepared), ('data', bunch.data) )
     
