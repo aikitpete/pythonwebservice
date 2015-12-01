@@ -255,11 +255,19 @@ from django.http import JsonResponse
 import collections
 from collections import OrderedDict
 from polls.jsonp_decorator import json_response
+# from django.db.models.loading import get_model
+from polls import serializers
+from django.db.models import F
 
 @json_response
 def sampledata(request):
+    
+    size = request.GET.get('size','large')
+    
+    serializer_class = F(serializers, size+"Serializer")
 
-    bunch = SamplemodelSerializer(Samplemodel.objects.all(), many=True)                                                                              
+    
+    bunch = serializer_class(F(models, size).objects.all(), many=True)                                                                              
 
     headers = bunch.data[0].keys()   
     titles = bunch.data[0].keys()   

@@ -133,7 +133,7 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
                 colReorder: true,
                 //fixedHeader: true,
                 //fixedColumns: true,
-                scrollY: 880,
+                scrollY: 580,
                 deferRender: true,
                 scroller: true
             });

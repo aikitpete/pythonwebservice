@@ -40,9 +40,9 @@ def json_response(func):
         # It just seems like a good idea to check for a 200 status code... Oh well. :(
         try:
             data = simplejson.dumps(objects)
-            if 'callback' in request.REQUEST:
+            if 'callback' in request.GET:
                 # A jsonp response!
-                data = '%s(%s);' % (request.REQUEST['callback'], data)
+                data = '%s(%s);' % (request.GET['callback'], data)
                 return HttpResponse(data, 'text/javascript; charset=utf-8')
         except:
             data = simplejson.dumps(str(objects))
