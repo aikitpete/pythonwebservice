@@ -79,8 +79,8 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
         selectColumns: function(item) {
             //the app model allows easy display of modal dialogs by passing a view model
             //views are usually located by convention, but you an specify it as well with viewUrl
-            item.viewUrl = 'app/widgets/selectcolumns';
-            app.showDialog(item);
+            //item.viewUrl = 'app/widgets/selectcolumns';
+            //app.showDialog(item);
             //app.showDialog();
         },
 
