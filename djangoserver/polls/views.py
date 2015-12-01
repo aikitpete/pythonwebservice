@@ -262,12 +262,12 @@ from polls import models
 @json_response
 def sampledata(request):
     
-    size = request.GET.get('size','large')
+    model_par = request.GET.get('model','Product')
     
-    serializer_class = getattr(serializers, size+"Serializer")
+    serializer_class = getattr(serializers, model_par+"Serializer")
 
     
-    bunch = serializer_class(getattr(models, size).objects.all(), many=True)                                                                              
+    bunch = serializer_class(getattr(models, model_par).objects.all(), many=True)                                                                              
 
     headers = bunch.data[0].keys()   
     titles = bunch.data[0].keys()   

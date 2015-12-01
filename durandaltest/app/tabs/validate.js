@@ -52,11 +52,11 @@ define(['jquery', 'jquery-ui', 'bootstrap', 'knockout', 'durandal/app', 'plugins
                 event["data"] = {};
                 var dataURL;
                 if (newViewOptions == "large-data") {
-                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?size=large";
+                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?model=Product";
                 } else if (newViewOptions == "medium-data") {
-                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?size=medium";
+                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?model=Simplemodel";
                 } else if (newViewOptions == "small-data") {
-                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?size=small";
+                    dataURL = "https://appprototype-petegerhat.c9users.io:8080/data/sampledata.json?model=Samplemodel";
                 }
                 controllerTableObject.loadTable(dataURL, event, this.afterDisplayTable);
 
